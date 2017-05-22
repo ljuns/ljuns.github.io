@@ -1,0 +1,250 @@
+# Blog info
+blog_name: ljuns
+slogan: 做自己喜欢的事，喜欢自己做的事
+# url: http://www.forsigner.com
+url: https://ljuns.github.io
+
+# Set avatar (Absolute url and relative url)
+avatar: /images/ljuns.jpeg
+
+# Set favicon
+# favicon: /favicon.ico
+
+# For seo
+keywords: Android,移动开发
+
+home_nav:
+  - name: Blog
+    url: /archives
+    target_blank: false #不在新页面打开
+  - name: Project
+    url: /project/
+    target_blank: true #在新页面打开
+  - name: Github
+    url: https://github.com/ljuns
+    target_blank: true
+  # - name: Twitter
+  #   url: https://twitter.com/forsigner
+  #   target_blank: true
+
+# config page nav
+page_nav:
+  - name: 博客
+    url: /archives/
+    target_blank: false # 不在新页面打开
+  - name: 分类
+    url: /category/
+    target_blank: false
+  # - name: 标签
+  #   url: /tags/
+  #   target_blank: false
+  # - name: 友链
+  #   url: /link/
+  #   target_blank: false
+  - name: 关于
+    url: /about/
+    target_blank: false
+  # - name: Github
+  #   url: https://github.com/ljuns
+  #   target_blank: true
+  # - name: RSS
+  #   url: /atom.xml
+  #   target_blank: true # 在新页面打开
+  # - name: 搜索
+  #   url: /search/
+  #   target_blank: false # 在新页面打开
+
+page_nav_style:  ROUND_RECT  # CIRCLE|ROUND_RECT
+
+# 面包屑
+breadcrumb:
+  isShow: false # true|fase
+
+# 盒子
+toolbox:
+  isShow: true # true|fase
+  text: 更多
+
+search_slogan:
+  isShow: true # true|fase
+  text: Can you find the bug of world ~
+
+link_slogan:
+  isShow: true # true|fase
+  text: 交换友链可以邮件 forsigner@gmail.com
+
+
+# set backtop show or hide
+backtop:
+  home: false
+  archive: false
+  category: true
+  tag: true
+  post: true
+  link: false
+  about: false
+
+donation:
+  show: true
+  btn_text: 支持一下
+  tip: 扫一扫，支持我吧，谢谢🙏🙏
+  items:
+    - type: 微信
+      text: 微信扫一扫
+      imgUrl: /images/weixin.png
+    - type: 支付宝
+      text: 支付宝扫一扫
+      imgUrl: /images/zhifubao.jpeg
+
+
+
+
+post:
+  header_align: CENTER # LEFT|CENTER
+  showToc: true # true|false
+  showComments: true
+  open_in_new_window: false
+  show_prev_next: true
+
+# =========================================================
+# 个性化设置
+# =========================================================
+
+# Custom CSS style, 推荐把样式文件放在blog源码文件夹，而不是主题里面
+personal_style: /css/personal-style.css
+
+# 这个值取决于你得背景图片是深色还是浅色，深色用dark，浅色用light
+home_background_scheme: light # dark、light
+
+# custom font-family 暂时只支持这3种英文字体，你可以完全自定义字体(看文档)
+blog_name_font_familiy: calligraffittiregular
+# blog_name_font_familiy: Lobster-Regular
+# blog_name_font_familiy: PoiretOne-Regular
+
+init_page_content: POST #HOME_NAV  # HOME_NAV | POST
+
+
+# =========================================================
+# 第三方服务
+# =========================================================
+# Stats
+google_analytics:
+baidu_analytics: 57e94d016e201fba3603a8a2b0263af0
+
+# Comment service
+disqus_shortname: forsigner
+# duoshuo_shortname: forsigner
+gentie_key: dd5e8365d08c44c2a5949cdee496b67b
+
+# 不算子,文章访问量统计和显示
+busuanzi: true
+
+# =========================================================
+# 页面内容设置
+# =========================================================
+about:
+  - type: me
+    icon: icon-user
+    text_value:
+    - "有点帅的 Android 开发者"
+    - "爱生活，爱分享，爱 LOL"
+    - "格言：做自己喜欢的事，喜欢自己做的事"
+    - "这里是我的分享，也是我成长的历程"
+  - type: Github
+    icon: icon-github
+    text_key: Github
+    text_value: "@ljuns"
+    text_value_url: https://github.com/ljuns
+  # - type: weibo
+  #   icon: icon-weibo
+  #   text_key: 微博
+  #   text_value: "@forsigner"
+  #   text_value_url: http://weibo.com/u/1847075964
+  - type: mail
+    icon: icon-mail
+    text_key: Gmail
+    text_value: "ljunsw@gmail.com"
+  - type: location
+    icon: icon-location
+    text_value: 广州
+
+link:
+  - name: 织网
+    info: 身体和灵魂，总有一个在路上
+    url: http://zheng-ji.info/
+    avatar: https://avatars3.githubusercontent.com/u/1414745?v=3&s=100
+  - name: Dongyado
+    info: 生命不止，折腾不息
+    url: http://dongyado.com/
+    avatar: https://avatars0.githubusercontent.com/u/6274940?v=3&s=100
+  - name: OrangeCoder
+    info: android ffmpeg nodejs gradle
+    url: http://orangecoder.com/
+    avatar: https://avatars0.githubusercontent.com/u/2263785?v=3&s=100
+  - name: EverET
+    info: 好记性不如烂笔头
+    url: http://everet.org/about-me/
+    avatar: https://avatars1.githubusercontent.com/u/1559563?v=3&s=100
+  - name: 题叶
+    info: FP, GUI, Writing
+    url: http://tiye.me/
+    avatar: https://avatars2.githubusercontent.com/u/449224?v=3&s=100
+  - name: McChen
+    info: Stay Hungry, Stay Foolish
+    url: http://mcchen.club/
+    avatar: https://avatars0.githubusercontent.com/u/8033333?v=3&s=100
+
+
+project:
+  - type: personal
+    name: fexo
+    url: https://github.com/forsigner/fexo
+    intro: A minimalist design theme for hexo
+  # - type: company
+  #   name: Fexo
+  #   url: https://github.com/forsigner/fexo
+  #   intro: A minimalist design theme for hexo
+  - type: personal
+    name: beside
+    url: https://github.com/forsigner/beside
+    intro: I need you beside me
+  - type: personal
+    name: web-fontmin
+    url: https://github.com/forsigner/web-fontmin
+    intro: 字体子集化，在线提取你需要的字体
+  - type: personal
+    name: magic-check
+    url: https://github.com/forsigner/magic-check
+    intro: Beautify Radio and Checkbox with pure CSS
+  - type: personal
+    name: nice-bar
+    url: https://github.com/forsigner/nice-bar
+    intro: A nice and lightweight scrollbar
+  - type: personal
+    name: angular-nice-bar
+    url: https://github.com/forsigner/angular-nice-bar
+    intro: A nice and lightweight scrollbar in Angular
+  - type: personal
+    name: fo-popover
+    url: https://github.com/forsigner/fo-popover
+    intro: A nice popover for Angular
+  - type: personal
+    name: fo-tooltip
+    url: A nice tooltip for Angular
+    intro: https://github.com/forsigner/fo-tooltip
+  - type: personal
+    name: fo-modal
+    url: https://github.com/forsigner/fo-modal
+    intro: A nice modal for Angular
+  - type: personal
+    name: mocer
+    url: https://github.com/forsigner/mocer
+    intro: Setup a mock server easily
+  - type: personal
+    name: node-pngdefry
+    url: https://github.com/forsigner/node-pngdefry
+    intro: Repairing iPhone fried PNGs using Node.js
+  - type: personal
+    name: ng-simditor
+    url: https://github.com/forsigner/ng-simditor
+    intro: Angular directive for simditor
