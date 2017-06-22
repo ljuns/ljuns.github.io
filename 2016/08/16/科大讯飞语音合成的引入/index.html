@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>科大讯飞语音合成的引入 | 小山的技术小窝</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="总结，科大讯飞，语音合成," />
+  
+
+  <meta name="description" content="关于第三方 SDK 的引入，很多情况下直接查看官方文档就够了，之前的我也一直这样认为，直到遇到了科大讯飞的语音合成。其实他和其他第三方 SDK 的引入没有太大的区别，唯一的一点不同或许就是需要引入 .so 文件，这个 .so 文件正是坑所在。既然都说了，那就顺便把语音合成这部分也说一下吧。在语音合成这方面，据我所知科大讯飞算是做得很不错的了，要用到人家的 SDK 那注册个账号是少不了的了。这部分就">
+<meta name="keywords" content="总结，科大讯飞，语音合成">
+<meta property="og:type" content="article">
+<meta property="og:title" content="科大讯飞语音合成的引入">
+<meta property="og:url" content="http://ljuns.cn/2016/08/16/科大讯飞语音合成的引入/index.html">
+<meta property="og:site_name" content="小山的技术小窝">
+<meta property="og:description" content="关于第三方 SDK 的引入，很多情况下直接查看官方文档就够了，之前的我也一直这样认为，直到遇到了科大讯飞的语音合成。其实他和其他第三方 SDK 的引入没有太大的区别，唯一的一点不同或许就是需要引入 .so 文件，这个 .so 文件正是坑所在。既然都说了，那就顺便把语音合成这部分也说一下吧。在语音合成这方面，据我所知科大讯飞算是做得很不错的了，要用到人家的 SDK 那注册个账号是少不了的了。这部分就">
+<meta property="og:image" content="http://oaydqd1yy.bkt.clouddn.com/png/sdk.png">
+<meta property="og:image" content="http://oaydqd1yy.bkt.clouddn.com/png/lib.png">
+<meta property="og:image" content="http://oaydqd1yy.bkt.clouddn.com/png/copy.png">
+<meta property="og:image" content="http://oaydqd1yy.bkt.clouddn.com/png/aslibrary.png">
+<meta property="og:image" content="http://oaydqd1yy.bkt.clouddn.com/png/build.png">
+<meta property="og:image" content="http://oaydqd1yy.bkt.clouddn.com/png/make.png">
+<meta property="og:image" content="http://oaydqd1yy.bkt.clouddn.com/jnilibs.png">
+<meta property="og:image" content="http://oaydqd1yy.bkt.clouddn.com/alllib.png">
+<meta property="og:updated_time" content="2017-06-03T13:24:46.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="科大讯飞语音合成的引入">
+<meta name="twitter:description" content="关于第三方 SDK 的引入，很多情况下直接查看官方文档就够了，之前的我也一直这样认为，直到遇到了科大讯飞的语音合成。其实他和其他第三方 SDK 的引入没有太大的区别，唯一的一点不同或许就是需要引入 .so 文件，这个 .so 文件正是坑所在。既然都说了，那就顺便把语音合成这部分也说一下吧。在语音合成这方面，据我所知科大讯飞算是做得很不错的了，要用到人家的 SDK 那注册个账号是少不了的了。这部分就">
+<meta name="twitter:image" content="http://oaydqd1yy.bkt.clouddn.com/png/sdk.png">
+
+  
+
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">更多</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">更多</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、包的导入-包括-so-文件"><span class="toc-text">1、包的导入(包括 .so 文件)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2、-so-文件的引入"><span class="toc-text">2、.so 文件的引入</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1、添加引入语句"><span class="toc-text">2.1、添加引入语句</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2、Make-Project"><span class="toc-text">2.2、Make Project</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3、代码实现"><span class="toc-text">3、代码实现</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-科大讯飞语音合成的引入" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">科大讯飞语音合成的引入</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2016.08.16</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>小山的技术小窝</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/总结/">总结</a>
+  </span>
+
+
+
+      
+        <span>
+          <i class="icon-comment"></i>
+          <a href="https://ljuns.github.io/2016/08/16/科大讯飞语音合成的引入/#disqus_thread"></a>
+        </span>
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>关于第三方 SDK 的引入，很多情况下直接查看官方文档就够了，之前的我也一直这样认为，直到遇到了科大讯飞的语音合成。其实他和其他第三方 SDK 的引入没有太大的区别，唯一的一点不同或许就是需要引入 .so 文件，这个 .so 文件正是坑所在。既然都说了，那就顺便把语音合成这部分也说一下吧。<br>在语音合成这方面，据我所知科大讯飞算是做得很不错的了，要用到人家的 SDK 那注册个账号是少不了的了。这部分就省略了，直接注册登录，然后创建应用，这时会给你个 appID ，嗯，还要绑定手机号和微信号（这点略坑）。都弄好后就下载 SDK ,解压出来是这样的：<br><br><img src="http://oaydqd1yy.bkt.clouddn.com/png/sdk.png" alt=""><br><a id="more"></a></p>
+<h3 id="1、包的导入-包括-so-文件"><a href="#1、包的导入-包括-so-文件" class="headerlink" title="1、包的导入(包括 .so 文件)"></a>1、包的导入(包括 .so 文件)</h3><p>直接把 SDK 中 lib 文件夹下的 <strong>所有文件</strong> 复制到 Android 工程下的 lib 目录下（如果 Android 工程下面没有 lib文件夹 ，就自己新建一个 lib 文件夹），为什么要复制所有呢？这里有个坑，一开始按照官方 SDK 只复制了 armeabi、armeabi-v7a、mips 这三个文件夹，但是在一切都弄好准备测试是一直报“引擎不支持（21002）”，我以为是 .so 文件引入失败，花了好一会功夫才搞清楚原来要导入所有文件，这是 lib 下的所有文件：<br><br><img src="http://oaydqd1yy.bkt.clouddn.com/png/lib.png" alt=""><br>我的 Android 工程目录<br><br><img src="http://oaydqd1yy.bkt.clouddn.com/png/copy.png" alt=""><br>这里有一点要注意，导入的 jar 包还需对它右键 －&gt; Add As Library<br><br><img src="http://oaydqd1yy.bkt.clouddn.com/png/aslibrary.png" alt=""><br>jar 包是引入了，那 .so 文件呢？接下来才是精华所在</p>
+<h3 id="2、-so-文件的引入"><a href="#2、-so-文件的引入" class="headerlink" title="2、.so 文件的引入"></a>2、.so 文件的引入</h3><h4 id="2-1、添加引入语句"><a href="#2-1、添加引入语句" class="headerlink" title="2.1、添加引入语句"></a>2.1、添加引入语句</h4><p>刚刚已经把 .so 文件都复制到 Android 工程的 lib 目录下了，但是还不够。打开 module 的 build.gradle 文件，在里面的 android 标签下添加一句 sourceSets.main.jniLibs.srcDirs = [‘libs’]<br><br><img src="http://oaydqd1yy.bkt.clouddn.com/png/build.png" alt=""><br>我的整个 build.gradle 文件是这样的：<br><br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">apply plugin: 'com.android.application'</div><div class="line"></div><div class="line">android &#123;</div><div class="line">    compileSdkVersion 23</div><div class="line">    buildToolsVersion '22.0.0'</div><div class="line"></div><div class="line">    defaultConfig &#123;</div><div class="line">        applicationId "com.catt.temp"</div><div class="line">        minSdkVersion 19</div><div class="line">        targetSdkVersion 23</div><div class="line">        versionCode 1</div><div class="line">        versionName "1.0"</div><div class="line">    &#125;</div><div class="line">    buildTypes &#123;</div><div class="line">        release &#123;</div><div class="line">            minifyEnabled false</div><div class="line">            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    sourceSets.main.jniLibs.srcDirs = ['libs']</div><div class="line">&#125;</div><div class="line"></div><div class="line">dependencies &#123;</div><div class="line">    compile fileTree(dir: 'libs', include: ['*.jar'])</div><div class="line">    testCompile 'junit:junit:4.12'</div><div class="line">    compile 'com.android.support:appcompat-v7:23.3.0'</div><div class="line">    compile 'com.android.support:support-v4:23.3.0'</div><div class="line">    compile 'com.android.support:design:23.3.0'</div><div class="line">    compile 'com.github.liuguangqiang.swipeback:library:1.0.2@aar'</div><div class="line">    compile files('libs/ksoap2-android-assembly-3.3.0-jar-with-dependencies.jar')</div><div class="line">    compile files('libs/Msc.jar')</div><div class="line">    compile files('libs/Sunflower.jar')</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="2-2、Make-Project"><a href="#2-2、Make-Project" class="headerlink" title="2.2、Make Project"></a>2.2、Make Project</h4><p>此时还差一步，就是 Build -&gt; Make Project <br><br><img src="http://oaydqd1yy.bkt.clouddn.com/png/make.png" alt=""><br>这样就会在工程生成一个 jniLibs 的东东，就像是这样的：<br><br><img src="http://oaydqd1yy.bkt.clouddn.com/jnilibs.png" alt=""></p>
+<h3 id="3、代码实现"><a href="#3、代码实现" class="headerlink" title="3、代码实现"></a>3、代码实现</h3><p>到这里所有的准备工作都做好了，接下来是代码实现，这部分在 SDK 上有，可以直接复制过来，贴上我的代码(AndroidMainfest.xml 中的权限看 SDK 就好了，这里就不贴出来了)：<br><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.catt.temp.util;</div><div class="line"><span class="keyword">import</span> android.content.Context;</div><div class="line"><span class="keyword">import</span> android.os.Bundle;</div><div class="line"><span class="keyword">import</span> com.iflytek.cloud.SpeechConstant;</div><div class="line"><span class="keyword">import</span> com.iflytek.cloud.SpeechError;</div><div class="line"><span class="keyword">import</span> com.iflytek.cloud.SpeechSynthesizer;</div><div class="line"><span class="keyword">import</span> com.iflytek.cloud.SpeechUtility;</div><div class="line"><span class="keyword">import</span> com.iflytek.cloud.SynthesizerListener;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 语音合成</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MSCUtil</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> Context mContext;</div><div class="line">    <span class="keyword">private</span> SpeechSynthesizer mSynthesizer;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String TEXT = <span class="string">"警告，当前机房温度已达到"</span>;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MSCUtil</span><span class="params">(Context context)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.mContext = context;</div><div class="line">        SpeechUtility.createUtility(mContext, SpeechConstant.APPID +<span class="string">"=57b27fce"</span>);</div><div class="line">        mSynthesizer = SpeechSynthesizer.createSynthesizer(mContext, <span class="keyword">null</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 开始</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">startSpeek</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="comment">// 设置发音人</span></div><div class="line">        mSynthesizer.setParameter(SpeechConstant.VOICE_NAME, <span class="string">"xiaoyan"</span>);</div><div class="line">        <span class="comment">// 设置语速</span></div><div class="line">        mSynthesizer.setParameter(SpeechConstant.SPEED, <span class="string">"50"</span>);</div><div class="line">        <span class="comment">// 设置音量，范围0～100</span></div><div class="line">        mSynthesizer.setParameter(SpeechConstant.VOLUME, <span class="string">"80"</span>);</div><div class="line">        <span class="comment">// 设置云端</span></div><div class="line">        mSynthesizer.setParameter(SpeechConstant.ENGINE_TYPE, SpeechConstant.TYPE_CLOUD);</div><div class="line">        mSynthesizer.setParameter(SpeechConstant.TTS_AUDIO_PATH, <span class="string">"./sdcard/iflytek.pcm"</span>);</div><div class="line">        mSynthesizer.startSpeaking(TEXT, synListener);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 停止</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">stopSpeek</span><span class="params">()</span> </span>&#123;</div><div class="line">        mSynthesizer.stopSpeaking();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 合成监听器</div><div class="line">     */</div><div class="line">    <span class="keyword">private</span> SynthesizerListener synListener = <span class="keyword">new</span> SynthesizerListener() &#123;</div><div class="line">        <span class="comment">//会话结束回调接口,没有错误时,error为null</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCompleted</span><span class="params">(SpeechError error)</span> </span>&#123;</div><div class="line">            <span class="comment">// 循环</span></div><div class="line">            mSynthesizer.startSpeaking(TEXT, synListener);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onEvent</span><span class="params">(<span class="keyword">int</span> i, <span class="keyword">int</span> i1, <span class="keyword">int</span> i2, Bundle bundle)</span> </span>&#123;&#125;</div><div class="line">        <span class="comment">//缓冲进度回调 //percent为缓冲进度0~100,beginPos为缓冲音频在文本中开始位置,endPos表示缓冲音频在文本中结束位置,info为附加信息。</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onBufferProgress</span><span class="params">(<span class="keyword">int</span> percent, <span class="keyword">int</span> beginPos, <span class="keyword">int</span> endPos, String info)</span> </span>&#123;&#125;</div><div class="line">        <span class="comment">//开始播放</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSpeakBegin</span><span class="params">()</span> </span>&#123;&#125;</div><div class="line">        <span class="comment">//暂停播放</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSpeakPaused</span><span class="params">()</span> </span>&#123;&#125;</div><div class="line">        <span class="comment">//播放进度回调 //percent为播放进度0~100,beginPos为播放音频在文本中开始位置,endPos表示播放音频在文本中结束位置.</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSpeakProgress</span><span class="params">(<span class="keyword">int</span> percent, <span class="keyword">int</span> beginPos, <span class="keyword">int</span> endPos)</span> </span>&#123;&#125;</div><div class="line">        <span class="comment">//恢复播放回调接口</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSpeakResumed</span><span class="params">()</span> </span>&#123;&#125;</div><div class="line">    &#125;;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>注释都很详细了，在 onCompleted() 方法中调用 mSynthesizer.startSpeaking(TEXT, synListener); 这一句是我自己的需求，因为我想要它循环播放语音，直到我手动的停止。TEXT 就是需要转换为语音的文字，自己定制。</p>
+<p>很郁闷的事，今天我发现官方 SDK 改了，变成了这样：<br><br><img src="http://oaydqd1yy.bkt.clouddn.com/alllib.png" alt=""><br>一开始不是这样的，不然我也不会浪费这么多时间在这，只能说很坑…</p>
+
+    
+  </div>
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持我吧，谢谢🙏🙏</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/weixin.png" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/zhifubao.jpeg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2016/07/27/TemperatureView：圆弧刻度温度进度条/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2016/11/21/CycleRotationView-自定义控件之轮播图/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'forsigner';
+    
+    var disqus_url = 'http://ljuns.cn/2016/08/16/科大讯飞语音合成的引入/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//forsigner.disqus.com/count.js" async></script>
+
+
+
+    
+
+
+
+
+    
+  <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+<script>
+  var cloudTieConfig = {
+    url: document.location.href, 
+    sourceId: "",
+    productKey: "dd5e8365d08c44c2a5949cdee496b67b",
+    target: "cloud-tie-wrapper"
+  };
+</script>
+<script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

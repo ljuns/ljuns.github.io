@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>学习总结 -- View 事件分发机制和滑动冲突 | 小山的技术小窝</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="事件分发, 滑动冲突," />
+  
+
+  <meta name="description" content="终于到了 View 这一关卡了，之前也有实践过自定义 View：圆弧刻度温度进度条，但是对于 View 底层的东西没什么了解，只是会用而已，抱着“知其然知其所以然”的心态，很多时候都会先去尝试使用，然后才来究其原因。这次会分两个部分来叙述本篇：事件分发机制、滑动冲突；自己本身对源码也不熟悉，所以本篇主要是理论概述，尽量不出现源码的东西。">
+<meta name="keywords" content="事件分发, 滑动冲突">
+<meta property="og:type" content="article">
+<meta property="og:title" content="学习总结 -- View 事件分发机制和滑动冲突">
+<meta property="og:url" content="http://ljuns.cn/2017/03/10/学习总结-View-事件分发机制和滑动冲突/index.html">
+<meta property="og:site_name" content="小山的技术小窝">
+<meta property="og:description" content="终于到了 View 这一关卡了，之前也有实践过自定义 View：圆弧刻度温度进度条，但是对于 View 底层的东西没什么了解，只是会用而已，抱着“知其然知其所以然”的心态，很多时候都会先去尝试使用，然后才来究其原因。这次会分两个部分来叙述本篇：事件分发机制、滑动冲突；自己本身对源码也不熟悉，所以本篇主要是理论概述，尽量不出现源码的东西。">
+<meta property="og:updated_time" content="2017-06-22T06:24:03.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="学习总结 -- View 事件分发机制和滑动冲突">
+<meta name="twitter:description" content="终于到了 View 这一关卡了，之前也有实践过自定义 View：圆弧刻度温度进度条，但是对于 View 底层的东西没什么了解，只是会用而已，抱着“知其然知其所以然”的心态，很多时候都会先去尝试使用，然后才来究其原因。这次会分两个部分来叙述本篇：事件分发机制、滑动冲突；自己本身对源码也不熟悉，所以本篇主要是理论概述，尽量不出现源码的东西。">
+
+  
+
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">更多</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">更多</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#事件分发机制"><span class="toc-text">事件分发机制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#滑动冲突"><span class="toc-text">滑动冲突</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#外部拦截"><span class="toc-text">外部拦截</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#内部拦截"><span class="toc-text">内部拦截</span></a></li></ol></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-学习总结-View-事件分发机制和滑动冲突" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">学习总结 -- View 事件分发机制和滑动冲突</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2017.03.10</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>小山的技术小窝</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/学习笔记/">学习笔记</a>
+  </span>
+
+
+
+      
+        <span>
+          <i class="icon-comment"></i>
+          <a href="https://ljuns.github.io/2017/03/10/学习总结-View-事件分发机制和滑动冲突/#disqus_thread"></a>
+        </span>
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>终于到了 View 这一关卡了，之前也有实践过自定义 View：<a href="https://ljuns.github.io/2016/07/27/TemperatureView%EF%BC%9A%E5%9C%86%E5%BC%A7%E5%88%BB%E5%BA%A6%E6%B8%A9%E5%BA%A6%E8%BF%9B%E5%BA%A6%E6%9D%A1/" target="_blank" rel="external">圆弧刻度温度进度条</a>，但是对于 View 底层的东西没什么了解，只是会用而已，抱着“知其然知其所以然”的心态，很多时候都会先去尝试使用，然后才来究其原因。这次会分两个部分来叙述本篇：事件分发机制、滑动冲突；自己本身对源码也不熟悉，所以本篇主要是理论概述，尽量不出现源码的东西。</p>
+<a id="more"></a>
+<h2 id="事件分发机制"><a href="#事件分发机制" class="headerlink" title="事件分发机制"></a>事件分发机制</h2><p>首先要声明这里用来分析的对象是 MotionEvent，即点击事件。</p>
+<blockquote>
+<p>所谓点击事件的事件分发其实就是对 MotionEvent 事件的分发过程，即当一个 MotionEvent 产生了以后，系统需要把这个事件传递给一个具体的 View，而这个传递过程就是分发机制。</p>
+</blockquote>
+<p>了解了分发机制后就来了解另一个概念，同一个事件序列：从手指接触屏幕的那一刻起到手指离开屏幕的那一刻结束，在这个过程中所产生的一系列事件就叫同一个事件序列。这个事件序列以 down 事件开始，中间含有 n 个 move 事件，最终以 up 事件结束。</p>
+<p>知道什么是同一个事件序列对后面的分析有很大的帮助，因为后续很多都是针对同一个事件序列来进行分析的。接下来看看点击事件的分发过程中三个很重要的方法：</p>
+<p><strong>public boolean dispatchTouchEvent(MotionEvent event)</strong></p>
+<p><strong>public boolean onInterceptTouchEvent(MotionEvent event)</strong></p>
+<p><strong>public boolean onTouchEvent(MotionEvent event)</strong></p>
+<p>这三个方法的关系就如下面的伪代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">dispatchTouchEvent</span><span class="params">(MotionEvent event)</span> </span>&#123;</div><div class="line">  <span class="keyword">boolean</span> consume = <span class="keyword">false</span>;</div><div class="line">  <span class="keyword">if</span> (onInterceptTouchEvent(event)) &#123;</div><div class="line">    consume = onTouchEvent(event);</div><div class="line">  &#125; <span class="keyword">else</span> &#123;</div><div class="line">    consume = child.dispatchTouchEvent(ev);</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> consume;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>通过这个伪代码可以很清晰的知道这三个方法之间的关系。它们的传递规则：对于一个根 ViewGroup 来说，点击事件产生后，首先会传递给 ViewGroup 本身，此时 ViewGroup 的 dispatchTouchEvent() 方法就会被调用，接着会调用 onInterceptTouchEvent() 方法，如果 onInterceptTouchEvent() 方法返回 true 就表示 ViewGroup 要拦截当前事件；接着再调用 onTouchEvent() 方法来处理该事件；但是如果 onInterceptTouchEvent() 方法返回 false 就表示 ViewGroup 不拦截当前事件，此时 ViewGroup 的 onTouchEvent() 方法就不会被调用，而是调用子 View 的 dispatchTouchEvent() 方法，如此反复直到事件最终被处理。</p>
+<p>通常来说那三个方法的执行流程就如上所说的，但是还会有一些比较特殊的情况，比如设置 OnTouchListener、OnClickListener。</p>
+<p>当一个 View 需要处理事件时，如果 View 设置了 OnTouchListener，那么 OnTouchListener 中的 onTouch() 方法就会被调用。如果 onTouch() 方法返回 false，则当前 View 的 onTouchEvent() 方法就会被调用；如果返回 true，当前 View 的 onTouchEvent() 方法将不会被调用。</p>
+<p>在 onTouchEvent() 方法中，如果有设置 OnClickListener，那么 onClick() 方法是一定会被调用的。</p>
+<p>曾经见过一道面试题，详细描述记不清了，大概意思是这样的：onTouch() 和 onTouchEvent() 谁先执行 ？有评论者说如果没有对 View 进行过比较深入的了解是接触不到这些的。</p>
+<p>那么通过前面几段叙述，对事件分发机制应该有个比较清晰的理解了，还有以下几点需要注意：</p>
+<ol>
+<li>当一个点击事件产生后，该点击事件的传递遵循如下顺序：Activity -&gt; Window -&gt; View，即事件总是先传递给 Activity，Activity 再传递给 Window，最后 Window 再传递给顶级 View。顶级 View 接收到事件后就会按照事件分发机制去分发事件。</li>
+<li>ViewGroup 默认不拦截任何事件，即 ViewGroup 的 onInterceptTouchEvent() 方法默认返回false。</li>
+<li>View 的 onTouchEvent() 默认都会处理事件（返回 true）。</li>
+<li>子 View 可以通过 requestDisallowInterceptTouchEvent() 方法干预父 View 的事件分发过程，ACTION_DOWN 事件除外。</li>
+</ol>
+<h2 id="滑动冲突"><a href="#滑动冲突" class="headerlink" title="滑动冲突"></a>滑动冲突</h2><p>在界面中只要内外两层同时可以滑动，这个时候就会产生滑动冲突。常见的滑动冲突场景可以简单的分为以下三种：</p>
+<blockquote>
+<ol>
+<li>外部滑动方向和内部滑动方向不一致；</li>
+<li>外部滑动方向和内部滑动方向一致；</li>
+<li>上面两种情况的嵌套。</li>
+</ol>
+</blockquote>
+<p><strong>场景一：</strong> 主要是 ViewPager 和 Fragment 配合使用所组成的页面滑动效果。在这种效果中可以通过 ViewPager 提供的左右滑动来切换页面，而每个页面内部往往又是一个 RecyclerView。按说这种效果是会出现滑动冲突的，但却不用我们去处理，原因是 ViewPager 内部已经处理了滑动冲突，所以我们使用的时候无须关注这个问题。</p>
+<p><strong>场景二：</strong> 如果在一个 ScrollView 中嵌套一个 RecyclerView，那么内外两层都在同一个方向可以滑动，当手指开始滑动的时候就会出现问题，因为系统不知道我们想要滑动的是哪一层。同理，如果内外两层都可以在左右方向滑动也会出现这种情况。</p>
+<p><strong>场景三：</strong> 场景三是场景一和场景二两种情况的嵌套，这种情况更为复杂。</p>
+<p>比较常见的滑动冲突就是上面那三种，那么该怎么来解决呢？其实可以根据滑动类型是水平滑动还是竖直滑动来判断由谁来拦截事件。至于如何判断滑动类型就有比较多的方式了：可以依据滑动路径和水平方向所形成的夹角；也可以依据水平方向和竖直方向上的距离差来判断 … 。</p>
+<p>滑动类型已经确定了，接下来就是确定滑动的接收者，究竟是谁来响应这个滑动类型？下面介绍两种具体的解决方法：</p>
+<h3 id="外部拦截"><a href="#外部拦截" class="headerlink" title="外部拦截"></a>外部拦截</h3><p>所谓外部拦截就是指点击事件都先经过父容器的拦截处理，如果父容器需要该事件就拦截，否则就不拦截而是交给子容器。外部拦截需要重写父容器的 onInterceptTouchEvent() 方法，在内部做响应的拦截即可。这种方法的伪代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">oonInterceptTouchEvent</span><span class="params">(MotionEvent event)</span> </span>&#123;</div><div class="line">  <span class="keyword">boolean</span> intercepted = <span class="keyword">false</span>;</div><div class="line">  <span class="keyword">int</span> x = (<span class="keyword">int</span>) event.getX();</div><div class="line">  <span class="keyword">int</span> y = (<span class="keyword">int</span>) event.getY();</div><div class="line">  <span class="keyword">switch</span> (event.getAction()) &#123;</div><div class="line">    <span class="keyword">case</span> MotionEvent.ACTION_DOWN:</div><div class="line">      intercepted = <span class="keyword">false</span>;</div><div class="line">      <span class="keyword">break</span>;</div><div class="line">    <span class="keyword">case</span> MotionEvent.ACTION_MOVE:</div><div class="line">      <span class="keyword">if</span> (父容器需要当前点击事件) &#123;</div><div class="line">        intercepted = <span class="keyword">true</span>;</div><div class="line">      &#125; <span class="keyword">else</span> &#123;</div><div class="line">        intercepted = <span class="keyword">false</span>;</div><div class="line">      &#125;</div><div class="line">      <span class="keyword">break</span>;</div><div class="line">    <span class="keyword">case</span> MotionEvent.ACTION_UP:</div><div class="line">      intercepted = <span class="keyword">false</span>;</div><div class="line">      <span class="keyword">break</span>;</div><div class="line">    <span class="keyword">default</span> :</div><div class="line">      <span class="keyword">break</span>;</div><div class="line">  &#125;</div><div class="line">  mLastXIntercept = x;</div><div class="line">  mLastYIntercept = y;</div><div class="line">  <span class="keyword">return</span> intercepted;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在 onInterceptTouchEvent() 方法中，首先是 ACTION_DOWN 事件，父容器必须返回 false，即不拦截 ACTION_DOWN 事件，这是因为一旦父容器拦截了 ACTION_DOWN 事件，那么后续的 ACTION_MOVE 和 ACTION_UP 事件都会直接交由父容器处理，此时事件就不能传递给子元素了；其次是 ACTION_MOVE 事件，这个事件可以根据需要来决定是否拦截，如果父容器需要拦截就返回 true，否则就返回 false；最后是 ACTION_UP 事件，这里必须返回 false，因为 ACTION_UP 事件本身没有太多意义。</p>
+<h3 id="内部拦截"><a href="#内部拦截" class="headerlink" title="内部拦截"></a>内部拦截</h3><p>内部拦截是指父容器默认不拦截任何事件，所有的事件都传递给子元素，如果子元素需要此事件就直接消耗处理掉，否则就返回给父容器进行处理。这种方法和外部拦截刚好相反，需要配合 requestDisallowInterceptTouchEvent() 方法才能正常工作，此时需要重写子元素的 dispatchTouchEvent() 方法。伪代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">dispatchTouchEvent</span><span class="params">(MotionEvent event)</span> </span>&#123;</div><div class="line">  <span class="keyword">int</span> x = (<span class="keyword">int</span>) event.getX();</div><div class="line">  <span class="keyword">int</span> y = (<span class="keyword">int</span>) event.getY();</div><div class="line">  <span class="keyword">switch</span> (event.getAction) &#123;</div><div class="line">    <span class="keyword">case</span> MotionEvent.ACTION_DOWN:</div><div class="line">      parent.requestDisallowInterceptTouchEvent(<span class="keyword">true</span>);</div><div class="line">      <span class="keyword">break</span>;</div><div class="line">    <span class="keyword">case</span> MotinEvent.ACTION_MOVE:</div><div class="line">      <span class="keyword">int</span> deltaX = x - mLastX;</div><div class="line">      <span class="keyword">int</span> deltaY = y - mLastY;</div><div class="line">      <span class="keyword">if</span> (父容器需要此类点击事件) &#123;</div><div class="line">        parent.requestDisallowInterceptTouchEvent(<span class="keyword">false</span>);</div><div class="line">      &#125;</div><div class="line">      <span class="keyword">break</span>;</div><div class="line">    <span class="keyword">case</span> MotionEvent.ACTION_UP:</div><div class="line">      <span class="keyword">break</span>;</div><div class="line">    <span class="keyword">default</span> :</div><div class="line">      <span class="keyword">break</span>;</div><div class="line">  &#125;</div><div class="line">  mLastX = x;</div><div class="line">  mLastY = y;</div><div class="line">  <span class="keyword">return</span> <span class="keyword">super</span>.dispatchTouchEvent(event);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>使用内部拦截除了需要对子元素进行修改以外，父元素也要修改为拦截除了 ACTION_DOWN 以外的其他事件。事件父元素所做的修改如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onInterceptTouchEvent</span><span class="params">(MotionEvent event)</span> </span>&#123;</div><div class="line">  <span class="keyword">int</span> action = event.getAction();</div><div class="line">  <span class="keyword">if</span> (action == MotionEvent.ACTION_DOWN) &#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">  &#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>为什么父元素不能拦截 ACTION_DOWN 事件呢？那是因为通过 requestDisallowInterceptTouchEvent() 方法会自动设置一个 FLAG_DISALLOW_INTERCEPT 标记，该标记会导致父元素无法拦截除了 ACTION_DOWN  以外的其他点击事件，而 ACTION_DOWN 事件会重置 FLAG_DISALLOW_INTERCEPT 标记，使之无效。</p>
+<p>目前所理解的 View 事件分发机制和滑动冲突就这么多了，只是一些理论概述，接下来还需要好好的实践一番才能进一步掌握，同时也才能发现一些细节上的问题。</p>
+
+    
+  </div>
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持我吧，谢谢🙏🙏</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/weixin.png" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/zhifubao.jpeg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2017/02/27/学习总结-- Android 多进程和 6 种 IPC 方式/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2017/04/06/学习总结-View-的工作流程/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'forsigner';
+    
+    var disqus_url = 'http://ljuns.cn/2017/03/10/学习总结-View-事件分发机制和滑动冲突/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//forsigner.disqus.com/count.js" async></script>
+
+
+
+    
+
+
+
+
+    
+  <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+<script>
+  var cloudTieConfig = {
+    url: document.location.href, 
+    sourceId: "",
+    productKey: "dd5e8365d08c44c2a5949cdee496b67b",
+    target: "cloud-tie-wrapper"
+  };
+</script>
+<script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

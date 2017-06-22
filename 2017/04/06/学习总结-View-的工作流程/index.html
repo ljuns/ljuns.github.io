@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>学习总结-- View 的工作流程 | 小山的技术小窝</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="View 的工作流程," />
+  
+
+  <meta name="description" content="对于新手来说，自定义 View 无疑是一重点难点(自己也还是菜鸟)，之前也尝试过一些自定义 View，虽然效果大概是那么回事，但是还是有很大的局限性，特别是现在回过头去看看，有些细节方面处理得并不够。因为一开始对 View 的认识并不够，缺乏根本上的认识。所以这次的总结分为 4 个点，都是在自定义 View 时需要注意并且自定义一个好的 View 不可或缺的知识点。">
+<meta name="keywords" content="View 的工作流程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="学习总结-- View 的工作流程">
+<meta property="og:url" content="http://ljuns.cn/2017/04/06/学习总结-View-的工作流程/index.html">
+<meta property="og:site_name" content="小山的技术小窝">
+<meta property="og:description" content="对于新手来说，自定义 View 无疑是一重点难点(自己也还是菜鸟)，之前也尝试过一些自定义 View，虽然效果大概是那么回事，但是还是有很大的局限性，特别是现在回过头去看看，有些细节方面处理得并不够。因为一开始对 View 的认识并不够，缺乏根本上的认识。所以这次的总结分为 4 个点，都是在自定义 View 时需要注意并且自定义一个好的 View 不可或缺的知识点。">
+<meta property="og:updated_time" content="2017-06-21T13:01:21.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="学习总结-- View 的工作流程">
+<meta name="twitter:description" content="对于新手来说，自定义 View 无疑是一重点难点(自己也还是菜鸟)，之前也尝试过一些自定义 View，虽然效果大概是那么回事，但是还是有很大的局限性，特别是现在回过头去看看，有些细节方面处理得并不够。因为一开始对 View 的认识并不够，缺乏根本上的认识。所以这次的总结分为 4 个点，都是在自定义 View 时需要注意并且自定义一个好的 View 不可或缺的知识点。">
+
+  
+
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">更多</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">更多</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#MeasureSpec"><span class="toc-text">MeasureSpec</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#measure"><span class="toc-text">measure</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-View-的-measure-过程"><span class="toc-text">1. View 的 measure 过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ViewGroup-的-measure-过程"><span class="toc-text">ViewGroup 的 measure 过程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#layout"><span class="toc-text">layout</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#draw"><span class="toc-text">draw</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-学习总结-View-的工作流程" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">学习总结-- View 的工作流程</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2017.04.06</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>小山的技术小窝</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/学习笔记/">学习笔记</a>
+  </span>
+
+
+
+      
+        <span>
+          <i class="icon-comment"></i>
+          <a href="https://ljuns.github.io/2017/04/06/学习总结-View-的工作流程/#disqus_thread"></a>
+        </span>
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>对于新手来说，自定义 View 无疑是一重点难点(自己也还是菜鸟)，之前也尝试过一些自定义 View，虽然效果大概是那么回事，但是还是有很大的局限性，特别是现在回过头去看看，有些细节方面处理得并不够。因为一开始对 View 的认识并不够，缺乏根本上的认识。所以这次的总结分为 4 个点，都是在自定义 View 时需要注意并且自定义一个好的 View 不可或缺的知识点。 </p>
+<a id="more"></a>
+<blockquote>
+<p>View 的工作流程主要是指 measure、layout、draw 这三大流程，即测量、布局和绘制，其中 measure 确定 View  的测量宽高，layout 确定 View 的最终宽高和四个顶点的位置，而 draw 则将 View 绘制到屏幕上。</p>
+</blockquote>
+<p>在说 View 的三大流程前先来个知识储备：MeasureSpec。MeasureSpec 是什么？它是一个短小精悍的类，通过它可以帮助我们进行测量 View。确切的说 MeasureSpec 在很大程度上决定了一个 View 的尺寸规格，但并不是绝对的，因为 View  的 MeasureSpec 的创建过程还受父容器的影响。</p>
+<h2 id="MeasureSpec"><a href="#MeasureSpec" class="headerlink" title="MeasureSpec"></a>MeasureSpec</h2><p>MeasureSpec 是一个 32 位的值，其中高 2 位为测量模式(即 specMode)，低 30 位为测量的大小(即 specSize)，在计算中使用位运算是为了提高和优化效率。</p>
+<p>specMode 分为以下三种：</p>
+<ul>
+<li><p>UNSPECIFIED</p>
+<p>这种情况时父容器不对 View 有任何限制，要多大给多大，一般用于系统内部。</p>
+</li>
+<li><p>EXACTLY</p>
+<p>精确值模式，当控件的 layout_width 属性和 layout_height 属性指定为确切的值或是 match_parent 的时候对应这种情况。</p>
+</li>
+<li><p>AT_MOST</p>
+<p>最大值模式，当控件的 layout_width 属性和 layout_height 属性指定为 wrap_content 时对应这种情况。</p>
+</li>
+</ul>
+<p>这里主要是了解三种测量模式分别对应哪些情况(其实是为了说明 EXACTLY 和 AT_MOST 对应的情况)，为接下来的讲述做准备。</p>
+<h2 id="measure"><a href="#measure" class="headerlink" title="measure"></a>measure</h2><p>measure 过程要分为单纯的 View 和 ViewGroup 两种情况来说，因为他们的内部实现不太一样。</p>
+<h3 id="1-View-的-measure-过程"><a href="#1-View-的-measure-过程" class="headerlink" title="1. View 的 measure 过程"></a>1. View 的 measure 过程</h3><p>View 的 measure() 方法是一个 final 类型的方法，子类不能重写此方法，而在 measure() 方法内部会调用 View 的 onMeasure() 方法，所以一般情况下自定义一个 View 都是重写 onMeasure() 方法。先看一下源码中 onMeasure() 方法的实现：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onMeasure</span><span class="params">(<span class="keyword">int</span> widthMeasureSpec, <span class="keyword">int</span> heightMeasureSpec)</span> </span>&#123;	</div><div class="line">     setMeasuredDimension(getDefaultSize(getSuggestedMinimumWidth(), widthMeasureSpec),                                                                                                           </div><div class="line">                          getDefaultSize(getSuggestedMinimumHeight(), heightMeasureSpec));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>onMeasure() 方法还是比较简洁的：setMeasureDimension() 方法是设置 View 宽\高的测量值，接下来再看看源码中 getDefaultSize() 方法的实现：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">getDefaultSize</span><span class="params">(<span class="keyword">int</span> size, <span class="keyword">int</span> measureSpec)</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> result = size;</div><div class="line">    <span class="keyword">int</span> specMode = MeasureSpec.getMode(measureSpec);</div><div class="line">    <span class="keyword">int</span> specSize = MeasureSpec.getSize(measureSpec);</div><div class="line"></div><div class="line">    <span class="keyword">switch</span> (specMode) &#123;</div><div class="line">        <span class="keyword">case</span> MeasureSpec.UNSPECIFIED:</div><div class="line">            result = size;</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        <span class="keyword">case</span> MeasureSpec.AT_MOST: <span class="comment">// wrap_content</span></div><div class="line">        <span class="keyword">case</span> MeasureSpec.EXACTLY: <span class="comment">// math_parent、确切的数值</span></div><div class="line">            result = specSize;</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> result;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>UNSPECIFIED 一般用于系统内部的测量过程，这里就不展开说了。所以 getDefaultSize() 方法可以简单的理解为：它的返回值就是 measureSpec 中的 specSize。</p>
+<p>从 getDefaultSize() 方法也可以看出当自定义控件设置为 wrap_content 和 match_parent 时效果是一样的，所以直接继承 View 的自定义控件需要重写 onMeasure() 方法，并且设置 wrap_content 时自身的大小。怎么解决呢？这里提供一个方案，在重写 onMeasure() 方法的时候处理：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onMeasure</span><span class="params">(<span class="keyword">int</span> widthMeasureSpec, <span class="keyword">int</span> heightMeasureSpec)</span> </span>&#123;</div><div class="line">    <span class="keyword">super</span>.onMeasure(widthMeasureSpec, heightMeasureSpec);</div><div class="line">    <span class="keyword">int</span> width = startMeasure(widthMeasureSpec);</div><div class="line">    <span class="keyword">int</span> height = startMeasure(heightMeasureSpec);</div><div class="line">    </div><div class="line">    setMeasuredDimension(width, height);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">startMeasure</span><span class="params">(<span class="keyword">int</span> spec)</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> result = <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> specSize = MeasureSpec.getSize(spec);</div><div class="line">    <span class="keyword">int</span> specMode = MeasureSpec.getMode(spec);</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (specMode == MeasureSpec.EXACTLY) &#123;</div><div class="line">        result = specSize;</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        result = <span class="number">200</span>;</div><div class="line">        <span class="keyword">if</span> (specMode == MeasureSpec.AT_MOST) &#123;</div><div class="line">            result = Math.min(result, specSize);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> result;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上述 startMeasure() 方法中的 200 这个数值不是固定的，随意给就好了。总的来说，startMeasure() 方法对 specMode 的三种模式都做了处理，这样在自定义控件中也可以使用 wrap_content 这个属性值了。</p>
+<h3 id="ViewGroup-的-measure-过程"><a href="#ViewGroup-的-measure-过程" class="headerlink" title="ViewGroup 的 measure 过程"></a>ViewGroup 的 measure 过程</h3><blockquote>
+<p>对于 ViewGroup 来说，除了完成自己的 measure 过程以外，还会遍历调用所有子元素的 measure() 方法，各个子元素再递归去执行这个过程。</p>
+</blockquote>
+<p>ViewGroup 是一个抽象类，没有重写 View 的 onMeasure() 方法，而是提供了一个 measureChildren() 方法，源码中的 measureChildren() 如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">measureChildren</span><span class="params">(<span class="keyword">int</span> widthMeasureSpec, <span class="keyword">int</span> heightMeasureSpec)</span> </span>&#123;</div><div class="line">       <span class="keyword">final</span> <span class="keyword">int</span> size = mChildrenCount;</div><div class="line">       <span class="keyword">final</span> View[] children = mChildren;</div><div class="line">       <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; size; ++i) &#123;</div><div class="line">           <span class="keyword">final</span> View child = children[i];</div><div class="line">           <span class="keyword">if</span> ((child.mViewFlags &amp; VISIBILITY_MASK) != GONE) &#123;</div><div class="line">               measureChild(child, widthMeasureSpec, heightMeasureSpec);</div><div class="line">           &#125;</div><div class="line">       &#125;</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<p>measureChildren() 方法中会遍历所有子元素，并对子元素进行 measure (上述代码中的 measureChild() 方法)。再来看看 measureChild() 方法的实现：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">measureChild</span><span class="params">(View child, <span class="keyword">int</span> parentWidthMeasureSpec,</span></span></div><div class="line">           <span class="keyword">int</span> parentHeightMeasureSpec) &#123;</div><div class="line">       <span class="keyword">final</span> LayoutParams lp = child.getLayoutParams();</div><div class="line">       <span class="keyword">final</span> <span class="keyword">int</span> childWidthMeasureSpec = getChildMeasureSpec(parentWidthMeasureSpec,</div><div class="line">               mPaddingLeft + mPaddingRight, lp.width);</div><div class="line">       <span class="keyword">final</span> <span class="keyword">int</span> childHeightMeasureSpec = getChildMeasureSpec(parentHeightMeasureSpec,</div><div class="line">               mPaddingTop + mPaddingBottom, lp.height);</div><div class="line">       child.measure(childWidthMeasureSpec, childHeightMeasureSpec);</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<p>这个方法也还是比较好理解的，首先是取出子元素的 LayoutParams，然后再通过 getChildMeasureSpec() 方法来创建子元素的 MeasureSpec，最后将 MeasureSpec 直接传递给 View 的 measure() 方法进行测量，那么就是上面说过的 View 的 measure 过程了。</p>
+<p>在某些情况下，系统可能需要多次 measure 才能确定最终的测量宽高，所以可以在 onLayout() 方法中通过 getMeasureWidth() \ getMeasureHeight() 去获取 View 测量后的宽高，此时获取到的值是准确的。</p>
+<h2 id="layout"><a href="#layout" class="headerlink" title="layout"></a>layout</h2><p>layout 的作用是 ViewGroup 用来确定子元素的位置，当 ViewGroup 的位置被确定后，ViewGroup 在 onLayout() 方法中会遍历所有的子元素并调用子元素的 layout() 方法，在子元素的 layout() 方法中子元素的 onLayout() 方法又会被调用。</p>
+<p>ViewGroup 的位置是怎么确定的呢？其实在 ViewGroup 的 layout() 方法中会通过 super.layout() 来调用父类 View 的 layout() 方法，所以 ViewGroup 位置确定的具体实现是在 View 的 layout() 中，先来看看 View 的 layout() 方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@SuppressWarnings</span>(&#123;<span class="string">"unchecked"</span>&#125;)</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">layout</span><span class="params">(<span class="keyword">int</span> l, <span class="keyword">int</span> t, <span class="keyword">int</span> r, <span class="keyword">int</span> b)</span> </span>&#123;</div><div class="line">    ...</div><div class="line">      <span class="keyword">boolean</span> changed = isLayoutModeOptical(mParent) ?</div><div class="line">              setOpticalFrame(l, t, r, b) : setFrame(l, t, r, b);</div><div class="line"></div><div class="line">      <span class="keyword">if</span> (changed || (mPrivateFlags &amp; PFLAG_LAYOUT_REQUIRED) == PFLAG_LAYOUT_REQUIRED) &#123;</div><div class="line">          onLayout(changed, l, t, r, b);</div><div class="line">          mPrivateFlags &amp;= ~PFLAG_LAYOUT_REQUIRED;</div><div class="line"></div><div class="line">          ListenerInfo li = mListenerInfo;</div><div class="line">          <span class="keyword">if</span> (li != <span class="keyword">null</span> &amp;&amp; li.mOnLayoutChangeListeners != <span class="keyword">null</span>) &#123;</div><div class="line">              ArrayList&lt;OnLayoutChangeListener&gt; listenersCopy =</div><div class="line">              (ArrayList&lt;OnLayoutChangeListener&gt;)li.mOnLayoutChangeListeners.clone();</div><div class="line">              <span class="keyword">int</span> numListeners = listenersCopy.size();</div><div class="line">              <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; numListeners; ++i) &#123;</div><div class="line">                  listenersCopy.get(i)</div><div class="line">                    .onLayoutChange(<span class="keyword">this</span>, l, t, r, b, oldL, oldT, oldR, oldB);</div><div class="line">              &#125;</div><div class="line">          &#125;</div><div class="line">      &#125;</div><div class="line">...       </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上述方法省略了一些无关代码，在该方法中出现了 setOpticalFrame() 和 setFrame() 这两个方法，它们又是干什么的呢？其实 setOpticalFrame() 内部也是调用了 setFrame() 方法的，那就看看 setFrame() 方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">  <span class="function"><span class="keyword">protected</span> <span class="keyword">boolean</span> <span class="title">setFrame</span><span class="params">(<span class="keyword">int</span> left, <span class="keyword">int</span> top, <span class="keyword">int</span> right, <span class="keyword">int</span> bottom)</span> </span>&#123;</div><div class="line">      ...</div><div class="line">          mLeft = left;</div><div class="line">          mTop = top;</div><div class="line">          mRight = right;</div><div class="line">          mBottom = bottom;</div><div class="line">...</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<p>这里 setFrame() 方法只给出了主要代码，它的主要作用也就是初始化 mLeft、mTop、mRight、mBottom 这四个值。</p>
+<p>所以 View 的 layout() 方法可以简单理解为：首先是通过 setFrame() 方法来设定 View ( ViewGroup ) 的四个顶点的位置，也就是在此时确定了 ViewGroup 的位置；然后再调用 onLayout() 方法，这个方法是用来确定子元素的位置。</p>
+<p>由于 View 的 onLayout() 方法是个空方法，所以找 Veiw 的子类 LinearLayout ( RelativeLayout 也可以) 的 onLayout() 方法来看看：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onLayout</span><span class="params">(<span class="keyword">boolean</span> changed, <span class="keyword">int</span> l, <span class="keyword">int</span> t, <span class="keyword">int</span> r, <span class="keyword">int</span> b)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (mOrientation == VERTICAL) &#123;</div><div class="line">        layoutVertical(l, t, r, b);</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        layoutHorizontal(l, t, r, b);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这个 onLayout() 方法很简洁，接下来选择 layoutVertical() 方法继续往下走：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">  <span class="function"><span class="keyword">void</span> <span class="title">layoutVertical</span><span class="params">(<span class="keyword">int</span> left, <span class="keyword">int</span> top, <span class="keyword">int</span> right, <span class="keyword">int</span> bottom)</span> </span>&#123;</div><div class="line">      ...</div><div class="line">      <span class="keyword">final</span> <span class="keyword">int</span> count = getVirtualChildCount();</div><div class="line">...</div><div class="line">      <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; count; i++) &#123;</div><div class="line">          <span class="keyword">final</span> View child = getVirtualChildAt(i);</div><div class="line">          <span class="keyword">if</span> (child == <span class="keyword">null</span>) &#123;</div><div class="line">              childTop += measureNullChild(i);</div><div class="line">          &#125; <span class="keyword">else</span> <span class="keyword">if</span> (child.getVisibility() != GONE) &#123;</div><div class="line">              <span class="keyword">final</span> <span class="keyword">int</span> childWidth = child.getMeasuredWidth();</div><div class="line">              <span class="keyword">final</span> <span class="keyword">int</span> childHeight = child.getMeasuredHeight();           </div><div class="line">              <span class="keyword">final</span> LinearLayout.LayoutParams lp =</div><div class="line">                      (LinearLayout.LayoutParams) child.getLayoutParams();</div><div class="line">              ...</div><div class="line">              setChildFrame(child, childLeft, childTop + getLocationOffset(child),</div><div class="line">                      childWidth, childHeight);</div><div class="line">            	...</div><div class="line">          &#125;</div><div class="line">      &#125;</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<p>layoutVertical() 只给出了主要代码，它的主要作用就是遍历所有子元素并通过 getMeasuredWidth() 和 getMeasuredHeight() 方法拿到子元素的测量宽高，最后再调用 setChildFrame() 来为子元素指定位置。setChildFrame() 方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">setChildFrame</span><span class="params">(View child, <span class="keyword">int</span> left, <span class="keyword">int</span> top, <span class="keyword">int</span> width, <span class="keyword">int</span> height)</span> </span>&#123;        </div><div class="line">    child.layout(left, top, left + width, top + height);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>setChildFrame() 方法仅仅是调用子元素的 layout() 方法而已，这样父元素在 layout() 方法中确定自己的位置后就通过 onLayout() 方法去调用子元素的 layout() 方法，子元素又会通过 layout() 方法确定自己的位置。这样一层一层地传递下去就完成了整个 View 树的 layout 过程。 </p>
+<h2 id="draw"><a href="#draw" class="headerlink" title="draw"></a>draw</h2><p>相对来说，draw 的过程就比较简单了，它的作用是将 View 绘制到屏幕上。先来看看 draw() 方法的实现：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@CallSuper</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">draw</span><span class="params">(Canvas canvas)</span> </span>&#123;</div><div class="line">    <span class="keyword">final</span> <span class="keyword">int</span> privateFlags = mPrivateFlags;</div><div class="line">    <span class="keyword">final</span> <span class="keyword">boolean</span> dirtyOpaque = </div><div class="line">      (privateFlags &amp; PFLAG_DIRTY_MASK) == PFLAG_DIRTY_OPAQUE &amp;&amp; </div><div class="line">      (mAttachInfo == <span class="keyword">null</span> || !mAttachInfo.mIgnoreDirtyState);</div><div class="line">    mPrivateFlags = (privateFlags &amp; ~PFLAG_DIRTY_MASK) | PFLAG_DRAWN;</div><div class="line"></div><div class="line">    <span class="comment">/*</span></div><div class="line">     * Draw traversal performs several drawing steps which must be executed</div><div class="line">     * in the appropriate order:</div><div class="line">     *</div><div class="line">     *      1. Draw the background</div><div class="line">     *      2. If necessary, save the canvas' layers to prepare for fading</div><div class="line">     *      3. Draw view's content</div><div class="line">     *      4. Draw children</div><div class="line">     *      5. If necessary, draw the fading edges and restore layers</div><div class="line">     *      6. Draw decorations (scrollbars for instance)</div><div class="line">     */</div><div class="line"></div><div class="line">    <span class="comment">// Step 1, draw the background, if needed</span></div><div class="line">    <span class="keyword">int</span> saveCount;</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (!dirtyOpaque) &#123;</div><div class="line">        drawBackground(canvas);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// skip step 2 &amp; 5 if possible (common case)</span></div><div class="line">    <span class="keyword">final</span> <span class="keyword">int</span> viewFlags = mViewFlags;</div><div class="line">    <span class="keyword">boolean</span> horizontalEdges = (viewFlags &amp; FADING_EDGE_HORIZONTAL) != <span class="number">0</span>;</div><div class="line">    <span class="keyword">boolean</span> verticalEdges = (viewFlags &amp; FADING_EDGE_VERTICAL) != <span class="number">0</span>;</div><div class="line">    <span class="keyword">if</span> (!verticalEdges &amp;&amp; !horizontalEdges) &#123;</div><div class="line">        <span class="comment">// Step 3, draw the content</span></div><div class="line">        <span class="keyword">if</span> (!dirtyOpaque) onDraw(canvas);</div><div class="line"></div><div class="line">        <span class="comment">// Step 4, draw the children</span></div><div class="line">        dispatchDraw(canvas);</div><div class="line"></div><div class="line">        <span class="comment">// Overlay is part of the content and draws beneath Foreground</span></div><div class="line">        <span class="keyword">if</span> (mOverlay != <span class="keyword">null</span> &amp;&amp; !mOverlay.isEmpty()) &#123;</div><div class="line">            mOverlay.getOverlayView().dispatchDraw(canvas);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">// Step 6, draw decorations (foreground, scrollbars)</span></div><div class="line">        onDrawForeground(canvas);</div><div class="line"></div><div class="line">        <span class="comment">// we're done...</span></div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    &#125;</div><div class="line">  ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>通过 View 的 draw() 方法可以明显的看出它有 6 个步骤，其中步骤 2 和步骤 5 可能会被跳过，所以主要看剩下的 4 个：</p>
+<ol>
+<li>绘制背景：drawBackground(canvas)；</li>
+<li>绘制自己：onDraw(canvas);</li>
+<li>绘制 children：dispatchDraw(canvas);</li>
+<li>绘制装饰器，比如 scrollBar：onDrawForeground(canvas);</li>
+</ol>
+<p>View 绘制流程的传递是通过 dispatchDraw() 方法来实现的，dispatchDraw() 方法会遍历调用所有子元素的 draw() 方法，这样 draw 过程就一层一层地传递下去了。</p>
+<p>到这里，View 的整个工作流程就差不多了，从 measure 到 layout 再到 draw，每个过程都会去遍历调用子元素相对应的方法来完成工作，从而完成一整个 View 的工作。</p>
+
+    
+  </div>
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持我吧，谢谢🙏🙏</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/weixin.png" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/zhifubao.jpeg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2017/03/10/学习总结-View-事件分发机制和滑动冲突/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2017/04/19/学习总结-Android-消息机制各个击破/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'forsigner';
+    
+    var disqus_url = 'http://ljuns.cn/2017/04/06/学习总结-View-的工作流程/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//forsigner.disqus.com/count.js" async></script>
+
+
+
+    
+
+
+
+
+    
+  <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+<script>
+  var cloudTieConfig = {
+    url: document.location.href, 
+    sourceId: "",
+    productKey: "dd5e8365d08c44c2a5949cdee496b67b",
+    target: "cloud-tie-wrapper"
+  };
+</script>
+<script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

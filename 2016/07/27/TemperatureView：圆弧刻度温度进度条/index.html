@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>TemperatureView：圆弧刻度温度进度条 | 小山的技术小窝</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="自定义 View," />
+  
+
+  <meta name="description" content="TemperatureView: 这是一个自定义 View ，用来显示温度的变化过程。前段时间公司要做一个实时监测机房温度的应用，现在把这个温度变化的 View 拿出来，自己对自定义 View 这方面的应用还不是很熟悉，这里也算是对自己工作的一个小总结。二话不说，先上个效果图：">
+<meta name="keywords" content="自定义 View">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TemperatureView：圆弧刻度温度进度条">
+<meta property="og:url" content="http://ljuns.cn/2016/07/27/TemperatureView：圆弧刻度温度进度条/index.html">
+<meta property="og:site_name" content="小山的技术小窝">
+<meta property="og:description" content="TemperatureView: 这是一个自定义 View ，用来显示温度的变化过程。前段时间公司要做一个实时监测机房温度的应用，现在把这个温度变化的 View 拿出来，自己对自定义 View 这方面的应用还不是很熟悉，这里也算是对自己工作的一个小总结。二话不说，先上个效果图：">
+<meta property="og:image" content="http://oaydqd1yy.bkt.clouddn.com/gif/temp.gif">
+<meta property="og:image" content="http://oaydqd1yy.bkt.clouddn.com/png/temp_1.png">
+<meta property="og:updated_time" content="2017-06-03T13:24:46.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="TemperatureView：圆弧刻度温度进度条">
+<meta name="twitter:description" content="TemperatureView: 这是一个自定义 View ，用来显示温度的变化过程。前段时间公司要做一个实时监测机房温度的应用，现在把这个温度变化的 View 拿出来，自己对自定义 View 这方面的应用还不是很熟悉，这里也算是对自己工作的一个小总结。二话不说，先上个效果图：">
+<meta name="twitter:image" content="http://oaydqd1yy.bkt.clouddn.com/gif/temp.gif">
+
+  
+
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">更多</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">更多</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#背景圆-可有可无，全凭个人喜欢"><span class="toc-text">背景圆(可有可无，全凭个人喜欢)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#进度弧"><span class="toc-text">进度弧</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#进度弧上的文字（正常，预警，警告）"><span class="toc-text">进度弧上的文字（正常，预警，警告）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#刻度弧（紧靠着进度弧内侧的黑色弧）"><span class="toc-text">刻度弧（紧靠着进度弧内侧的黑色弧）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#刻度"><span class="toc-text">刻度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#中间的圆"><span class="toc-text">中间的圆</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#指针"><span class="toc-text">指针</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#当前温度"><span class="toc-text">当前温度</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-TemperatureView：圆弧刻度温度进度条" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">TemperatureView：圆弧刻度温度进度条</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2016.07.27</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>小山的技术小窝</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/自定义-View/">自定义 View</a>
+  </span>
+
+
+
+      
+        <span>
+          <i class="icon-comment"></i>
+          <a href="https://ljuns.github.io/2016/07/27/TemperatureView：圆弧刻度温度进度条/#disqus_thread"></a>
+        </span>
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>TemperatureView: 这是一个自定义 View ，用来显示温度的变化过程。前段时间公司要做一个实时监测机房温度的应用，现在把这个温度变化的 View 拿出来，自己对自定义 View 这方面的应用还不是很熟悉，这里也算是对自己工作的一个小总结。<br>二话不说，先上个效果图：<br><br><img src="http://oaydqd1yy.bkt.clouddn.com/gif/temp.gif" alt=""><br><a id="more"></a><br>当然，正常室温变化是没有这么快的，再来张截图：<br><br><img src="http://oaydqd1yy.bkt.clouddn.com/png/temp_1.png" alt=""><br>下面来说说这个过程，首先可以将它分为几个部分，分别为：<br>1、整个背景圆（可有可无）<br>2、进度弧（分为三段，颜色分别为绿黄红）<br>3、进度弧上的文字（正常，预警，警告）<br>4、刻度弧（紧靠着进度弧内侧的黑色弧）<br>5、刻度<br>6、中间的圆<br>7、指针<br>8、当前温度<br>那些自定义属性就不多说了，下面直接是绘制的过程（在此之前需要对绘制过程所用到的相关类有一定的了解）。</p>
+<h3 id="背景圆-可有可无，全凭个人喜欢"><a href="#背景圆-可有可无，全凭个人喜欢" class="headerlink" title="背景圆(可有可无，全凭个人喜欢)"></a>背景圆(可有可无，全凭个人喜欢)</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * 背景圆</div><div class="line"> * <span class="doctag">@param</span> canvas</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">drawOutCircle</span><span class="params">(Canvas canvas)</span> </span>&#123;</div><div class="line">  <span class="comment">// 已经将画布移到中心，所以圆心为（0,0）</span></div><div class="line">  canvas.drawCircle(<span class="number">0</span>, <span class="number">0</span>, mSize /<span class="number">2</span>-dp2px(<span class="number">1</span>), outCirclePaint);</div><div class="line">  canvas.save();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>mSize:是控件的大小，mSize /2-dp2px(1):是让这个背景圆和控件有点距离。</p>
+<h3 id="进度弧"><a href="#进度弧" class="headerlink" title="进度弧"></a>进度弧</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * 进度弧</div><div class="line"> * <span class="doctag">@param</span> canvas</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">drawProgress</span><span class="params">(Canvas canvas)</span> </span>&#123;</div><div class="line">  <span class="comment">// dp2px(10):留一点位置（可有可无）</span></div><div class="line">  progressRadius = mSize /<span class="number">2</span> - dp2px(<span class="number">10</span>);</div><div class="line">  canvas.save();</div><div class="line">  RectF rectF = <span class="keyword">new</span> RectF(-progressRadius, -progressRadius, progressRadius, progressRadius);</div><div class="line">  <span class="comment">// 设置为圆角</span></div><div class="line">  progressPaint.setStrokeCap(Paint.Cap.ROUND);</div><div class="line">  progressPaint.setColor(Color.GREEN);</div><div class="line">  <span class="comment">// 从150度位置开始，经过120度</span></div><div class="line">  canvas.drawArc(rectF, <span class="number">150</span>, <span class="number">120</span>, <span class="keyword">false</span>, progressPaint);</div><div class="line">  progressPaint.setColor(Color.RED);</div><div class="line">  progressPaint.setStrokeCap(Paint.Cap.ROUND);</div><div class="line">  canvas.drawArc(rectF, <span class="number">330</span>, <span class="number">60</span>, <span class="keyword">false</span>, progressPaint);</div><div class="line">  progressPaint.setColor(Color.YELLOW);</div><div class="line">  progressPaint.setStrokeCap(Paint.Cap.BUTT);</div><div class="line">  canvas.drawArc(rectF, <span class="number">270</span>, <span class="number">60</span>, <span class="keyword">false</span>, progressPaint);</div><div class="line">  canvas.restore();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>整个进度弧是从150度的位置开始到30度为止，也就是说整个进度弧所占的角度为240度。将它分为40份（也就是最高40度的意思），所以刚好每份是6度。<br>给出的效果图中进度弧是<strong>绿黄红</strong>的，在这里的绘制顺序却是<strong>绿红黄</strong>，这是因为我想要将进度弧的两端（绿和红）设置为圆角，而黄色与绿色和红色的衔接处为直角。如果在这里的 Paint 只是设置为 <strong>Paint.Cap.ROUND</strong> ，那么中间黄色部分和红绿的衔接处也是圆角的；如果按照绿黄红的顺序来绘制，那么黄色和红色衔接处是圆角的，而绿色和黄色衔接处是直角的。其实很简单，如果理解不了就动手试一下，保证瞬间明了。</p>
+<h3 id="进度弧上的文字（正常，预警，警告）"><a href="#进度弧上的文字（正常，预警，警告）" class="headerlink" title="进度弧上的文字（正常，预警，警告）"></a>进度弧上的文字（正常，预警，警告）</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * 进度弧上的文字</div><div class="line"> * <span class="doctag">@param</span> canvas</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">drawProgressText</span><span class="params">(Canvas canvas)</span> </span>&#123;</div><div class="line">    canvas.save();</div><div class="line">    String normal = <span class="string">"正常"</span>;</div><div class="line">    String warn = <span class="string">"预警"</span>;</div><div class="line">    String danger = <span class="string">"警告"</span>;</div><div class="line">    <span class="comment">// 因为文字在进度弧上，所以要旋转一定的角度</span></div><div class="line">    canvas.rotate(-<span class="number">60</span>, <span class="number">0</span>, <span class="number">0</span>);</div><div class="line">    progressTextPaint.setTextSize(sp2px(<span class="number">12</span>));</div><div class="line">    canvas.drawText(normal, -dp2px(<span class="number">12</span>), -scaleArcRadius - dp2px(<span class="number">4</span>), progressTextPaint);</div><div class="line">    canvas.rotate(<span class="number">90</span>, <span class="number">0</span>, <span class="number">0</span>);</div><div class="line">    canvas.drawText(warn, -dp2px(<span class="number">12</span>), -scaleArcRadius - dp2px(<span class="number">4</span>), progressTextPaint);</div><div class="line">    canvas.rotate(<span class="number">60</span>, <span class="number">0</span>, <span class="number">0</span>);</div><div class="line">    canvas.drawText(danger, -dp2px(<span class="number">12</span>), -scaleArcRadius - dp2px(<span class="number">4</span>), progressTextPaint);</div><div class="line">    canvas.rotate(-<span class="number">60</span>, <span class="number">0</span>, <span class="number">0</span>);</div><div class="line">    canvas.restore();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果直接 drawText ，那么绘制的文字是水平的，想要把文字绘制在进度弧上，得先旋转一定的角度。拿绿色这段弧来说：它占了120度，所以中间位置是60度，那么就需要旋转60度了。<br>有一点要注意的是，绿色这段弧在左边，所以要逆时针旋转60度（旋转角度为负数是逆时针，正数是顺时针）。第二段弧上的文字为什么旋转了90度呢？它只需要旋转30度就可以了啊？那是因为第一段弧时旋转了－60度（逆时针），而第二段是从第一段的基础上旋转过来的，所以需要顺时针旋转90度。</p>
+<h3 id="刻度弧（紧靠着进度弧内侧的黑色弧）"><a href="#刻度弧（紧靠着进度弧内侧的黑色弧）" class="headerlink" title="刻度弧（紧靠着进度弧内侧的黑色弧）"></a>刻度弧（紧靠着进度弧内侧的黑色弧）</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * 刻度弧</div><div class="line"> * <span class="doctag">@param</span> canvas</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">drawScaleArc</span><span class="params">(Canvas canvas)</span> </span>&#123;</div><div class="line">    <span class="comment">// 刻度弧紧靠进度弧</span></div><div class="line">    scaleArcRadius = mSize/<span class="number">2</span> - (dp2px(<span class="number">15</span>)+dp2px(PADDING)/<span class="number">4</span>);</div><div class="line">    canvas.save();</div><div class="line">    <span class="comment">// 画弧</span></div><div class="line">    RectF rectF = <span class="keyword">new</span> RectF(-scaleArcRadius, -scaleArcRadius,</div><div class="line">            scaleArcRadius, scaleArcRadius);</div><div class="line">    canvas.drawArc(rectF, <span class="number">150</span>, <span class="number">240</span>, <span class="keyword">false</span>, scaleArcPaint);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这里只是简单的画条弧，只要注意半径的把握就可以了。</p>
+<h3 id="刻度"><a href="#刻度" class="headerlink" title="刻度"></a>刻度</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">    <span class="comment">// 旋转的角度</span></div><div class="line">    <span class="keyword">float</span> mAngle = <span class="number">240f</span> / mTikeCount;</div><div class="line">    <span class="comment">// 画右半部分的刻度</span></div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= mTikeCount/<span class="number">2</span>; i++) &#123;</div><div class="line">        <span class="comment">// 5的倍数就画长刻度，并标上刻度值</span></div><div class="line">        <span class="keyword">if</span> (i % <span class="number">5</span> == <span class="number">0</span>) &#123;</div><div class="line">            scale = <span class="number">20</span> + i + <span class="string">""</span>;</div><div class="line">            panelTextPaint.setTextSize(sp2px(<span class="number">15</span>));</div><div class="line">            <span class="keyword">float</span> scaleWidth = panelTextPaint.measureText(scale);</div><div class="line">            canvas.drawLine(<span class="number">0</span>, -scaleArcRadius, <span class="number">0</span>, -scaleArcRadius+mLongTikeHeight, scalePaint);</div><div class="line">            canvas.drawText(scale, -scaleWidth/<span class="number">2</span>, -scaleArcRadius+mLongTikeHeight + dp2px(<span class="number">15</span>), panelTextPaint);</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            canvas.drawLine(<span class="number">0</span>, -scaleArcRadius, <span class="number">0</span>, -scaleArcRadius+ mShortTikeHeight, scalePaint);</div><div class="line">        &#125;</div><div class="line">        canvas.rotate(mAngle, <span class="number">0</span>, <span class="number">0</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="comment">// 画布回正</span></div><div class="line">    canvas.rotate(-mAngle * mTikeCount/<span class="number">2</span> - <span class="number">6</span>, <span class="number">0</span>, <span class="number">0</span>);</div><div class="line">    canvas.restore();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这里只给出了右半部分的刻度，左半部分类似。绘制时先是旋转角度（一共240度，分成40份，每次旋转6度），然后再画直线；画直线时还要判断如果是5的倍数，就画长一点，并且标上刻度值，就是那些0，5，10，15…<br>这里是右半部分，所以刻度值是从20开始，总共是20个刻度。最后要注意画布回正<br><strong>canvas.rotate(-mAngle * mTikeCount/2 - 6, 0, 0)</strong> 。</p>
+<h3 id="中间的圆"><a href="#中间的圆" class="headerlink" title="中间的圆"></a>中间的圆</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * 中心圆</div><div class="line"> * <span class="doctag">@param</span> canvas</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">drawInPoint</span><span class="params">(Canvas canvas)</span> </span>&#123;</div><div class="line">    canvas.save();</div><div class="line">    canvas.drawCircle(<span class="number">0</span>, <span class="number">0</span>, pointRadius, pointPaint);</div><div class="line">    canvas.restore();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这个圆是为了凸显接下来的指针更好看一些，这个圆的半径就自行选择咯。</p>
+<h3 id="指针"><a href="#指针" class="headerlink" title="指针"></a>指针</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * 指针（这里分为左右部分是为了画出来的指针有立体感）</div><div class="line"> * <span class="doctag">@param</span> canvas</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">drawPointer</span><span class="params">(Canvas canvas)</span> </span>&#123;</div><div class="line">    RectF rectF = <span class="keyword">new</span> RectF(-pointRadius/<span class="number">2</span>, -pointRadius/<span class="number">2</span>, pointRadius/<span class="number">2</span>, pointRadius/<span class="number">2</span>);</div><div class="line">    canvas.save();</div><div class="line">    <span class="comment">// 先将指针与刻度0位置对齐</span></div><div class="line">    canvas.rotate(<span class="number">60</span>, <span class="number">0</span>, <span class="number">0</span>);</div><div class="line">    <span class="keyword">float</span> angle = currentTemp * <span class="number">6.0f</span>;</div><div class="line">    canvas.rotate(angle, <span class="number">0</span>, <span class="number">0</span>);</div><div class="line">    <span class="comment">// 指针左半部分</span></div><div class="line">    Path leftPointerPath = <span class="keyword">new</span> Path();</div><div class="line">    leftPointerPath.moveTo(pointRadius/<span class="number">2</span>, <span class="number">0</span>);</div><div class="line">    leftPointerPath.addArc(rectF, <span class="number">0</span>, <span class="number">360</span>);</div><div class="line">    leftPointerPath.lineTo(<span class="number">0</span>, scaleArcRadius - mLongTikeHeight - dp2px(OFFSET) - dp2px(<span class="number">15</span>));</div><div class="line">    leftPointerPath.lineTo(-pointRadius/<span class="number">2</span>, <span class="number">0</span>);</div><div class="line">    leftPointerPath.close();</div><div class="line">    <span class="comment">// 指针右半部分</span></div><div class="line">    Path rightPointerPath = <span class="keyword">new</span> Path();</div><div class="line">    rightPointerPath.moveTo(-pointRadius/<span class="number">2</span>, <span class="number">0</span>);</div><div class="line">    rightPointerPath.addArc(rectF, <span class="number">0</span>, -<span class="number">180</span>);</div><div class="line">    rightPointerPath.lineTo(<span class="number">0</span>, scaleArcRadius - mLongTikeHeight - dp2px(OFFSET) - dp2px(<span class="number">15</span>));</div><div class="line">    rightPointerPath.lineTo(<span class="number">0</span>, pointRadius/<span class="number">2</span>);</div><div class="line">    rightPointerPath.close();</div><div class="line">    <span class="comment">// 指针的圆</span></div><div class="line">    Path circlePath = <span class="keyword">new</span> Path();</div><div class="line">    circlePath.addCircle(<span class="number">0</span>, <span class="number">0</span>, pointRadius/<span class="number">4</span>, Path.Direction.CW);</div><div class="line"></div><div class="line">    canvas.drawPath(leftPointerPath, leftPointerPaint);</div><div class="line">    canvas.drawPath(rightPointerPath, rightPointerPaint);</div><div class="line">    canvas.drawPath(circlePath, pointerCirclePaint);</div><div class="line">    canvas.restore();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>其实指针部分可以一次性绘制完，但是为了看起来有点立体感，就将它分为左右两部分，但是都是类似的。<br>就拿左半部分来说：首先将画笔移动到中心圆的边缘（ <strong>leftPointerPath.moveTo(pointRadius/2, 0)</strong> ），然后来个弧度是让指针的根部为弧形的，接下来是指针的长度（长度＝刻度弧的半径(scaleArcRadius) － 长刻度的长度(mLongTikeHeight) － 刻度值与刻度的间隔(dp2px(15)) － 尾部与刻度值的间隔(dp2px(OFFSET))），最后再将它们连接起来。<br>指针上的圆意思是指针根部灰色的小圆，这样看起来指针的根部是有个小洞的。<br>由于之前对这些 Path 的操作不怎么熟悉，所以在这里花的时间较多，而且指针这部分所占的篇幅也是蛮大的，因为难度也比较大嘛。<br>有兴趣的可以来这学习巩固下，这个系列都很给力:<a href="https://github.com/GcsSloop/AndroidNote/blob/master/CustomView/Advance/%5B5%5DPath_Basic.md" target="_blank" rel="external">安卓自定义 View 进阶 - Path 基础</a></p>
+<h3 id="当前温度"><a href="#当前温度" class="headerlink" title="当前温度"></a>当前温度</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * 表盘上的文字</div><div class="line"> * <span class="doctag">@param</span> canvas</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">drawPanelText</span><span class="params">(Canvas canvas)</span> </span>&#123;</div><div class="line">    canvas.save();</div><div class="line">    String text = <span class="string">"当前温度"</span>;</div><div class="line">    <span class="keyword">float</span> length = panelTextPaint.measureText(text);</div><div class="line">    panelTextPaint.setTextSize(sp2px(<span class="number">15</span>));</div><div class="line">    canvas.drawText(text, -length/<span class="number">2</span>, scaleArcRadius/<span class="number">2</span> + dp2px(<span class="number">20</span>), panelTextPaint);</div><div class="line">    String temp = currentTemp + <span class="string">" ℃"</span>;</div><div class="line">    panelTextPaint.setTextSize(sp2px(<span class="number">15</span>));</div><div class="line">    <span class="keyword">float</span> tempTextLength = panelTextPaint.measureText(temp);</div><div class="line">    canvas.drawText(temp, -tempTextLength/<span class="number">2</span>, scaleArcRadius, panelTextPaint);</div><div class="line">    canvas.restore();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这部分是表盘上显示的当前温度，首先是绘制<strong>“当前温度”</strong> 这四个字,然后在下方绘制具体的温度值，注意好文字的位置就可以了，没什么难的。<br>到这里绘制就结束了，整个表盘也就出来了。其实自定义一个 View 最重要的是把它拆分为几个部分，然后再一部分一部分的绘制出来，至于其中的某些计算部分就得靠自己的细心了，但是多试几次还是可以出来的。<br>篇幅有限，只是拿出一些关键的代码，有兴趣可以来这看看源码，随便 Star 、Fork <a href="https://github.com/ljuns/TemperatureView" target="_blank" rel="external">Github:https://github.com/ljuns/TemperatureView</a></p>
+
+    
+  </div>
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持我吧，谢谢🙏🙏</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/weixin.png" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/zhifubao.jpeg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="hide pull-left" href="/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2016/08/16/科大讯飞语音合成的引入/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'forsigner';
+    
+    var disqus_url = 'http://ljuns.cn/2016/07/27/TemperatureView：圆弧刻度温度进度条/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//forsigner.disqus.com/count.js" async></script>
+
+
+
+    
+
+
+
+
+    
+  <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+<script>
+  var cloudTieConfig = {
+    url: document.location.href, 
+    sourceId: "",
+    productKey: "dd5e8365d08c44c2a5949cdee496b67b",
+    target: "cloud-tie-wrapper"
+  };
+</script>
+<script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

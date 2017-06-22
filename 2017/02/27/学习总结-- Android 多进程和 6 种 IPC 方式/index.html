@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>学习总结-- Android 多进程和 6 种 IPC 方式 | 小山的技术小窝</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="IPC," />
+  
+
+  <meta name="description" content="之前对于 IPC 机制真的是完全懵逼啊，根本就不知道 IPC 是个什么东西，通过这些天的学习算是有了一定的了解，但也仅限于使用方式，对于原理的东西还是很懵逼的，所以先来个 IPC 方式的总结（对原理还没有理解透彻，这里只是用法的小结）。 IPC 是 Inter-Process Communication 的缩写，含义为进程间通信或者跨进程通信，是指两个进程之间进行数据交换的过程。在说到 IPC 之">
+<meta name="keywords" content="IPC">
+<meta property="og:type" content="article">
+<meta property="og:title" content="学习总结-- Android 多进程和 6 种 IPC 方式">
+<meta property="og:url" content="http://ljuns.cn/2017/02/27/学习总结-- Android 多进程和 6 种 IPC 方式/index.html">
+<meta property="og:site_name" content="小山的技术小窝">
+<meta property="og:description" content="之前对于 IPC 机制真的是完全懵逼啊，根本就不知道 IPC 是个什么东西，通过这些天的学习算是有了一定的了解，但也仅限于使用方式，对于原理的东西还是很懵逼的，所以先来个 IPC 方式的总结（对原理还没有理解透彻，这里只是用法的小结）。 IPC 是 Inter-Process Communication 的缩写，含义为进程间通信或者跨进程通信，是指两个进程之间进行数据交换的过程。在说到 IPC 之">
+<meta property="og:image" content="http://oaydqd1yy.bkt.clouddn.com/gif/Kapture%202017-03-02%20at%2015.56.29.gif">
+<meta property="og:updated_time" content="2017-06-03T13:24:46.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="学习总结-- Android 多进程和 6 种 IPC 方式">
+<meta name="twitter:description" content="之前对于 IPC 机制真的是完全懵逼啊，根本就不知道 IPC 是个什么东西，通过这些天的学习算是有了一定的了解，但也仅限于使用方式，对于原理的东西还是很懵逼的，所以先来个 IPC 方式的总结（对原理还没有理解透彻，这里只是用法的小结）。 IPC 是 Inter-Process Communication 的缩写，含义为进程间通信或者跨进程通信，是指两个进程之间进行数据交换的过程。在说到 IPC 之">
+<meta name="twitter:image" content="http://oaydqd1yy.bkt.clouddn.com/gif/Kapture%202017-03-02%20at%2015.56.29.gif">
+
+  
+
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">更多</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">更多</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Android-中的多进程模式"><span class="toc-text">Android 中的多进程模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#开启多进程模式"><span class="toc-text">开启多进程模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#多进程造成的问题"><span class="toc-text">多进程造成的问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Android-中的-IPC-方式"><span class="toc-text">Android 中的 IPC 方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用-Bundle"><span class="toc-text">使用 Bundle</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用文件共享"><span class="toc-text">使用文件共享</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用-Messenger"><span class="toc-text">使用 Messenger</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用-AIDL"><span class="toc-text">使用 AIDL</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用ContentProvider"><span class="toc-text">使用ContentProvider</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用-Socket"><span class="toc-text">使用 Socket</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IPC-方式比较"><span class="toc-text">IPC 方式比较</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-学习总结-- Android 多进程和 6 种 IPC 方式" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">学习总结-- Android 多进程和 6 种 IPC 方式</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2017.02.27</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>小山的技术小窝</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/学习笔记/">学习笔记</a>
+  </span>
+
+
+
+      
+        <span>
+          <i class="icon-comment"></i>
+          <a href="https://ljuns.github.io/2017/02/27/学习总结-- Android 多进程和 6 种 IPC 方式/#disqus_thread"></a>
+        </span>
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>之前对于 IPC 机制真的是完全懵逼啊，根本就不知道 IPC 是个什么东西，通过这些天的学习算是有了一定的了解，但也仅限于使用方式，对于原理的东西还是很懵逼的，所以先来个 IPC 方式的总结（对原理还没有理解透彻，这里只是用法的小结）。</p>
+<p>IPC 是 Inter-Process Communication 的缩写，含义为进程间通信或者跨进程通信，是指两个进程之间进行数据交换的过程。在说到 IPC 之前有必要简单介绍一下 Android 中的多进程模式。</p>
+<a id="more"></a>
+<h2 id="Android-中的多进程模式"><a href="#Android-中的多进程模式" class="headerlink" title="Android 中的多进程模式"></a>Android 中的多进程模式</h2><h3 id="开启多进程模式"><a href="#开启多进程模式" class="headerlink" title="开启多进程模式"></a>开启多进程模式</h3><p>在 Android 中使用多进程一般来说只有两种方法：给四大组件(Activity、Service、Receiver、ContentProvider)在 AndroidMenifest 中指定 android:process 属性；另一种非常规的方法是通过 JNI 在 native 层去 fork 一个新的进程，这种方法比较特殊，先不考虑。</p>
+<p>默认情况(也就是没有为某个组件指定 android:process 属性的情况)下，此时的进程名是包名。通常情况下，进程可以分为私有进程和全局进程：进程名以“：”开头的进程属于当前应用的私有进程，其他应用的组件不可以和它在同一个进程中；进程名不以“：”开头的进程属于全局进程，其他应用通过 ShareUID 方式可以和它在同一个进程中。</p>
+<h3 id="多进程造成的问题"><a href="#多进程造成的问题" class="headerlink" title="多进程造成的问题"></a>多进程造成的问题</h3><p>开启多进程很简单，通过为四大组件指定 android:process 属性即可，但是在实际开发中可能会遇到各种问题，总结如下：</p>
+<ol>
+<li>静态成员和单例模式完全失效；</li>
+<li>线程同步机制完全失效；</li>
+<li>SharedPreferences 的可靠性下降；</li>
+<li>Application 会多次创建。</li>
+</ol>
+<p>简单的分析一下出现这几个问题的原因，第 1 个问题：Android 为每个应用分配了一个独立的虚拟机，或者说为每个进程都分配了一个独立的虚拟机，不同的虚拟机在内存的分配上有不同的地址空间，这就导致在不同的虚拟机中访问同一个对象会产生多份副本。</p>
+<p>第 2 个问题本质上和第 1 个问题是类似的，既然不是同一块内存，那么不管锁对象还是锁全局类都无法保证线程同步，因为不同进程锁的不是同一个对象。</p>
+<p>第 3 个问题是因为 SharedPreferences 不支持两个进程同时去执行写操作，否则会导致一定几率的数据丢失，这是因为 SharedPreferences 底层是通过读\写 XML 文件来实现的。</p>
+<p>第 4 个问题：运行在同一个进程中的组件是属于同一个虚拟机和同一个 Application，也就是说运行在不同进程中的组件是属于两个不同的虚拟机和 Application 的。</p>
+<p>大概分析了下多进程带来的问题，接下来就要学习如何解决这些问题。</p>
+<h2 id="Android-中的-IPC-方式"><a href="#Android-中的-IPC-方式" class="headerlink" title="Android 中的 IPC 方式"></a>Android 中的 IPC 方式</h2><h3 id="使用-Bundle"><a href="#使用-Bundle" class="headerlink" title="使用 Bundle"></a>使用 Bundle</h3><p>四大组件中的三大组件（Activity、Service、Receiver）都支持在 Intent 中传递 Bundle 数据，由于 Bundle 实现了 Parcelable 接口，所以它可以方便地在不同的进程间传输。当在一个进程中启动另一个进程的 Activity 、Service 和 Receiver 时，可以在 Bundle 中附加需要传输给远程进程的信息，并通过 Intent 发送出去。</p>
+<p><strong>注意：传输的数据必须能够被序列化，比如基本类型、实现了 Parcelabel 接口的对象、实现了 Serializable 接口的对象以及一些 Android 支持的特殊对象</strong></p>
+<h3 id="使用文件共享"><a href="#使用文件共享" class="headerlink" title="使用文件共享"></a>使用文件共享</h3><p>共享文件也是一种不错的进程间通信方式，两个进程通过读\写同一个文件来交换数据，由于 Android 系统基于 Linux ，使得其并发读\写文件可以没有限制地进行。下面将模拟这么个例子：在 MainActivity 中序列化一个 User 对象到 sd 卡上，然后在 SecondActivity 中去反序列化。首先创建一个 User 类，并实现 Serializable 进行序列化(使用 Parcelable 进行序列化也是可以的)，如果不懂什么是序列化，自己 Google 去。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> <span class="keyword">implements</span> <span class="title">Serializable</span></span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">1L</span>;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> userId;</div><div class="line">    <span class="keyword">private</span> String userName;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> isMale;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">User</span><span class="params">(<span class="keyword">int</span> userId, String userName, <span class="keyword">boolean</span> isMale)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.userId = userId;</div><div class="line">        <span class="keyword">this</span>.userName = userName;</div><div class="line">        <span class="keyword">this</span>.isMale = isMale;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">   <span class="comment">// 以下省略 get()、set()、toString() 方法</span></div><div class="line">   ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>然后在 MainActivity 中进行保存(MyConstants.BASE_PATH：是 sd 卡的存储路径，<code>BASE_PATH = Environment.getExternalStorageDirectory()
+.getPath() + &quot;/ljuns/basepath/&quot;</code>)：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">persistToFile</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">            <span class="comment">// 创建基本目录</span></div><div class="line">            File dir = <span class="keyword">new</span> File(MyConstants.BASE_PATH);</div><div class="line">            <span class="keyword">if</span> (!dir.exists()) &#123;</div><div class="line">                <span class="comment">// 创建多级目录</span></div><div class="line">                dir.mkdirs();</div><div class="line">            &#125;</div><div class="line">            <span class="comment">// 文件存储目录</span></div><div class="line">            File cacheFile = <span class="keyword">new</span> File(MyConstants.CACHE_FILE_PATH);</div><div class="line">            <span class="keyword">try</span> &#123;</div><div class="line">                ObjectOutputStream out = <span class="keyword">new</span> ObjectOutputStream(</div><div class="line">                        <span class="keyword">new</span> FileOutputStream(cacheFile));</div><div class="line">                User user = <span class="keyword">new</span> User(<span class="number">1</span>, <span class="string">"ljuns"</span>, <span class="keyword">true</span>);</div><div class="line">                Log.d(<span class="string">"ljuns"</span>, <span class="string">"run1: "</span> + user.toString());</div><div class="line">                out.writeObject(user);</div><div class="line">            &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">                e.printStackTrace();</div><div class="line">            &#125; <span class="keyword">finally</span> &#123;</div><div class="line">                MyUtils.close(out);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;).start();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>最后在 SecondActivity 中恢复数据(<code>CACHE_FILE_PATH = BASE_PATH + &quot;usercache&quot;</code>)：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">recoverFromFile</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">            <span class="comment">// 文件存储路径</span></div><div class="line">            File cacheFile = <span class="keyword">new</span> File(MyConstants.CACHE_FILE_PATH);</div><div class="line">            <span class="keyword">if</span> (cacheFile.exists()) &#123;</div><div class="line">                <span class="keyword">try</span> &#123;</div><div class="line">                    ObjectInputStream in = <span class="keyword">new</span> ObjectInputStream(</div><div class="line">                            		<span class="keyword">new</span> FileInputStream(cacheFile));</div><div class="line">                    User user = (User) in.readObject();</div><div class="line">                    Log.d(<span class="string">"ljuns"</span>, <span class="string">"run2: "</span> + user.toString());</div><div class="line">                &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">                    e.printStackTrace();</div><div class="line">                &#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</div><div class="line">                    e.printStackTrace();</div><div class="line">                &#125; <span class="keyword">finally</span> &#123;</div><div class="line">                    MyUtils.close(in);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;).start();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>通过上面的步骤的运行结果可以发现两个 user 对象的内容是相同的，本质上还是两个对象。</p>
+<p><strong>还有一点需要注意:</strong></p>
+<blockquote>
+<p>SharedPreferences 是 Android 提供的轻量级存储方案，它通过键值对的方式来存储数据，在底层实现上采用了 XML 文件来存储键值对。从本质上来说 SharedPreferences 也属于文件的一种，但是由于系统对它的读\写有一定的缓存策略，即在内存中会有一份 SharedPreferences 文件的缓存，因此在多进程模式下系统对它的读\写就变得不可靠，当面对高并发的读\写有很大几率会丢失数据，所以不建议在进程间通信中使用 SharedPreferences 。</p>
+</blockquote>
+<h3 id="使用-Messenger"><a href="#使用-Messenger" class="headerlink" title="使用 Messenger"></a>使用 Messenger</h3><p>暂且不深究 Messenger 是个什么东东，只需知道可以通过它在不同进程中传递 Message 对象来实现数据的进程间传递。直接来看看它的用法：</p>
+<p>首先需要在服务端创建一个 Service 来处理客户端的连接请求，同时创建一个 Handler 对象用来接收客户端发送的消息，然后通过 Handler 对象创建一个 Messenger 对象，在 Service 的 onBind() 方法中返回这个 Messenger 对象底层的 Binder，客户端通过该 Messenger 给服务端发送消息。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MessengerService</span> <span class="keyword">extends</span> <span class="title">Service</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">MessengerHandler</span> <span class="keyword">extends</span> <span class="title">Handler</span> </span>&#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleMessage</span><span class="params">(Message msg)</span> </span>&#123;</div><div class="line">            <span class="keyword">switch</span> (msg.what) &#123;</div><div class="line">                <span class="keyword">case</span> <span class="number">0</span>:</div><div class="line">     				<span class="comment">// 接受客户端发送的消息</span></div><div class="line">                    Log.d(<span class="string">"ljuns"</span>, <span class="string">"service: "</span> + msg.getData().getString(<span class="string">"msg"</span>));</div><div class="line"></div><div class="line">                    <span class="comment">// 给客户端返回消息</span></div><div class="line">                    Messenger messenger = msg.replyTo;</div><div class="line">                    Message message = Message.obtain(<span class="keyword">null</span>, <span class="number">1</span>);</div><div class="line">                    Bundle bundle = <span class="keyword">new</span> Bundle();</div><div class="line">                    bundle.putString(<span class="string">"reply"</span>, <span class="string">"嗯，你的信息已收到"</span>);</div><div class="line">                    message.setData(bundle);</div><div class="line">                    <span class="keyword">try</span> &#123;</div><div class="line">                        messenger.send(message);</div><div class="line">                    &#125; <span class="keyword">catch</span> (RemoteException e) &#123;</div><div class="line">                        e.printStackTrace();</div><div class="line">                    &#125;</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                <span class="keyword">default</span>:</div><div class="line">                    <span class="keyword">super</span>.handleMessage(msg);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// 创建 Messenger 对象</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Messenger messenger = </div><div class="line">    							<span class="keyword">new</span> Messenger(<span class="keyword">new</span> MessengerHandler());</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> IBinder <span class="title">onBind</span><span class="params">(Intent intent)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> messenger.getBinder();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>服务端通过 <code>Messenger messenger = msg.replyTo</code> 取出客户端用来接收消息的 Messenger 对象，再通过该 Messenger 对象给客户端发送消息。为什么可以通过 <code>msg.replyTo</code> 获取到一个 Messenger 对象呢？那是因为在客户端中把一个接收消息的 Messenger 对象放入 Message 的 replyTo 参数中，所以才能在这通过 replyTo 参数取出来。</p>
+<p>不要忘了还需对这个 Service 进行注册，让其运行在单独的进程中：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">service</span></span></div><div class="line">    <span class="attr">android:name</span>=<span class="string">".messenger.MessengerService"</span></div><div class="line">    <span class="attr">android:process</span>=<span class="string">":remote"</span> /&gt;</div></pre></td></tr></table></figure>
+<p>客户端的实现：首先需要绑定远程进程的 MessengerService，绑定成功后根据返回的 binder 对象创建 Messenger 对象，该 Messenger 对象正是服务端用来接收消息的，在客户端中使用该 Messenger 对象向服务端发送消息。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MessengerActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> Messenger mMessenger;</div><div class="line">    <span class="keyword">private</span> Messenger mReplyMessenger = </div><div class="line">    						<span class="keyword">new</span> Messenger(<span class="keyword">new</span> MessengerHandler());</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 接收消息</div><div class="line">     */</div><div class="line">    <span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">MessengerHandler</span> <span class="keyword">extends</span> <span class="title">Handler</span> </span>&#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleMessage</span><span class="params">(Message msg)</span> </span>&#123;</div><div class="line">            <span class="keyword">switch</span> (msg.what) &#123;</div><div class="line">                <span class="keyword">case</span> <span class="number">1</span>:</div><div class="line">                    Log.d(<span class="string">"ljuns"</span>, <span class="string">"client: "</span> + msg.getData().getString(<span class="string">"reply"</span>));</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                <span class="keyword">default</span>:</div><div class="line">                    <span class="keyword">super</span>.handleMessage(msg);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 发送消息</div><div class="line">     */</div><div class="line">    <span class="keyword">private</span> ServiceConnection connection = <span class="keyword">new</span> ServiceConnection() &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onServiceConnected</span><span class="params">(ComponentName componentName, IBinder binder)</span> </span>&#123;</div><div class="line">            <span class="comment">// 创建 Messenger 对象</span></div><div class="line">            mMessenger = <span class="keyword">new</span> Messenger(binder);</div><div class="line">            Message msg = Message.obtain(<span class="keyword">null</span>,<span class="number">0</span>);</div><div class="line">            Bundle data = <span class="keyword">new</span> Bundle();</div><div class="line">            data.putString(<span class="string">"msg"</span>, <span class="string">"Hello, this is client"</span>);</div><div class="line">            msg.setData(data);</div><div class="line"></div><div class="line">            msg.replyTo = mReplyMessenger;</div><div class="line">            <span class="keyword">try</span> &#123;</div><div class="line">                <span class="comment">// 发送消息</span></div><div class="line">                mMessenger.send(msg);</div><div class="line">            &#125; <span class="keyword">catch</span> (RemoteException e) &#123;</div><div class="line">                e.printStackTrace();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onServiceDisconnected</span><span class="params">(ComponentName componentName)</span> </span>&#123;&#125;</div><div class="line">    &#125;;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">        setContentView(R.layout.activity_messenger);</div><div class="line"></div><div class="line">        <span class="comment">// 绑定 Service</span></div><div class="line">        Intent intent = <span class="keyword">new</span> Intent(<span class="keyword">this</span>, MessengerService.class);</div><div class="line">        bindService(intent, connection, Service.BIND_AUTO_CREATE);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onDestroy</span><span class="params">()</span> </span>&#123;</div><div class="line">        unbindService(connection);</div><div class="line">        <span class="keyword">super</span>.onDestroy();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>msg.replyTo = mReplyMessenger</code> 正是这句代码把客户端用来接收消息的 Messenger 通过 Message 的 replyTo 参数传递给服务端。运行程序打印 log 就会发现一个客户端与服务端进行通信的小例子就完成了，而且是跨进程进行通信。总结一下上面的客户端与服务端的交互过程：</p>
+<ol>
+<li>服务端接收消息的 Messenger 对象会通过 onBind() 方法返回给客户端，客户端取出该 Messenger 对象并通过该 Messenger 对象给服务端发送消息；</li>
+<li>客户端接收消息的 Messenger 对象会通过 Message 的参数 replyTo 传递给服务端，服务端取出该 Messenger 对象并用该 Messenger 对象给客户端发送消息。</li>
+</ol>
+<h3 id="使用-AIDL"><a href="#使用-AIDL" class="headerlink" title="使用 AIDL"></a>使用 AIDL</h3><p>前面的 Messenger 的作用主要是为了传递消息，如果需要跨进程调用服务端的方法，那就需要用到 AIDL 了，但是 AIDL 并不支持所有的数据类型，仅支持如下类型：</p>
+<blockquote>
+<ul>
+<li>基本数据类型(int、long、char、boolean、double等)；</li>
+<li>String 和 CharSequence；</li>
+<li>List：只支持 ArrayList，每个元素都必须能够被 AIDL 支持；</li>
+<li>Map：只支持 HashMap，里面每个元素都必须能够被 AIDL 支持，包括 key 和 value；</li>
+<li>Parcelable：所有实现了 Parcelable 接口的对象；</li>
+<li>AIDL：所有的 AIDL 接口本身也可以在 AIDL 文件中使用。</li>
+</ul>
+</blockquote>
+<p>下面来看看如何使用 AIDL 进行进程间的通信。</p>
+<p>AIDL 接口：首先创建了一个后缀为 .aidl 的文件：IBookManager.aidl，在里面声明了一个接口和两个方法，这两个方法是暴露给客户端的：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> cn.ljuns.androidgrowing.aidl;</div><div class="line"><span class="keyword">import</span> cn.ljuns.androidgrowing.aidl.Book;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">interface</span> <span class="title">IBookManager</span> </span>&#123;</div><div class="line">    <span class="function">List&lt;Book&gt; <span class="title">getBookList</span><span class="params">()</span></span>;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">addBook</span><span class="params">(in Book book)</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>注意:</strong></p>
+<ol>
+<li>在 IBookManager.aidl 中用到了 Book 这个类，这个类实现了 Parcelable 接口并且和 IBookManager.aidl 位于同一个包中，由于 AIDL 的规范，这里必须手动调用 <code>import cn.ljuns.androidgrowing.aidl.Book;</code> 进行导入。</li>
+<li>如果 AIDL 文件中用到了自定义的 Parcelable 对象，那么必须新建一个和该对象同名的 AIDL 文件，并在其中声明为 Parcelable 类型。在 IBookManager.aidl 中用到了自定义的 Parcelable 对象（Book），所以此时还需创建 Book.aidl：</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> cn.ljuns.androidgrowing.aidl;</div><div class="line">parcelable Book;</div></pre></td></tr></table></figure>
+<p>AIDL 接口创建好了，接下来到服务端了，首先要创建一个 Service 用来监听客户端的连接请求，然后实现创建好的 AIDL 接口：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AIDLService</span> <span class="keyword">extends</span> <span class="title">Service</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String TAG = <span class="string">"ljuns"</span>;</div><div class="line"></div><div class="line">    <span class="comment">// CopyOnWriteArrayList 支持并发读\写</span></div><div class="line">    <span class="keyword">private</span> CopyOnWriteArrayList&lt;Book&gt; bookList = </div><div class="line">    									<span class="keyword">new</span> CopyOnWriteArrayList&lt;&gt;();</div><div class="line"></div><div class="line">    <span class="comment">// 实现 IBookManager.Stub 接口</span></div><div class="line">    <span class="keyword">private</span> IBinder binder = <span class="keyword">new</span> IBookManager.Stub() &#123;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> List&lt;Book&gt; <span class="title">getBookList</span><span class="params">()</span> <span class="keyword">throws</span> RemoteException </span>&#123;</div><div class="line">            <span class="keyword">return</span> bookList;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addBook</span><span class="params">(Book book)</span> <span class="keyword">throws</span> RemoteException </span>&#123;</div><div class="line">            bookList.add(book);</div><div class="line">        &#125;</div><div class="line">    &#125;;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onCreate();</div><div class="line">        bookList.add(<span class="keyword">new</span> Book(<span class="number">1</span>, <span class="string">"Android"</span>));</div><div class="line">        bookList.add(<span class="keyword">new</span> Book(<span class="number">2</span>, <span class="string">"iOS"</span>));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> IBinder <span class="title">onBind</span><span class="params">(Intent intent)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> binder;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在这里使用了 CopyOnWriteArrayList 是因为它支持并发读\写。AIDL 中所支持的是抽象的 List，虽然此时返回的是 CopyOnWriteArrayList，但是在 Binder 中会按照 List 的规范去访问数据并最终形成一个新的 ArrayList 传递给客户端，所以上面有说到 AIDL 只支持 ArrayList 和这里的 CopyOnWriteArrayList 并不矛盾。</p>
+<p>客户端的实现就比较简单了，首先是绑定服务端，并在绑定成功后将服务端返回的 Binder 对象转换成 AIDL 接口，然后通过该 Binder 对象就可以去调用服务端的方法了：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AIDLActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> MESSAGE_NEW_BOOK_ARRIVED = <span class="number">1</span>;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> ServiceConnection connection = <span class="keyword">new</span> ServiceConnection() &#123;</div><div class="line">        <span class="comment">/**</span></div><div class="line">         * 绑定成功</div><div class="line">         * <span class="doctag">@param</span> componentName</div><div class="line">         * <span class="doctag">@param</span> iBinder</div><div class="line">         */</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onServiceConnected</span><span class="params">(ComponentName componentName, IBinder iBinder)</span> </span>&#123;</div><div class="line"></div><div class="line">            <span class="comment">// 将服务端返回的 Binder 对象转成 AIDL 接口所属的类型</span></div><div class="line">            IBookManager manager = IBookManager.Stub.asInterface(iBinder);</div><div class="line">            mManager = manager;</div><div class="line">            <span class="comment">// 调用远程服务端的方法</span></div><div class="line">            <span class="keyword">try</span> &#123;</div><div class="line">                List&lt;Book&gt; bookList = manager.getBookList();</div><div class="line">                log(bookList);</div><div class="line"></div><div class="line">                manager.addBook(<span class="keyword">new</span> Book(<span class="number">3</span>, <span class="string">"Android 开发艺术探索"</span>));</div><div class="line">                log(manager.getBookList());</div><div class="line">            &#125; <span class="keyword">catch</span> (RemoteException e) &#123;</div><div class="line">                e.printStackTrace();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onServiceDisconnected</span><span class="params">(ComponentName componentName)</span> </span>&#123;&#125;</div><div class="line">    &#125;;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">        setContentView(R.layout.activity_aidl);</div><div class="line">        <span class="comment">// 绑定 Service</span></div><div class="line">        Intent intent = <span class="keyword">new</span> Intent(<span class="keyword">this</span>, AIDLService.class);</div><div class="line">        bindService(intent, connection, Service.BIND_AUTO_CREATE);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onDestroy</span><span class="params">()</span> </span>&#123;</div><div class="line">        unbindService(connection);</div><div class="line">        <span class="keyword">super</span>.onDestroy();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 打印</div><div class="line">     * <span class="doctag">@param</span> list：数据源</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">log</span><span class="params">(List&lt;Book&gt; list)</span> </span>&#123;</div><div class="line">        <span class="keyword">for</span> (Book book : list) &#123;</div><div class="line">            Log.d(<span class="string">"ljuns"</span>, <span class="string">"id: "</span> + book.bookId + <span class="string">", name: "</span> + book.bookName);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>使用 AIDL 跨进程通信的基本用法就是这样的，还有很多比较复杂的用法就不细说，有兴趣的自己找找相关的资料。</p>
+<h3 id="使用ContentProvider"><a href="#使用ContentProvider" class="headerlink" title="使用ContentProvider"></a>使用ContentProvider</h3><p>ContentProvider 是 Android 中提供的专门用于不同应用间进行数据共享的方式，它天生适合进程间通信。</p>
+<p>ContentProvider 主要以表格的形式来组织数据，并且可以包含多张表，对于每个表格来说，它们都具有行和列的层次性，行往往对应一条记录，而列对应一条记录中的一个字段。ContentProvider 对底层的数据存储方式没有任何要求，既可以使用 SQLite 数据库，也可以使用普通文件，甚至可以采用内存中的一个对象来进行数据的存储。</p>
+<p>ContentProvider 属于 Android 四大组件之一，关于用法不再细说，有一点需要注意：在注册 ContentProvider 的时候需要给它设置 <strong>android:authorities</strong> 属性，该属性是 ContentProvider 的唯一标识，通过这个属性外部应用就可以访问本应用的 ContentProvider，因此 android:authorities 必须是唯一的。</p>
+<h3 id="使用-Socket"><a href="#使用-Socket" class="headerlink" title="使用 Socket"></a>使用 Socket</h3><blockquote>
+<p>Socket 也称为“套接字”，分为流式套接字和用户数据报套接字两种，分别对应于网络的传输控制层中的 TCP 和 UDP 协议。TCP 协议是面向连接的协议，提供稳定的双向通信功能，TCP 连接的建立需要经历“三次握手”才能完成，为了提供稳定的数据传输功能，其本身提供了超时重传机制，因此具有很高的稳定性。</p>
+<p>UDP 是无连接的，提供不稳定的单向通信功能，在性能上具有更好的效率，其缺点是不保证数据一定能够正确传输，尤其是在网络拥塞的情况下。</p>
+</blockquote>
+<p>下面演示一个跨进程的聊天程序，仅仅是演示跨进程的通信：</p>
+<p><img src="http://oaydqd1yy.bkt.clouddn.com/gif/Kapture%202017-03-02%20at%2015.56.29.gif" alt=""></p>
+<p>接下来看看具体的实现，首先使用 Socket 进行通信，需要声明权限：</p>
+ <figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.INTERNET"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.ACCESS_NETWORK_STATE"</span> /&gt;</span></div></pre></td></tr></table></figure>
+<p>服务端：当 Service 启动时新建一个线程并在这个线程中建立 TCP 服务，然后就等待客户端的连接请求。当有客户端连接时就会生成一个新的 Socket，通过 Socket 就可以实现客户端和服务端通信了。当服务端输入流的返回值是 null 时说明客户端断开了连接，此时服务端也会关闭对应的 Socket 并结束通信。</p>
+<p>服务端的全部代码（已经做了详细注释）：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SocketService</span> <span class="keyword">extends</span> <span class="title">Service</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> mIsServiceDestory = <span class="keyword">false</span>;</div><div class="line">    <span class="comment">// 返回消息集合</span></div><div class="line">    <span class="keyword">private</span> String[] mDefinedMessages = <span class="keyword">new</span> String[]&#123;</div><div class="line">            <span class="string">"你好啊"</span>,</div><div class="line">            <span class="string">"你叫啥？"</span>,</div><div class="line">            <span class="string">"你知道吗？我可是可以和多个人同时聊天的哦"</span>,</div><div class="line">            <span class="string">"给你讲个笑话：据说爱笑的人运气不会太差，不知道真假"</span></div><div class="line">    &#125;;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">new</span> Thread(<span class="keyword">new</span> TcpService()).start();</div><div class="line">        <span class="keyword">super</span>.onCreate();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> IBinder <span class="title">onBind</span><span class="params">(Intent intent)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDestroy</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onDestroy();</div><div class="line">        mIsServiceDestory = <span class="keyword">true</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 开启线程建立 TCP 服务</div><div class="line">     */</div><div class="line">    <span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">TcpService</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="meta">@SuppressWarnings</span>(<span class="string">"resource"</span>)</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">            ServerSocket serverSocket = <span class="keyword">null</span>;</div><div class="line">            <span class="keyword">try</span> &#123;</div><div class="line">                <span class="comment">// 建立 TCP 服务，监听 8688 端口</span></div><div class="line">                serverSocket = <span class="keyword">new</span> ServerSocket(<span class="number">8688</span>);</div><div class="line">            &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">                System.out.println(<span class="string">"establish tcp server failed, port: 8688"</span>);</div><div class="line">                e.printStackTrace();</div><div class="line">                <span class="keyword">return</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="comment">// 等待客户端连接请求</span></div><div class="line">            <span class="keyword">while</span> (!mIsServiceDestory) &#123;</div><div class="line">                <span class="keyword">try</span> &#123;</div><div class="line">                    <span class="comment">// 当客户端连接时生成一个新的 Socket</span></div><div class="line">                    <span class="keyword">final</span> Socket clientSocket = serverSocket.accept();</div><div class="line">                    System.out.println(<span class="string">"accept"</span>);</div><div class="line">                    <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</div><div class="line">                        <span class="meta">@Override</span></div><div class="line">                        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">                            responseClient(clientSocket);</div><div class="line">                        &#125;</div><div class="line">                    &#125;).start();</div><div class="line">                &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">                    e.printStackTrace();</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 响应客户端</div><div class="line">     * <span class="doctag">@param</span> clientSocket：客户端 Socket</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">responseClient</span><span class="params">(Socket clientSocket)</span> </span>&#123;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            <span class="comment">// 用于接收客户端消息</span></div><div class="line">            BufferedReader in = <span class="keyword">new</span> BufferedReader(</div><div class="line">                    <span class="keyword">new</span> InputStreamReader(clientSocket.getInputStream()));</div><div class="line">            <span class="comment">// 用于向客户端发送消息</span></div><div class="line">            PrintWriter out = <span class="keyword">new</span> PrintWriter(<span class="keyword">new</span> BufferedWriter(</div><div class="line">                    <span class="keyword">new</span> OutputStreamWriter(clientSocket.getOutputStream())), <span class="keyword">true</span>);</div><div class="line">            out.println(<span class="string">"欢迎来到聊天室"</span>);</div><div class="line">            <span class="keyword">while</span> (!mIsServiceDestory) &#123;</div><div class="line">                <span class="comment">// 读取客户端发送的消息</span></div><div class="line">                String str = in.readLine();</div><div class="line">                System.out.println(<span class="string">"msg from client: "</span> + str);</div><div class="line">                <span class="comment">// 当接收到客户端消息为 null 时为客户端断开连接</span></div><div class="line">                <span class="keyword">if</span> (str == <span class="keyword">null</span>) &#123;</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">int</span> i = <span class="keyword">new</span> Random().nextInt(mDefinedMessages.length);</div><div class="line">                <span class="comment">// 服务端返回的消息</span></div><div class="line"></div><div class="line">                String msg = mDefinedMessages[i];</div><div class="line">                <span class="keyword">try</span> &#123;</div><div class="line">                    Thread.sleep(<span class="number">500</span>);</div><div class="line">                    out.println(msg);</div><div class="line">                    System.out.println(<span class="string">"send: "</span> + msg);</div><div class="line">                &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">                    e.printStackTrace();</div><div class="line">                &#125;</div><div class="line"></div><div class="line">            &#125;</div><div class="line">            System.out.println(<span class="string">"client quit."</span>);</div><div class="line"></div><div class="line">            <span class="comment">// 关闭流</span></div><div class="line">            <span class="keyword">if</span> (out != <span class="keyword">null</span>) &#123;</div><div class="line">                out.close();</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span> (in != <span class="keyword">null</span>) &#123;</div><div class="line">                in.close();</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span> (clientSocket != <span class="keyword">null</span>) &#123;</div><div class="line">                clientSocket.close();</div><div class="line">            &#125;</div><div class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>客户端：当客户端启动时在 onCreate() 方法中开启一个线程去连接服务端 Socket，为了确保能够连接成功，采用超时重连的策略，即每次连接失败后都会重新尝试建立连接。连接成功后通过 while 持续地读取服务端发送过来的消息，直到客户端退出。</p>
+<p>客户端的全部代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SocketActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span></span></div><div class="line">        <span class="keyword">implements</span> <span class="title">View</span>.<span class="title">OnClickListener</span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> MESSAGE_RECEIVE_NEW_MSG = <span class="number">1</span>;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> MESSAGE_SOCKET_CONNECTED = <span class="number">2</span>;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> TextView mOutput;</div><div class="line">    <span class="keyword">private</span> EditText mInput;</div><div class="line">    <span class="keyword">private</span> Button mSend;</div><div class="line">    <span class="keyword">private</span> PrintWriter mPrintWriter;</div><div class="line">    <span class="keyword">private</span> Socket mClientSocket;</div><div class="line"></div><div class="line">    <span class="meta">@SuppressLint</span>(<span class="string">"HandlerLeak"</span>)</div><div class="line">    <span class="keyword">private</span> Handler handler = <span class="keyword">new</span> Handler() &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleMessage</span><span class="params">(Message msg)</span> </span>&#123;</div><div class="line">            <span class="keyword">switch</span> (msg.what) &#123;</div><div class="line">                <span class="keyword">case</span> MESSAGE_RECEIVE_NEW_MSG:</div><div class="line">                    <span class="comment">// 显示消息</span></div><div class="line">                    mOutput.setText(mOutput.getText() + (String)msg.obj);</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                <span class="keyword">case</span> MESSAGE_SOCKET_CONNECTED:</div><div class="line">                    <span class="comment">// 设置按钮为可点击</span></div><div class="line">                    mSend.setEnabled(<span class="keyword">true</span>);</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                <span class="keyword">default</span>:</div><div class="line">                    <span class="keyword">super</span>.handleMessage(msg);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">        setContentView(R.layout.activity_socket);</div><div class="line"></div><div class="line">        findView();</div><div class="line">        Intent intent = <span class="keyword">new</span> Intent(<span class="keyword">this</span>, SocketService.class);</div><div class="line">        startService(intent);</div><div class="line">        <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">                connectTCPService();</div><div class="line">            &#125;</div><div class="line">        &#125;).start();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 连接服务端 Socket</div><div class="line">     * 采取超时重连策略</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">connectTCPService</span><span class="params">()</span> </span>&#123;</div><div class="line">        Socket socket = <span class="keyword">null</span>;</div><div class="line">        <span class="keyword">while</span> (socket == <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">try</span> &#123;</div><div class="line">                socket = <span class="keyword">new</span> Socket(<span class="string">"localhost"</span>, <span class="number">8688</span>);</div><div class="line">                mClientSocket = socket;</div><div class="line">                <span class="comment">// 用于向服务端发送消息</span></div><div class="line">                mPrintWriter = <span class="keyword">new</span> PrintWriter(<span class="keyword">new</span> BufferedWriter(</div><div class="line">                			<span class="keyword">new</span> OutputStreamWriter(socket.getOutputStream())), <span class="keyword">true</span>);</div><div class="line">                <span class="comment">// 连接成功时设置按钮为可点击</span></div><div class="line">                handler.sendEmptyMessage(MESSAGE_SOCKET_CONNECTED);</div><div class="line">                System.out.println(<span class="string">"connect server success"</span>);</div><div class="line">            &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">                <span class="keyword">try</span> &#123;</div><div class="line">                    Thread.sleep(<span class="number">1000</span>);</div><div class="line">                &#125; <span class="keyword">catch</span> (InterruptedException e1) &#123;</div><div class="line">                    e1.printStackTrace();</div><div class="line">                &#125;</div><div class="line">                e.printStackTrace();</div><div class="line">                System.out.println(<span class="string">"connect tcp server failed, retry..."</span>);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            <span class="comment">// 用于接收服务端的消息</span></div><div class="line">            BufferedReader in = <span class="keyword">new</span> BufferedReader(</div><div class="line">                    <span class="keyword">new</span> InputStreamReader(socket.getInputStream()));</div><div class="line">            <span class="comment">// 不断的去读取从服务端返回的消息</span></div><div class="line">            <span class="keyword">while</span> (!SocketActivity.<span class="keyword">this</span>.isFinishing()) &#123;</div><div class="line">                <span class="comment">// 读取从服务端返回的消息</span></div><div class="line">                String msg = in.readLine();</div><div class="line">                System.out.println(<span class="string">"receive: "</span> + msg);</div><div class="line">                <span class="keyword">if</span> (msg != <span class="keyword">null</span>) &#123;</div><div class="line">                    String time = formateDateTime(System.currentTimeMillis());</div><div class="line">                    String showMsg = <span class="string">"server "</span> + time + <span class="string">": "</span> + msg + <span class="string">"\n"</span>;</div><div class="line">                    <span class="comment">// 显示服务端返回的消息</span></div><div class="line">                    handler.obtainMessage(MESSAGE_RECEIVE_NEW_MSG, showMsg).sendToTarget();</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            System.out.println(<span class="string">"quit..."</span>);</div><div class="line">            <span class="comment">// 关闭流</span></div><div class="line">            <span class="keyword">if</span> (mPrintWriter != <span class="keyword">null</span>) &#123;</div><div class="line">                mPrintWriter.close();</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span> (in != <span class="keyword">null</span>) &#123;</div><div class="line">                in.close();</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span> (socket != <span class="keyword">null</span>) &#123;</div><div class="line">                socket.close();</div><div class="line">            &#125;</div><div class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 格式化时间</div><div class="line">     * <span class="doctag">@param</span> l</div><div class="line">     * <span class="doctag">@return</span></div><div class="line">     */</div><div class="line">    <span class="meta">@SuppressLint</span>(<span class="string">"SimpleDateFormat"</span>)</div><div class="line">    <span class="function"><span class="keyword">private</span> String <span class="title">formateDateTime</span><span class="params">(<span class="keyword">long</span> l)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> SimpleDateFormat(<span class="string">"(HH:mm:ss)"</span>).format(<span class="keyword">new</span> Date(l));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">findView</span><span class="params">()</span> </span>&#123;</div><div class="line">        mOutput = (TextView) findViewById(R.id.tv_output);</div><div class="line">        mInput = (EditText) findViewById(R.id.et_input);</div><div class="line">        mSend = (Button) findViewById(R.id.btn_send);</div><div class="line">        mSend.setOnClickListener(<span class="keyword">this</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View view)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (view == mSend) &#123;</div><div class="line">            <span class="comment">// 获取输入的内容</span></div><div class="line">            String msg = mInput.getText().toString().trim();</div><div class="line">            <span class="keyword">if</span> (!TextUtils.isEmpty(msg) &amp;&amp; mPrintWriter != <span class="keyword">null</span>) &#123;</div><div class="line">                <span class="comment">// 发送给服务端</span></div><div class="line">                mPrintWriter.println(msg);</div><div class="line">                mPrintWriter.flush();</div><div class="line">                <span class="comment">// 设置输入框为空</span></div><div class="line">                mInput.setText(<span class="string">""</span>);</div><div class="line">                String time = formateDateTime(System.currentTimeMillis());</div><div class="line">                String showMsg = <span class="string">"client "</span> + time + <span class="string">": "</span> + msg + <span class="string">"\n"</span>;</div><div class="line">                <span class="comment">// 显示客户端发送的消息</span></div><div class="line">                handler.obtainMessage(MESSAGE_RECEIVE_NEW_MSG, showMsg).sendToTarget();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onDestroy</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onDestroy();</div><div class="line">        <span class="keyword">if</span> (mClientSocket != <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">try</span> &#123;</div><div class="line">                mClientSocket.shutdownInput();</div><div class="line">                mClientSocket.close();</div><div class="line">            &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">                e.printStackTrace();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="IPC-方式比较"><a href="#IPC-方式比较" class="headerlink" title="IPC 方式比较"></a>IPC 方式比较</h2><p>上面一共实现了六种 IPC 方式，各种方式之间都有哪些联系和区别呢？总结一下：</p>
+<blockquote>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">方式</th>
+<th style="text-align:center">优点</th>
+<th style="text-align:center">缺点</th>
+<th style="text-align:center">适用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Bundle</td>
+<td style="text-align:center">简单易用</td>
+<td style="text-align:center">只能传输 Bundle 支持的数据类型</td>
+<td style="text-align:center">四大组件间的进程间通信</td>
+</tr>
+<tr>
+<td style="text-align:center">文件共享</td>
+<td style="text-align:center">简单易用</td>
+<td style="text-align:center">不适合高并发场景，并且无法做到进程间的即时通信</td>
+<td style="text-align:center">无并发访问情形，交换简单的数据实时性不高的场景</td>
+</tr>
+<tr>
+<td style="text-align:center">AIDL</td>
+<td style="text-align:center">功能强大，支持一对多并发通信，支持实时通信</td>
+<td style="text-align:center">使用稍复杂，需要处理好线程同步</td>
+<td style="text-align:center">一对多通信且有 RPC 需求</td>
+</tr>
+<tr>
+<td style="text-align:center">Messenger</td>
+<td style="text-align:center">功能一般，支持一对多串形通信，支持实时通信</td>
+<td style="text-align:center">不能很好处理高并发情形，不支持 RPC ，数据通过 Messenger 进行传输，因此只能传输 Bundle 支持的数据类型</td>
+<td style="text-align:center">低并发的一对多即时通信，无 RPC 需求，或者无需返回结果的 RPC 需求</td>
+</tr>
+<tr>
+<td style="text-align:center">ContentProvider</td>
+<td style="text-align:center">在数据源访问方面功能强大，支持一对多并发数据共享，可通过 Call 方法扩展其他操作</td>
+<td style="text-align:center">可以理解为受约束的 AIDL ，主要提供数据源的 CRUD 操作</td>
+<td style="text-align:center">一对多的进程间的数据共享</td>
+</tr>
+<tr>
+<td style="text-align:center">Socket</td>
+<td style="text-align:center">功能强大，可以通过网络传输字节流，支持一对多并发实时通信</td>
+<td style="text-align:center">实现细节稍微有点烦琐，不支持直接的 RPC</td>
+<td style="text-align:center">网络数据交换</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+<p>能看到这里首先恭喜你耐心见长了，其次要感谢赏光，有什么问题可以留言交流。</p>
+
+    
+  </div>
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持我吧，谢谢🙏🙏</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/weixin.png" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/zhifubao.jpeg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2017/02/15/学习总结-Activity-的生命周期和启动模式/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2017/03/10/学习总结-View-事件分发机制和滑动冲突/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'forsigner';
+    
+    var disqus_url = 'http://ljuns.cn/2017/02/27/学习总结-- Android 多进程和 6 种 IPC 方式/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//forsigner.disqus.com/count.js" async></script>
+
+
+
+    
+
+
+
+
+    
+  <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+<script>
+  var cloudTieConfig = {
+    url: document.location.href, 
+    sourceId: "",
+    productKey: "dd5e8365d08c44c2a5949cdee496b67b",
+    target: "cloud-tie-wrapper"
+  };
+</script>
+<script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

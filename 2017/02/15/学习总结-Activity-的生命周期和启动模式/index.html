@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>学习总结--Activity 的生命周期和启动模式 | 小山的技术小窝</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="生命周期 启动模式," />
+  
+
+  <meta name="description" content="可能是因为处于比较安逸的环境（目前团队移动端项目不多），心态有点浮躁，想要提高自己却又始终没有行动起来，为了改变现状同时也改变自己，前两天定下个目标：每周产出一篇文章，作为自己成长道路上的垫脚石。 这将是一个系列，“学习总结”的系列，主要是对《Android 开发艺术探索》学习的总结，如无特别说明，该系列中的引用都来自《Android 开发艺术探索》。">
+<meta name="keywords" content="生命周期 启动模式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="学习总结--Activity 的生命周期和启动模式">
+<meta property="og:url" content="http://ljuns.cn/2017/02/15/学习总结-Activity-的生命周期和启动模式/index.html">
+<meta property="og:site_name" content="小山的技术小窝">
+<meta property="og:description" content="可能是因为处于比较安逸的环境（目前团队移动端项目不多），心态有点浮躁，想要提高自己却又始终没有行动起来，为了改变现状同时也改变自己，前两天定下个目标：每周产出一篇文章，作为自己成长道路上的垫脚石。 这将是一个系列，“学习总结”的系列，主要是对《Android 开发艺术探索》学习的总结，如无特别说明，该系列中的引用都来自《Android 开发艺术探索》。">
+<meta property="og:image" content="http://oaydqd1yy.bkt.clouddn.com/png/activity_lifecycle.png">
+<meta property="og:image" content="http://oaydqd1yy.bkt.clouddn.com/png/tmp03a4f365.png">
+<meta property="og:image" content="http://oaydqd1yy.bkt.clouddn.com/png/tmp548eee0b.png">
+<meta property="og:image" content="http://oaydqd1yy.bkt.clouddn.com/png/tmp42676dc1.png">
+<meta property="og:image" content="http://oaydqd1yy.bkt.clouddn.com/png/tmp0d354993.png">
+<meta property="og:image" content="http://oaydqd1yy.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-02-18%2012.50.37.png">
+<meta property="og:image" content="http://oaydqd1yy.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-02-18%2015.01.19.png">
+<meta property="og:updated_time" content="2017-06-03T13:24:46.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="学习总结--Activity 的生命周期和启动模式">
+<meta name="twitter:description" content="可能是因为处于比较安逸的环境（目前团队移动端项目不多），心态有点浮躁，想要提高自己却又始终没有行动起来，为了改变现状同时也改变自己，前两天定下个目标：每周产出一篇文章，作为自己成长道路上的垫脚石。 这将是一个系列，“学习总结”的系列，主要是对《Android 开发艺术探索》学习的总结，如无特别说明，该系列中的引用都来自《Android 开发艺术探索》。">
+<meta name="twitter:image" content="http://oaydqd1yy.bkt.clouddn.com/png/activity_lifecycle.png">
+
+  
+
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">更多</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">更多</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Activity-的生命周期"><span class="toc-text">Activity 的生命周期</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#典型情况下的生命周期"><span class="toc-text">典型情况下的生命周期</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#异常情况下的生命周期"><span class="toc-text">异常情况下的生命周期</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#资源相关的系统配置发生改变时Activity-的生命周期变化。"><span class="toc-text">资源相关的系统配置发生改变时Activity 的生命周期变化。</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#系统内存不足导致-Activity-被杀死"><span class="toc-text">系统内存不足导致 Activity 被杀死</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Activity-的启动模式"><span class="toc-text">Activity 的启动模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#standard：标准模式"><span class="toc-text">standard：标准模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#singleTop：栈顶复用模式"><span class="toc-text">singleTop：栈顶复用模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#singleTask：栈内复用模式"><span class="toc-text">singleTask：栈内复用模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#singleInstance：单实例模式"><span class="toc-text">singleInstance：单实例模式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IntentFilter-的匹配规则"><span class="toc-text">IntentFilter 的匹配规则</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#action-的匹配规则"><span class="toc-text">action 的匹配规则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#category-的匹配规则"><span class="toc-text">category 的匹配规则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#data-的匹配规则"><span class="toc-text">data 的匹配规则</span></a></li></ol></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-学习总结-Activity-的生命周期和启动模式" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">学习总结--Activity 的生命周期和启动模式</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2017.02.15</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>小山的技术小窝</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/学习笔记/">学习笔记</a>
+  </span>
+
+
+
+      
+        <span>
+          <i class="icon-comment"></i>
+          <a href="https://ljuns.github.io/2017/02/15/学习总结-Activity-的生命周期和启动模式/#disqus_thread"></a>
+        </span>
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>可能是因为处于比较安逸的环境（目前团队移动端项目不多），心态有点浮躁，想要提高自己却又始终没有行动起来，为了改变现状同时也改变自己，前两天定下个目标：每周产出一篇文章，作为自己成长道路上的垫脚石。</p>
+<p>这将是一个系列，“学习总结”的系列，主要是对《Android 开发艺术探索》学习的总结，如无特别说明，该系列中的引用都来自《Android 开发艺术探索》。</p>
+<a id="more"></a>
+<h2 id="Activity-的生命周期"><a href="#Activity-的生命周期" class="headerlink" title="Activity 的生命周期"></a>Activity 的生命周期</h2><h3 id="典型情况下的生命周期"><a href="#典型情况下的生命周期" class="headerlink" title="典型情况下的生命周期"></a>典型情况下的生命周期</h3><p>Activity 的生命周期是老生常谈了，不知道大家在面试的时候是否有遇到过 Activity 生命周期的问题，反正我是有遇见过。这个知识点虽然很基础，但也很重要，无论从事什么行业什么工作，基础都是最重要的，难道不是么？先来看张图：</p>
+<p><img src="http://oaydqd1yy.bkt.clouddn.com/png/activity_lifecycle.png" alt=""></p>
+<p>这是官网上描述 Activity 生命周期的图，也就是这里说的典型的 Activity 生命周期。关于回调方法这里便不再说，相信大家都可以很轻松的从各种途径获取到。</p>
+<h3 id="异常情况下的生命周期"><a href="#异常情况下的生命周期" class="headerlink" title="异常情况下的生命周期"></a>异常情况下的生命周期</h3><p>Activity 除了受用户操作所导致的正常的生命周期方法调度，还有一些异常情况，比如当资源相关的系统配置发生改变以及系统内存不足时，Activity 就可能被杀死。</p>
+<ol>
+<li><h4 id="资源相关的系统配置发生改变时Activity-的生命周期变化。"><a href="#资源相关的系统配置发生改变时Activity-的生命周期变化。" class="headerlink" title="资源相关的系统配置发生改变时Activity 的生命周期变化。"></a>资源相关的系统配置发生改变时Activity 的生命周期变化。</h4><p>比如说当前 Activity 处于竖屏状态，如果旋转屏幕，系统配置就会发生改变，默认情况下 Activity 就会被销毁并且重新创建。那么这种情况下的生命周期又是怎样的呢？来个示例：首先启动一个 Activity，随便输入点东西：<br><br><img src="http://oaydqd1yy.bkt.clouddn.com/png/tmp03a4f365.png" alt=""><br><br>此时的生命周期是这样的：<br><br><img src="http://oaydqd1yy.bkt.clouddn.com/png/tmp548eee0b.png" alt=""><br><br>然后旋转一下屏幕：<br><br><img src="http://oaydqd1yy.bkt.clouddn.com/png/tmp42676dc1.png" alt=""><br><br>这时的生命周期又是这样的：<br><br><img src="http://oaydqd1yy.bkt.clouddn.com/png/tmp0d354993.png" alt=""><br><br>也就是说默认情况下，系统配置发生改变后 Activity 会被销毁并重新创建，同时系统会回调 onSaveInstanceState() 方法来保存当前的状态，用 onRestoreInstanceState() 方法来恢复之前保存的状态。所以会发现尽管 Activity 重新创建了，但是一开始输入的数据并没有消失，需要强调的是：<strong>onSaveInstanceState() 这个方法只会在 Activity 被异常终止的情况下回调</strong>。<br><br>其实细心点还能发现 onCreate() 方法和 onRestoreInstanceState() 方法都有一个相同的 Bundle 参数，所以在 onCreate() 方法中也同样可以恢复一些数据。它们的区别在于：onCreate() 方法不管是正常情况还是异常情况都会被回调，所以需要判断参数是否为 null；但是只要系统回调了 onRestoreInstanceState() 方法就说明参数一定不为 null，所以官方的建议是在 onRestoreInstanceState() 方法中做一些恢复数据的工作。</p>
+</li>
+<li><h4 id="系统内存不足导致-Activity-被杀死"><a href="#系统内存不足导致-Activity-被杀死" class="headerlink" title="系统内存不足导致 Activity 被杀死"></a>系统内存不足导致 Activity 被杀死</h4><p>这种情况不好模拟，但是它的数据存储和恢复过程和前面一样。下面了解一下 Activity 的优先级情况，可以分为以下三种：</p>
+<ol>
+<li>前台 Activity：正在和用户交互的 Activity，优先级最高；</li>
+<li>可见但非前台 Activity：比如 Activity 中弹出一个对话框，导致 Activity 可见但是失去焦点无法和用户直接交互；</li>
+<li>后台 Activity：已经被停止的 Activity，优先级最低。</li>
+</ol>
+<p>当系统内存不足时，系统会按照上述优先级排列从最低优先级开始去杀死 Activity 所在的进程，并在后续通过 onSaveInstanceState() 和 onRestoreInstanceState() 来存储和恢复数据。</p>
+</li>
+</ol>
+<h2 id="Activity-的启动模式"><a href="#Activity-的启动模式" class="headerlink" title="Activity 的启动模式"></a>Activity 的启动模式</h2><p>一个 Android 应用程序功能通常会被拆分为多个 Activity，各个 Activity 之间通过 Intent 进行连接，而 Android 系统则通过栈结构来保存整个应用程序的 Activity，这个栈就被叫做任务栈，栈底元素是整个任务栈的发起者。</p>
+<h3 id="standard：标准模式"><a href="#standard：标准模式" class="headerlink" title="standard：标准模式"></a>standard：标准模式</h3><p>这是系统默认的启动模式，每次启动一个 Activity 都会创建一个新的实例，不管这个实例是否已经存在。在这种模式下，谁启动了这个 Activity，那么这个 Activity 就运行在启动它的那个 Activity 所在的栈中。</p>
+<p><font color="red" size="4">注意：</font> 如果是用 ApplicationContext 去启动 standard 模式的 Activity 会报错：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">E/AndroidRuntime: FATAL EXCEPTION: main</div><div class="line">  android.util.AndroidRuntimeException:<span class="function">Calling <span class="title">startActivity</span><span class="params">()</span> from </span></div><div class="line">  outside of an Activity context <span class="keyword">requires</span> the FLAG_ACTIVITY_NEW_TASK </div><div class="line">  flag. Is <span class="keyword">this</span> really what you want?</div></pre></td></tr></table></figure>
+<p>这是因为非 Activity 类型的 Context（ApplicationContext）并没有所谓的任务栈。出现这种情况时给待启动的 Activity 添加 <code>FLAG_ACTIVITY_NEW_TASK</code> 这个标记便可以解决问题。</p>
+<h3 id="singleTop：栈顶复用模式"><a href="#singleTop：栈顶复用模式" class="headerlink" title="singleTop：栈顶复用模式"></a>singleTop：栈顶复用模式</h3><p>在这种模式下，如果 Activity 已经处于栈顶位置，当启动该 Activity 时不会重新创建实例，同时onCreate()、onStart() 方法也不会被系统调用，但是系统会在 Activity 启动时回调它的 onNewInstance() 方法。这种情况下的生命周期如下图：<br><br><img src="http://oaydqd1yy.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-02-18%2012.50.37.png" alt=""><br><br>如果 Activity 没有处于栈顶位置，启动该 Activity 就会重新创建新的实例。</p>
+<p>举个例子：假设当前任务栈中有 A、B、C、D 四个 Activity，其中 A 位于栈底，D 位于栈顶。如果 D 的启动模式是 singTop，此时 D 位于栈顶，当再次启动 D 的时候栈内的情况仍为 ABCD；如果 B 的启动模式是 singTop，此时 B 不是位于栈顶，当再次启动 B 的时候栈内的情况就变为 ABCDB。</p>
+<h3 id="singleTask：栈内复用模式"><a href="#singleTask：栈内复用模式" class="headerlink" title="singleTask：栈内复用模式"></a>singleTask：栈内复用模式</h3><p>这里先要了解一下：什么是 Activity 需要的任务栈？默认情况下，一个应用中所有的 Activity 需要的任务栈的名字是该应用的包名。但是也可以为每个 Activity 单独指定 TaskAffinity 这个属性，这个属性值必须不能和包名相同。TaskAffinity 属性主要和 singleTask 启动模式或者和 allowTaskReparenting 属性配对使用，在其他情况下没有意义。</p>
+<p>在 singleTask 这种模式下，只要 Activity 在任何一个栈中存在，那么不管重复启动多少次该 Activity 也不会重新创建实例，同时系统也会回调它的 onNewInstance() 方法。具体如下：<br><br><img src="http://oaydqd1yy.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-02-18%2015.01.19.png" alt=""><br><br>下面举几个例子来说明一下：</p>
+<blockquote>
+<ul>
+<li>比如目前任务栈 S1 中的情况为 ABC，这个时候 Activity D 以 singleTask 模式请求启动，其所需要的任务栈为 S2，由于 S2 和 D 的实例都不存在，所以系统会先创建任务栈，然后再创建 D 的实例并将其入栈到 S2。</li>
+<li>另外一种情况，假设 D 所需的任务栈为 S1，其他情况如前面所示，那么由于 S1 已经存在，所以系统会直接创建 D 的实例并将其入栈道 S1。</li>
+<li>如果 D 所需的任务栈为 S1，并且当前任务栈 S1 的情况为 ADBC，根据栈内复用的原则，此时 D 不会重新创建，系统会把 D 切换到栈顶并调用其 onNewInstance() 方法，同时由于 singleTask 默认具有 clearTop 的效果，会导致栈内所有在 D 上面的 Activity 全部出栈，于是最终 S1 中的情况为 AD 。</li>
+</ul>
+</blockquote>
+<h3 id="singleInstance：单实例模式"><a href="#singleInstance：单实例模式" class="headerlink" title="singleInstance：单实例模式"></a>singleInstance：单实例模式</h3><p>这是一种加强的 singleTask 模式，具有此种模式的 Activity 拥有 singleTask 模式所有的特性，同时具有该模式的 Activity 只能单独地位于一个任务栈中。</p>
+<p>举个例子：有 A、B、C 三个 Activity，其中 A 和 C 的启动模式为 standard，B 的启动模式为 singleInstance，启动顺序为 A -&gt; B -&gt; C，此时会发现 AC 会位于同一个任务栈中，而 B 位于另外一个任务栈。当按下 Back 键进行返回时，C 直接返回到了 A，再按下 Back 键就返回到 B。这是因为 A 和 C 所在的任务栈已经空了，再按下 Back 键时就会显示另一个任务栈的 Activity（B）。</p>
+<h2 id="IntentFilter-的匹配规则"><a href="#IntentFilter-的匹配规则" class="headerlink" title="IntentFilter 的匹配规则"></a>IntentFilter 的匹配规则</h2><p>启动 Activity 分为显示启动和隐式启动两种，显示启动需要明确指定被启动对象的组件信息，包括包名和类名，而隐式启动则不需要明确指定组件信息。原则上一个 Intent 不应该既是显示启动又是隐式启动，<strong>如果一个 Intent 同时存在显示启动和隐式启动则以显示启动为主</strong>。</p>
+<p>隐式启动需要 Intent 能够匹配目标组件的 intent-filter 中所设置的过滤信息，包括 action、category、data。一个 Intent 只有同时匹配 action、category、data 才算完全匹配，才能成功启动目标 Activity。另外一点，一个 Activity 中可以有多个 intent-filter，一个 Intent 只要能完全匹配任何一个 intent-filter 就可以启动对应的 Activity。</p>
+<h3 id="action-的匹配规则"><a href="#action-的匹配规则" class="headerlink" title="action 的匹配规则"></a>action 的匹配规则</h3><p>系统预定义了一些 action，同时我们也可以在应用中定义自己的 action。一个过滤规则中可以有多个action，<strong>只有当 Intent 中的 action 和过滤规则中的其中一个 action 完全相同(包括大小写字符串)才算是匹配成功</strong>。</p>
+<h3 id="category-的匹配规则"><a href="#category-的匹配规则" class="headerlink" title="category 的匹配规则"></a>category 的匹配规则</h3><p>category 的匹配规则和 action 的匹配规则不同，Intent 中可以没有 category，如果有就必须和过滤规则中的任何一个 category 完全匹配。其实系统在调用 startActivity() 方法或 startActivityForResult() 方法的时候会默认为 Intent 加上 <code>android.intent.category.DEFAULT</code> 这个 category。</p>
+<h3 id="data-的匹配规则"><a href="#data-的匹配规则" class="headerlink" title="data 的匹配规则"></a>data 的匹配规则</h3><p>首先了解下 data 的结构，data 由两部分组成：mimeType 和 URI。mimeType 指媒体类型，比如 image／jpeg、audio／mpeg4-generic 和 video／* 等，可以表示图片、文本、视频等不同的媒体格式；URI 的结构：<br><br><code>&lt;scheme&gt;://&lt;host&gt;:&lt;port&gt;/[&lt;path&gt;|&lt;pathPrefix&gt;|&lt;pathPattern&gt;]</code><br></p>
+<ul>
+<li>Scheme：URI 的模式，如果 URI 中没有指定 scheme 意味着 URI 无效；</li>
+<li>Host：URI 的主机名，如果 URI 中没有指定 host 意味着 URI 无效；</li>
+<li>Port：URI 的端口号；</li>
+<li>Path、pathPattern、pathPrefix：表示路径信息。</li>
+</ul>
+<p>实际的例子：<br></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">content:<span class="comment">//com.example.project:200/folder/subfolder/etc</span></div><div class="line">http:<span class="comment">//www.baidu.com:80/search/info</span></div></pre></td></tr></table></figure>
+<p>匹配规则：如果过滤规则中定义了 data，那么 Intent 中必须也要定义可完全匹配过滤规则中的任何一个 data。<font color="red" size="4">注意：</font> Intent 的 setData() 方法和 setType() 方法会彼此清除对方的值，所以如果要指定完整的 data 必须使用 setDataAndType() 方法。</p>
+<p>“Activity 的生命周期和启动模式” 的学习总结就到这了，如果有发现错误或有更好的见解再来补充说明。</p>
+
+    
+  </div>
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持我吧，谢谢🙏🙏</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/weixin.png" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/zhifubao.jpeg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2017/01/22/学习总结--View 的移动/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2017/02/27/学习总结-- Android 多进程和 6 种 IPC 方式/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'forsigner';
+    
+    var disqus_url = 'http://ljuns.cn/2017/02/15/学习总结-Activity-的生命周期和启动模式/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//forsigner.disqus.com/count.js" async></script>
+
+
+
+    
+
+
+
+
+    
+  <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+<script>
+  var cloudTieConfig = {
+    url: document.location.href, 
+    sourceId: "",
+    productKey: "dd5e8365d08c44c2a5949cdee496b67b",
+    target: "cloud-tie-wrapper"
+  };
+</script>
+<script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>
