@@ -1,21 +1,93 @@
-<!DOCTYPE html>
+<!doctype html>
 
 
-  <html class="light page-post">
+
+  
 
 
+<html class="theme-next mist use-motion" lang="zh-Hans">
 <head>
-  <meta charset="utf-8">
-  
-  <title>TemperatureView：圆弧刻度温度进度条 | 小山的技术小窝</title>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   
-    <meta name="keywords" content="自定义 View," />
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
   
 
-  <meta name="description" content="TemperatureView: 这是一个自定义 View ，用来显示温度的变化过程。前段时间公司要做一个实时监测机房温度的应用，现在把这个温度变化的 View 拿出来，自己对自定义 View 这方面的应用还不是很熟悉，这里也算是对自己工作的一个小总结。二话不说，先上个效果图：">
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="自定义 View," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="TemperatureView: 这是一个自定义 View ，用来显示温度的变化过程。前段时间公司要做一个实时监测机房温度的应用，现在把这个温度变化的 View 拿出来，自己对自定义 View 这方面的应用还不是很熟悉，这里也算是对自己工作的一个小总结。二话不说，先上个效果图：">
 <meta name="keywords" content="自定义 View">
 <meta property="og:type" content="article">
 <meta property="og:title" content="TemperatureView：圆弧刻度温度进度条">
@@ -30,171 +102,293 @@
 <meta name="twitter:description" content="TemperatureView: 这是一个自定义 View ，用来显示温度的变化过程。前段时间公司要做一个实时监测机房温度的应用，现在把这个温度变化的 View 拿出来，自己对自定义 View 这方面的应用还不是很熟悉，这里也算是对自己工作的一个小总结。二话不说，先上个效果图：">
 <meta name="twitter:image" content="http://oaydqd1yy.bkt.clouddn.com/gif/temp.gif">
 
-  
-
-  
-
-  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
 
 
-  
-    <link rel="stylesheet" href="/css/personal-style.css">
-  
-
-  
-
-  
-  <script type="text/javascript">
-    var _hmt = _hmt || [];
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
-    })();
-  </script>
-
-
-  
-  <script type="text/javascript">
-	(function(){
-	    var bp = document.createElement('script');
-	    var curProtocol = window.location.protocol.split(':')[0];
-	    if (curProtocol === 'https') {
-	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
-	    }
-	    else {
-	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-	    }
-	    var s = document.getElementsByTagName("script")[0];
-	    s.parentNode.insertBefore(bp, s);
-	})();
-  </script>
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
 
 
 
-  
-    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-  
+  <link rel="canonical" href="http://ljuns.cn/2016/07/27/TemperatureView：圆弧刻度温度进度条/"/>
 
-  
-    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
-  
+
+
+
+
+  <title> TemperatureView：圆弧刻度温度进度条 | 小山的技术小窝 </title>
 </head>
 
-<body>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
 
 
   
-    <span id="toolbox-mobile" class="toolbox-mobile">更多</span>
+  
+    
   
 
-  <div class="post-header CENTER">
-   
-  <div class="toolbox">
-    <a class="toolbox-entry" href="/">
-      <span class="toolbox-entry-text">更多</span>
-      <i class="icon-angle-down"></i>
-      <i class="icon-home"></i>
-    </a>
-    <ul class="list-toolbox">
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">小山的技术小窝</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
       
-        <li class="item-toolbox">
-          <a
-            class="ROUND_RECT"
-            href="/archives/"
-            rel="noopener noreferrer"
-            target="_self"
-            >
-            博客
+        <p class="site-subtitle">做自己喜欢的事，喜欢自己做的事</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
           </a>
         </li>
       
-        <li class="item-toolbox">
-          <a
-            class="ROUND_RECT"
-            href="/category/"
-            rel="noopener noreferrer"
-            target="_self"
-            >
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
             分类
           </a>
         </li>
       
-        <li class="item-toolbox">
-          <a
-            class="ROUND_RECT"
-            href="/about/"
-            rel="noopener noreferrer"
-            target="_self"
-            >
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
             关于
           </a>
         </li>
       
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
     </ul>
-  </div>
+  
 
-
-</div>
-
-
-  <div id="toc" class="toc-article">
-    <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#背景圆-可有可无，全凭个人喜欢"><span class="toc-text">背景圆(可有可无，全凭个人喜欢)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#进度弧"><span class="toc-text">进度弧</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#进度弧上的文字（正常，预警，警告）"><span class="toc-text">进度弧上的文字（正常，预警，警告）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#刻度弧（紧靠着进度弧内侧的黑色弧）"><span class="toc-text">刻度弧（紧靠着进度弧内侧的黑色弧）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#刻度"><span class="toc-text">刻度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#中间的圆"><span class="toc-text">中间的圆</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#指针"><span class="toc-text">指针</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#当前温度"><span class="toc-text">当前温度</span></a></li></ol>
-  </div>
+  
+</nav>
 
 
 
-<div class="content content-post CENTER">
-   <article id="post-TemperatureView：圆弧刻度温度进度条" class="article article-type-post" itemprop="blogPost">
-  <header class="article-header">
-    <h1 class="post-title">TemperatureView：圆弧刻度温度进度条</h1>
+ </div>
+    </header>
 
-    <div class="article-meta">
-      <span>
-        <i class="icon-calendar"></i>
-        <span>2016.07.27</span>
-      </span>
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
 
-      
-        <span class="article-author">
-          <i class="icon-user"></i>
-          <span>小山的技术小窝</span>
-        </span>
-      
-
-      
-  <span class="article-category">
-    <i class="icon-list"></i>
-    <a class="article-category-link" href="/categories/自定义-View/">自定义 View</a>
-  </span>
-
-
-
-      
-        <span>
-          <i class="icon-comment"></i>
-          <a href="https://ljuns.github.io/2016/07/27/TemperatureView：圆弧刻度温度进度条/#disqus_thread"></a>
-        </span>
-      
-
-      
-      <i class="fa fa-eye"></i> 
-        <span id="busuanzi_container_page_pv">
-           &nbsp热度 <span id="busuanzi_value_page_pv">
-           <i class="fa fa-spinner fa-spin"></i></span>℃
-        </span>
-      
-
-      
-      
-    </div>
-  </header>
-
-  <div class="article-content">
+  <div id="posts" class="posts-expand">
     
-      <p>TemperatureView: 这是一个自定义 View ，用来显示温度的变化过程。前段时间公司要做一个实时监测机房温度的应用，现在把这个温度变化的 View 拿出来，自己对自定义 View 这方面的应用还不是很熟悉，这里也算是对自己工作的一个小总结。<br>二话不说，先上个效果图：<br><br><img src="http://oaydqd1yy.bkt.clouddn.com/gif/temp.gif" alt=""><br><a id="more"></a><br>当然，正常室温变化是没有这么快的，再来张截图：<br><br><img src="http://oaydqd1yy.bkt.clouddn.com/png/temp_1.png" alt=""><br>下面来说说这个过程，首先可以将它分为几个部分，分别为：<br>1、整个背景圆（可有可无）<br>2、进度弧（分为三段，颜色分别为绿黄红）<br>3、进度弧上的文字（正常，预警，警告）<br>4、刻度弧（紧靠着进度弧内侧的黑色弧）<br>5、刻度<br>6、中间的圆<br>7、指针<br>8、当前温度<br>那些自定义属性就不多说了，下面直接是绘制的过程（在此之前需要对绘制过程所用到的相关类有一定的了解）。</p>
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://ljuns.cn/2016/07/27/TemperatureView：圆弧刻度温度进度条/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="小山的技术小窝">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小山的技术小窝">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                TemperatureView：圆弧刻度温度进度条
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-07-27T10:29:29+08:00">
+                2016-07-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/自定义-View/" itemprop="url" rel="index">
+                    <span itemprop="name">自定义 View</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a class="cloud-tie-join-count" href="/2016/07/27/TemperatureView：圆弧刻度温度进度条/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count join-count" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2016/07/27/TemperatureView：圆弧刻度温度进度条/" class="leancloud_visitors" data-flag-title="TemperatureView：圆弧刻度温度进度条">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>TemperatureView: 这是一个自定义 View ，用来显示温度的变化过程。前段时间公司要做一个实时监测机房温度的应用，现在把这个温度变化的 View 拿出来，自己对自定义 View 这方面的应用还不是很熟悉，这里也算是对自己工作的一个小总结。<br>二话不说，先上个效果图：<br><br><img src="http://oaydqd1yy.bkt.clouddn.com/gif/temp.gif" alt=""><br><a id="more"></a><br>当然，正常室温变化是没有这么快的，再来张截图：<br><br><img src="http://oaydqd1yy.bkt.clouddn.com/png/temp_1.png" alt=""><br>下面来说说这个过程，首先可以将它分为几个部分，分别为：<br>1、整个背景圆（可有可无）<br>2、进度弧（分为三段，颜色分别为绿黄红）<br>3、进度弧上的文字（正常，预警，警告）<br>4、刻度弧（紧靠着进度弧内侧的黑色弧）<br>5、刻度<br>6、中间的圆<br>7、指针<br>8、当前温度<br>那些自定义属性就不多说了，下面直接是绘制的过程（在此之前需要对绘制过程所用到的相关类有一定的了解）。</p>
 <h3 id="背景圆-可有可无，全凭个人喜欢"><a href="#背景圆-可有可无，全凭个人喜欢" class="headerlink" title="背景圆(可有可无，全凭个人喜欢)"></a>背景圆(可有可无，全凭个人喜欢)</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * 背景圆</div><div class="line"> * <span class="doctag">@param</span> canvas</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">drawOutCircle</span><span class="params">(Canvas canvas)</span> </span>&#123;</div><div class="line">  <span class="comment">// 已经将画布移到中心，所以圆心为（0,0）</span></div><div class="line">  canvas.drawCircle(<span class="number">0</span>, <span class="number">0</span>, mSize /<span class="number">2</span>-dp2px(<span class="number">1</span>), outCirclePaint);</div><div class="line">  canvas.save();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>mSize:是控件的大小，mSize /2-dp2px(1):是让这个背景圆和控件有点距离。</p>
 <h3 id="进度弧"><a href="#进度弧" class="headerlink" title="进度弧"></a>进度弧</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * 进度弧</div><div class="line"> * <span class="doctag">@param</span> canvas</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">drawProgress</span><span class="params">(Canvas canvas)</span> </span>&#123;</div><div class="line">  <span class="comment">// dp2px(10):留一点位置（可有可无）</span></div><div class="line">  progressRadius = mSize /<span class="number">2</span> - dp2px(<span class="number">10</span>);</div><div class="line">  canvas.save();</div><div class="line">  RectF rectF = <span class="keyword">new</span> RectF(-progressRadius, -progressRadius, progressRadius, progressRadius);</div><div class="line">  <span class="comment">// 设置为圆角</span></div><div class="line">  progressPaint.setStrokeCap(Paint.Cap.ROUND);</div><div class="line">  progressPaint.setColor(Color.GREEN);</div><div class="line">  <span class="comment">// 从150度位置开始，经过120度</span></div><div class="line">  canvas.drawArc(rectF, <span class="number">150</span>, <span class="number">120</span>, <span class="keyword">false</span>, progressPaint);</div><div class="line">  progressPaint.setColor(Color.RED);</div><div class="line">  progressPaint.setStrokeCap(Paint.Cap.ROUND);</div><div class="line">  canvas.drawArc(rectF, <span class="number">330</span>, <span class="number">60</span>, <span class="keyword">false</span>, progressPaint);</div><div class="line">  progressPaint.setColor(Color.YELLOW);</div><div class="line">  progressPaint.setStrokeCap(Paint.Cap.BUTT);</div><div class="line">  canvas.drawArc(rectF, <span class="number">270</span>, <span class="number">60</span>, <span class="keyword">false</span>, progressPaint);</div><div class="line">  canvas.restore();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
@@ -212,185 +406,473 @@
 <h3 id="当前温度"><a href="#当前温度" class="headerlink" title="当前温度"></a>当前温度</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * 表盘上的文字</div><div class="line"> * <span class="doctag">@param</span> canvas</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">drawPanelText</span><span class="params">(Canvas canvas)</span> </span>&#123;</div><div class="line">    canvas.save();</div><div class="line">    String text = <span class="string">"当前温度"</span>;</div><div class="line">    <span class="keyword">float</span> length = panelTextPaint.measureText(text);</div><div class="line">    panelTextPaint.setTextSize(sp2px(<span class="number">15</span>));</div><div class="line">    canvas.drawText(text, -length/<span class="number">2</span>, scaleArcRadius/<span class="number">2</span> + dp2px(<span class="number">20</span>), panelTextPaint);</div><div class="line">    String temp = currentTemp + <span class="string">" ℃"</span>;</div><div class="line">    panelTextPaint.setTextSize(sp2px(<span class="number">15</span>));</div><div class="line">    <span class="keyword">float</span> tempTextLength = panelTextPaint.measureText(temp);</div><div class="line">    canvas.drawText(temp, -tempTextLength/<span class="number">2</span>, scaleArcRadius, panelTextPaint);</div><div class="line">    canvas.restore();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>这部分是表盘上显示的当前温度，首先是绘制<strong>“当前温度”</strong> 这四个字,然后在下方绘制具体的温度值，注意好文字的位置就可以了，没什么难的。<br>到这里绘制就结束了，整个表盘也就出来了。其实自定义一个 View 最重要的是把它拆分为几个部分，然后再一部分一部分的绘制出来，至于其中的某些计算部分就得靠自己的细心了，但是多试几次还是可以出来的。<br>篇幅有限，只是拿出一些关键的代码，有兴趣可以来这看看源码，随便 Star 、Fork <a href="https://github.com/ljuns/TemperatureView" target="_blank" rel="external">Github:https://github.com/ljuns/TemperatureView</a></p>
 
-    
-  </div>
-</article>
-
-
-   
-  <div class="text-center donation">
-    <div class="inner-donation">
-      <span class="btn-donation">支持一下</span>
-      <div class="donation-body">
-        <div class="tip text-center">扫一扫，支持我吧，谢谢🙏🙏</div>
-        <ul class="theme.donation.items.length">
-        
-          <li class="item">
-            <img src="/images/weixin.png" alt="">
-          </li>
-        
-          <li class="item">
-            <img src="/images/zhifubao.jpeg" alt="">
-          </li>
-        
-        </ul>
-      </div>
+      
     </div>
-  </div>
 
+    <div>
+      
+        
 
-   
-  <div class="box-prev-next clearfix">
-    <a class="hide pull-left" href="/">
-        <i class="icon icon-angle-left"></i>
-    </a>
-    <a class="show pull-right" href="/2016/08/16/科大讯飞语音合成的引入/">
-        <i class="icon icon-angle-right"></i>
-    </a>
-  </div>
-
-
-
-
-</div>
-
-
-  <a id="backTop" class="back-top">
-    <i class="icon-angle-up"></i>
-  </a>
-
-
-
-
-  <div class="modal" id="modal">
-  <span id="cover" class="cover hide"></span>
-  <div id="modal-dialog" class="modal-dialog hide-dialog">
-    <div class="modal-header">
-      <span id="close" class="btn-close">关闭</span>
+      
     </div>
-    <hr>
-    <div class="modal-body">
-      <ul class="list-toolbox">
-        
-          <li class="item-toolbox">
-            <a
-              class="ROUND_RECT"
-              href="/archives/"
-              rel="noopener noreferrer"
-              target="_self"
-              >
-              博客
-            </a>
-          </li>
-        
-          <li class="item-toolbox">
-            <a
-              class="ROUND_RECT"
-              href="/category/"
-              rel="noopener noreferrer"
-              target="_self"
-              >
-              分类
-            </a>
-          </li>
-        
-          <li class="item-toolbox">
-            <a
-              class="ROUND_RECT"
-              href="/about/"
-              rel="noopener noreferrer"
-              target="_self"
-              >
-              关于
-            </a>
-          </li>
-        
-      </ul>
 
+    <div>
+      
+        
+
+      
     </div>
-  </div>
-</div>
 
+    <div>
+      
+        
 
-
-  
-      <div class="fexo-comments comments-post">
-    
-  <section class="disqus-comments">
-    <div id="disqus_thread">
-      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+      
     </div>
-  </section>
 
-  <script>
-    var disqus_shortname = 'forsigner';
-    
-    var disqus_url = 'http://ljuns.cn/2016/07/27/TemperatureView：圆弧刻度温度进度条/';
-    
-    (function(){
-      var dsq = document.createElement('script');
-      dsq.type = 'text/javascript';
-      dsq.async = true;
-      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-  </script>
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/自定义-View/" rel="tag"># 自定义 View</a>
+          
+        </div>
+      
 
-  <script id="dsq-count-scr" src="//forsigner.disqus.com/count.js" async></script>
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/08/16/科大讯飞语音合成的引入/" rel="prev" title="科大讯飞语音合成的引入">
+                科大讯飞语音合成的引入 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
 
 
 
-    
-
-
-
-
-    
-  <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    <div class="post-spread">
+      
+        
 <script>
-  var cloudTieConfig = {
-    url: document.location.href, 
-    sourceId: "",
-    productKey: "dd5e8365d08c44c2a5949cdee496b67b",
-    target: "cloud-tie-wrapper"
-  };
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
 </script>
-<script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
 
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="小山的技术小窝" />
+          <p class="site-author-name" itemprop="name">小山的技术小窝</p>
+           
+              <p class="site-description motion-element" itemprop="description">做自己喜欢的事，喜欢自己做的事</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#背景圆-可有可无，全凭个人喜欢"><span class="nav-number">1.</span> <span class="nav-text">背景圆(可有可无，全凭个人喜欢)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进度弧"><span class="nav-number">2.</span> <span class="nav-text">进度弧</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进度弧上的文字（正常，预警，警告）"><span class="nav-number">3.</span> <span class="nav-text">进度弧上的文字（正常，预警，警告）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#刻度弧（紧靠着进度弧内侧的黑色弧）"><span class="nav-number">4.</span> <span class="nav-text">刻度弧（紧靠着进度弧内侧的黑色弧）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#刻度"><span class="nav-number">5.</span> <span class="nav-text">刻度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#中间的圆"><span class="nav-number">6.</span> <span class="nav-text">中间的圆</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#指针"><span class="nav-number">7.</span> <span class="nav-text">指针</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#当前温度"><span class="nav-number">8.</span> <span class="nav-text">当前温度</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">小山的技术小窝</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
 
   </div>
 
   
 
-  <script type="text/javascript">
-  function loadScript(url, callback) {
-    var script = document.createElement('script')
-    script.type = 'text/javascript';
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
 
-    if (script.readyState) { //IE
-      script.onreadystatechange = function() {
-        if (script.readyState == 'loaded' ||
-          script.readyState == 'complete') {
-          script.onreadystatechange = null;
-          callback();
-        }
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+    <script>
+      var cloudTieConfig = {
+        url: document.location.href, 
+        sourceId: "",
+        productKey: "dd5e8365d08c44c2a5949cdee496b67b",
+        target: "cloud-tie-wrapper"
       };
-    } else { //Others
-      script.onload = function() {
-        callback();
-      };
+    </script>
+    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("uUWe0rkGeHSCYXNicFT31jqm-gzGzoHsz", "HoNf0QAubQdnEAzudg1hrEz3");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
     }
 
-    script.src = url;
-    document.getElementsByTagName('head')[0].appendChild(script);
-  }
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
 
-  window.onload = function() {
-    loadScript('/js/bundle.js?235683', function() {
-      // load success
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
     });
-  }
-</script>
+  </script>
+
+
+
+  
+
+  
+
+  
 
 </body>
 </html>
