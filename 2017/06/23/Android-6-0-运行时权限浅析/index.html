@@ -1,0 +1,898 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="权限," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="关于 Android 的权限是一直都存在的，6.0 之后做的改变其实是为了更好的保护用户的个人信息安全。 最直观的就是以前安装应用的时候会显示这个应用需要用到所有的权限，如果不想应用拥有某个权限，唯一的做法就是放弃该应用。现在不一样了，现在是先不管应用需要哪些权限，安装了再说，等要用到某些功能时应用才提示要申请权限，当然也是可以拒绝的，大不了不用这个功能而已，但是其他的功能还是照样可以用的啊。 接">
+<meta name="keywords" content="权限">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android 6.0 运行时权限浅析">
+<meta property="og:url" content="http://ljuns.cn/2017/06/23/Android-6-0-运行时权限浅析/index.html">
+<meta property="og:site_name" content="小山的技术小窝">
+<meta property="og:description" content="关于 Android 的权限是一直都存在的，6.0 之后做的改变其实是为了更好的保护用户的个人信息安全。 最直观的就是以前安装应用的时候会显示这个应用需要用到所有的权限，如果不想应用拥有某个权限，唯一的做法就是放弃该应用。现在不一样了，现在是先不管应用需要哪些权限，安装了再说，等要用到某些功能时应用才提示要申请权限，当然也是可以拒绝的，大不了不用这个功能而已，但是其他的功能还是照样可以用的啊。 接">
+<meta property="og:image" content="http://oh0xbzubu.bkt.clouddn.com/image/argue2ndtv141_meitu_1.jpg?imageView2/0/q/75|watermark/2/text/5bCP5bGx55qE5oqA5pyv5bCP56qd/font/5a6L5L2T/fontsize/400/fill/IzAwMDAwMA==/dissolve/100/gravity/SouthEast/dx/10/dy/10|imageslim">
+<meta property="og:image" content="http://oh0xbzubu.bkt.clouddn.com/gif/Kapture%202017-06-23%20at%2010.57.54.gif">
+<meta property="og:image" content="http://oh0xbzubu.bkt.clouddn.com/gif/Kapture%202017-06-23%20at%2014.38.04.gif">
+<meta property="og:updated_time" content="2017-06-23T08:02:15.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android 6.0 运行时权限浅析">
+<meta name="twitter:description" content="关于 Android 的权限是一直都存在的，6.0 之后做的改变其实是为了更好的保护用户的个人信息安全。 最直观的就是以前安装应用的时候会显示这个应用需要用到所有的权限，如果不想应用拥有某个权限，唯一的做法就是放弃该应用。现在不一样了，现在是先不管应用需要哪些权限，安装了再说，等要用到某些功能时应用才提示要申请权限，当然也是可以拒绝的，大不了不用这个功能而已，但是其他的功能还是照样可以用的啊。 接">
+<meta name="twitter:image" content="http://oh0xbzubu.bkt.clouddn.com/image/argue2ndtv141_meitu_1.jpg?imageView2/0/q/75|watermark/2/text/5bCP5bGx55qE5oqA5pyv5bCP56qd/font/5a6L5L2T/fontsize/400/fill/IzAwMDAwMA==/dissolve/100/gravity/SouthEast/dx/10/dy/10|imageslim">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://ljuns.cn/2017/06/23/Android-6-0-运行时权限浅析/"/>
+
+
+
+
+
+  <title> Android 6.0 运行时权限浅析 | 小山的技术小窝 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">小山的技术小窝</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">做自己喜欢的事，喜欢自己做的事</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://ljuns.cn/2017/06/23/Android-6-0-运行时权限浅析/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="小山的技术小窝">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小山的技术小窝">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Android 6.0 运行时权限浅析
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-23T09:30:11+08:00">
+                2017-06-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习总结/" itemprop="url" rel="index">
+                    <span itemprop="name">学习总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a class="cloud-tie-join-count" href="/2017/06/23/Android-6-0-运行时权限浅析/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count join-count" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/06/23/Android-6-0-运行时权限浅析/" class="leancloud_visitors" data-flag-title="Android 6.0 运行时权限浅析">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>关于 Android 的权限是一直都存在的，6.0 之后做的改变其实是为了更好的保护用户的个人信息安全。</p>
+<p>最直观的就是以前安装应用的时候会显示这个应用需要用到所有的权限，如果不想应用拥有某个权限，唯一的做法就是放弃该应用。现在不一样了，现在是先不管应用需要哪些权限，安装了再说，等要用到某些功能时应用才提示要申请权限，当然也是可以拒绝的，大不了不用这个功能而已，但是其他的功能还是照样可以用的啊。</p>
+<p>接下来就简单的介绍一下关于 6.0 运行时权限的使用以及一些注意事项。</p>
+<a id="more"></a>
+<p>Android 中的权限有 100 多种，主要分为普通权限和危险权限，其中普通权限只需在 Androidmanifest.xml 文件中声明即可；而危险权限除了需要在 Androidmanifest.xml 文件中声明，还需在代码中进行处理。</p>
+<p>运行时权限是以组的形式存在的，一共 9 组 24 个权限。如果用户同意应用申请的某个权限，那么应用可以使用该权限所在的那一组权限。比如应用申请 CALL_PHONE 这个权限，如果用户同意了，那么这个应用将拥有 PHONE 这个权限组所有的权限。</p>
+<p><img src="http://oh0xbzubu.bkt.clouddn.com/image/argue2ndtv141_meitu_1.jpg?imageView2/0/q/75|watermark/2/text/5bCP5bGx55qE5oqA5pyv5bCP56qd/font/5a6L5L2T/fontsize/400/fill/IzAwMDAwMA==/dissolve/100/gravity/SouthEast/dx/10/dy/10|imageslim" alt=""></p>
+<h2 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h2><p>这里通过一个拨打电话的小例子来展示运行时权限的用法：</p>
+<p>首先在布局文件添加一个按钮，这个按钮用来申请权限：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- activity_main.xml --&gt;</span></div><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">LinearLayout</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></div><div class="line">    <span class="attr">xmlns:tools</span>=<span class="string">"http://schemas.android.com/tools"</span></div><div class="line">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line">    <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></div><div class="line">    <span class="attr">android:orientation</span>=<span class="string">"vertical"</span></div><div class="line">    <span class="attr">tools:context</span>=<span class="string">"cn.ljuns.androidgrowing.MainActivity"</span>&gt;</div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">Button</span></span></div><div class="line">        <span class="attr">android:id</span>=<span class="string">"@+id/btn_call"</span></div><div class="line">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">        <span class="attr">android:text</span>=<span class="string">"Call Phone"</span> /&gt;</div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">LinearLayout</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>很简单的布局，只是添加了一个 Button。既然是拨打电话，那么就需要在 AndroidManifest.xml 文件中进行权限的声明：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.CALL_PHONE"</span> /&gt;</span></div></pre></td></tr></table></figure>
+<p>在 AndroidManifest.xml 文件进行权限的声明这一点没有什么变化，以前是这样，现在也是这样。接下来才是重头戏，看看对应的 MainActivity：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">        setContentView(R.layout.activity_main);</div><div class="line"></div><div class="line">       	<span class="comment">// 绑带 Button 事件</span></div><div class="line">	findViewById(R.id.btn_call).setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</div><div class="line">              	<span class="comment">// 检查权限</span></div><div class="line">                <span class="keyword">if</span> (ContextCompat.checkSelfPermission(MainActivity.<span class="keyword">this</span>,</div><div class="line">                    Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) &#123;</div><div class="line">                  	<span class="comment">// 申请拨打电话的权限</span></div><div class="line">                    ActivityCompat.requestPermissions(MainActivity.<span class="keyword">this</span>,</div><div class="line">                            <span class="keyword">new</span> String[]&#123;Manifest.permission.CALL_PHONE&#125;, <span class="number">1</span>);</div><div class="line">                &#125; <span class="keyword">else</span> &#123;</div><div class="line">                    call();</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line">      </div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 拥有权限时拨打电话</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">call</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            Intent intent = <span class="keyword">new</span> Intent(Intent.ACTION_CALL);</div><div class="line">            intent.setData(Uri.parse(<span class="string">"tel:10086"</span>));</div><div class="line">            startActivity(intent);</div><div class="line">        &#125; <span class="keyword">catch</span> (SecurityException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     *申请权限的回调</div><div class="line">     */</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onRequestPermissionsResult</span><span class="params">(</span></span></div><div class="line">            <span class="keyword">int</span> requestCode, String[] permissions, <span class="keyword">int</span>[] grantResults) &#123;</div><div class="line">        <span class="keyword">switch</span> (requestCode) &#123;</div><div class="line">            <span class="keyword">case</span> <span class="number">1</span>:</div><div class="line">                <span class="keyword">if</span> (grantResults.length &gt; <span class="number">0</span> &amp;&amp;</div><div class="line">                        grantResults[<span class="number">0</span>] == PackageManager.PERMISSION_GRANTED) &#123;</div><div class="line">                    call();</div><div class="line">                &#125; <span class="keyword">else</span> &#123;</div><div class="line">                    Toast.makeText(<span class="keyword">this</span>, <span class="string">"你拒绝了这个权限"</span>, Toast.LENGTH_SHORT).show();</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>首先需要通过 <code>ContextCompat.checkSelfPermission()</code> 方法来检查某个权限，如果返回值等于 <code>PackageManager.PERMISSION_GRANTED</code> 就代表已经拥有该权限，而如果返回值等于 <code>PackageManager.PERMISSION_DENIED</code> 则代表还未拥有该权限。</p>
+<p>其次，如果还未拥有该权限就通过 <code>ActivityCompat.requestPermissions(final Activity activity, final String[] permissions, final int requestCode)</code> 方法来申请。三个参数分别是：Activity 对象、需要申请的权限数组、请求码。当然，Fragment 中同样可以申请权限： <code>requestPermissions(String[] permissions, int requestCode)</code> 。</p>
+<p>最后需要对申请的权限进行处理，也就是同意或者拒绝了该权限后需要执行哪些操作。所以还需要重写 <code>onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults)</code> 方法，在该方法中进行处理。onRequestPermissionsResult() 方法的三个参数分布是：申请权限时传递过来的请求码、申请的权限数组、申请权限的返回值(同意或者拒绝)。</p>
+<p>下面来运行下这个小例子：</p>
+<p><img src="http://oh0xbzubu.bkt.clouddn.com/gif/Kapture%202017-06-23%20at%2010.57.54.gif" alt=""></p>
+<p>如果第一次拒绝了该权限，在下次要用到的时候会再次提示需要申请权限；而如果已经允许了该权限，在下次需要用到的时候就不会再申请了。</p>
+<p><strong>其实还有一点需要注意：如果手机的 Android 版本低于 6.0，运行时权限不会起任何的作用。</strong></p>
+<h2 id="简单封装"><a href="#简单封装" class="headerlink" title="简单封装"></a>简单封装</h2><p>接下来尝试简单的封装一下：</p>
+<p>首先需要一个接口，里面的两个方法分别代表权限申请成功和失败，也就是允许和拒绝。同时，对于拒绝的权限还要显示哪些权限被拒绝了：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">PermissionListener</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">granted</span><span class="params">()</span></span>;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">denied</span><span class="params">(List&lt;String&gt; deniedList)</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>接着新建一个 BaseActivity 继承 AppCompatActivity，在 BaseActivity 中做权限的申请和申请后的处理：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="keyword">static</span> PermissionListener mListener;</div><div class="line"><span class="comment">/**</span></div><div class="line"> * 申请权限</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">requestRuntimePermissions</span><span class="params">(</span></span></div><div class="line">  				String[] permissions, PermissionListener listener) &#123;</div><div class="line">    mListener = listener;</div><div class="line">    List&lt;String&gt; permissionList = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">    <span class="comment">// 遍历每一个申请的权限，把没有通过的权限放在集合中</span></div><div class="line">    <span class="keyword">for</span> (String permission : permissions) &#123;</div><div class="line">        <span class="keyword">if</span> (ContextCompat.checkSelfPermission(<span class="keyword">this</span>, permission) !=</div><div class="line">                PackageManager.PERMISSION_GRANTED) &#123;</div><div class="line">            permissionList.add(permission);</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            mListener.granted();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">// 申请权限</span></div><div class="line">    <span class="keyword">if</span> (!permissionList.isEmpty()) &#123;</div><div class="line">        ActivityCompat.requestPermissions(<span class="keyword">this</span>,</div><div class="line">                permissionList.toArray(<span class="keyword">new</span> String[permissionList.size()]), <span class="number">1</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 申请后的处理</div><div class="line"> */</div><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onRequestPermissionsResult</span><span class="params">(</span></span></div><div class="line">  			<span class="keyword">int</span> requestCode, String[] permissions, <span class="keyword">int</span>[] grantResults) &#123;</div><div class="line">    <span class="keyword">super</span>.onRequestPermissionsResult(requestCode, permissions, grantResults);</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (grantResults.length &gt; <span class="number">0</span>) &#123;</div><div class="line">        List&lt;String&gt; deniedList = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">      	<span class="comment">// 遍历所有申请的权限，把被拒绝的权限放入集合</span></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; grantResults.length; i++) &#123;</div><div class="line">            <span class="keyword">int</span> grantResult = grantResults[i];</div><div class="line">            <span class="keyword">if</span> (grantResult == PackageManager.PERMISSION_GRANTED) &#123;</div><div class="line">                mListener.granted();</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                deniedList.add(permissions[i]);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (!deniedList.isEmpty()) &#123;</div><div class="line">            mListener.denied(deniedList);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上面代码比较简单，这里再介绍一下。</p>
+<ol>
+<li>在 requestRuntimePermissions() 方法中首先遍历应用需要的权限，如果权限还没有申请或者之前申请失败的就先放入一个集合；如果已经申请成功的就回调 granted() 方法，让用户去处理后续。接着对那些还没申请过或者之前申请失败的权限进行申请。</li>
+<li>重写 onRequestPermissionsResult() 方法，遍历申请的所有权限，如果申请通过了就回调 granted() 方法，让用户去做后续处理；如果申请失败就放入集合，并且回调 denied() 方法，让用户去做后续处理。</li>
+</ol>
+<p>MainActivity 中的代码需要修改为如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">    <span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">    setContentView(R.layout.activity_main);</div><div class="line">  </div><div class="line">    <span class="comment">// 绑带 Button 事件</span></div><div class="line">    findViewById(R.id.btn_demo).setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</div><div class="line">            <span class="comment">// 申请权限</span></div><div class="line">            requestRuntimePermissions(<span class="keyword">new</span> String[]&#123;Manifest.permission.CALL_PHONE,</div><div class="line">                            Manifest.permission.READ_EXTERNAL_STORAGE,</div><div class="line">                            Manifest.permission.ACCESS_FINE_LOCATION&#125;,</div><div class="line">                    <span class="keyword">new</span> PermissionListener() &#123;</div><div class="line">                        <span class="meta">@Override</span></div><div class="line">                        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">granted</span><span class="params">()</span> </span>&#123;</div><div class="line">                            <span class="comment">// 权限申请通过</span></div><div class="line">                        &#125;</div><div class="line"></div><div class="line">                        <span class="meta">@Override</span></div><div class="line">                        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">denied</span><span class="params">(List&lt;String&gt; deniedList)</span> </span>&#123;</div><div class="line">                            <span class="comment">// 权限申请不通过</span></div><div class="line">                            <span class="keyword">for</span> (String denied : deniedList) &#123;</div><div class="line">                            	Toast.makeText(MainActivity.<span class="keyword">this</span>,</div><div class="line">                                               denied + <span class="string">"权限被拒绝了"</span>,</div><div class="line">                                               Toast.LENGTH_SHORT).show();</div><div class="line">                            &#125;</div><div class="line">                        &#125;</div><div class="line">                    &#125;);</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>最后运行结果：</p>
+<p><img src="http://oh0xbzubu.bkt.clouddn.com/gif/Kapture%202017-06-23%20at%2014.38.04.gif" alt=""></p>
+<p>参考链接：<a href="http://edu.csdn.net/course/detail/3539" target="_blank" rel="external">Android 6.0 运行时权限讲解</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/权限/" rel="tag"># 权限</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/03/如何实现 Bitmap 的高效加载？/" rel="next" title="如何实现 Bitmap 的高效加载？">
+                <i class="fa fa-chevron-left"></i> 如何实现 Bitmap 的高效加载？
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="小山的技术小窝" />
+          <p class="site-author-name" itemprop="name">小山的技术小窝</p>
+           
+              <p class="site-description motion-element" itemprop="description">做自己喜欢的事，喜欢自己做的事</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用方法"><span class="nav-number">1.</span> <span class="nav-text">使用方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简单封装"><span class="nav-number">2.</span> <span class="nav-text">简单封装</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">小山的技术小窝</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+    <script>
+      var cloudTieConfig = {
+        url: document.location.href, 
+        sourceId: "",
+        productKey: "dd5e8365d08c44c2a5949cdee496b67b",
+        target: "cloud-tie-wrapper"
+      };
+    </script>
+    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("uUWe0rkGeHSCYXNicFT31jqm-gzGzoHsz", "HoNf0QAubQdnEAzudg1hrEz3");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
