@@ -94,13 +94,13 @@
 <meta property="og:url" content="http://ljuns.cn/2017/04/19/学习总结-Android-消息机制各个击破/index.html">
 <meta property="og:site_name" content="小山的技术小窝">
 <meta property="og:description" content="提到消息机制大家都不陌生，因为在日常开发中少不了和它打交道，郭婶也有过相关的篇章来讲述：Android异步消息处理机制完全解析，带你从源码的角度彻底理解，看完不禁感叹写得很棒很适用。说实话，郭婶这篇文章看了不下 3 遍，甚至还打印出来认真仔细研究，每次都会随笔记点东西，但都是零零散散的，这次结合《Android 开发艺术探索》来记录自己的学习过程。">
-<meta property="og:image" content="http://oaydqd1yy.bkt.clouddn.com/image/tmp1f7f3501.png">
+<meta property="og:image" content="https://i.niupic.com/images/2018/01/19/w80gK2.png">
 <meta property="og:image" content="http://oh0xbzubu.bkt.clouddn.com/image/tmp3a2fc0aa.png">
-<meta property="og:updated_time" content="2017-06-03T13:24:46.000Z">
+<meta property="og:updated_time" content="2018-01-19T05:46:47.619Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="学习总结 -- Android 消息机制各个击破">
 <meta name="twitter:description" content="提到消息机制大家都不陌生，因为在日常开发中少不了和它打交道，郭婶也有过相关的篇章来讲述：Android异步消息处理机制完全解析，带你从源码的角度彻底理解，看完不禁感叹写得很棒很适用。说实话，郭婶这篇文章看了不下 3 遍，甚至还打印出来认真仔细研究，每次都会随笔记点东西，但都是零零散散的，这次结合《Android 开发艺术探索》来记录自己的学习过程。">
-<meta name="twitter:image" content="http://oaydqd1yy.bkt.clouddn.com/image/tmp1f7f3501.png">
+<meta name="twitter:image" content="https://i.niupic.com/images/2018/01/19/w80gK2.png">
 
 
 
@@ -422,7 +422,7 @@
 <p>先来个小例子见识下 ThreadLocal 的厉害之处：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadLocalActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String TAG = <span class="string">"ljuns"</span>;</div><div class="line">    <span class="keyword">private</span> ThreadLocal&lt;Boolean&gt; mThreadLocal = <span class="keyword">new</span> ThreadLocal&lt;&gt;();</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">        setContentView(R.layout.activity_thread_local);</div><div class="line"></div><div class="line">        <span class="comment">// 主线程</span></div><div class="line">        mThreadLocal.set(<span class="keyword">true</span>);</div><div class="line">        Log.d(TAG, <span class="string">"main : "</span> + mThreadLocal.get());</div><div class="line">        </div><div class="line">        <span class="comment">// 子线程 1</span></div><div class="line">        <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">                mThreadLocal.set(<span class="keyword">false</span>);</div><div class="line">                Log.d(TAG, <span class="string">"thread 1 : "</span> + mThreadLocal.get());</div><div class="line">            &#125;</div><div class="line">        &#125;).start();</div><div class="line">        </div><div class="line">        <span class="comment">// 子线程 2</span></div><div class="line">        <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">                Log.d(TAG, <span class="string">"thread 2 : "</span> + mThreadLocal.get());</div><div class="line">            &#125;</div><div class="line">        &#125;).start();</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
 <p>很简单的小例子，先创建出一个 ThreadLocal 对象：mThreadLocal，然后分别在三个线程中对它进行操作，按照刚刚那句话，打印的结果应该是：主线程的 mThreadLocal 是 true，子线程 1 的 mThreadLocal 是 false，子线程 2 由于没有赋值所以应该是 null 。实际的结果怎样呢？来看看：</p>
-<p><img src="http://oaydqd1yy.bkt.clouddn.com/image/tmp1f7f3501.png" alt=""></p>
+<p><img src="https://i.niupic.com/images/2018/01/19/w80gK2.png" alt=""></p>
 <p>结果当然在意料之中，因为在此之前已经先试验过了，这就是 ThreadLocal 的奇妙之处。知其然知其所以然，接下来看看它的内部实现，首先看看 set() 方法：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">set</span><span class="params">(T value)</span> </span>&#123;</div><div class="line">    Thread currentThread = Thread.currentThread();</div><div class="line">    Values values = values(currentThread);</div><div class="line">    <span class="keyword">if</span> (values == <span class="keyword">null</span>) &#123;</div><div class="line">        values = initializeValues(currentThread);</div><div class="line">    &#125;</div><div class="line">    values.put(<span class="keyword">this</span>, value);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>这个方法很简洁，首先获取当前线程，然后通过 values() 方法获取当前线程的 ThreadLocal 数据。为什么这么说呢？先来看看 values() 方法：</p>
@@ -652,7 +652,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

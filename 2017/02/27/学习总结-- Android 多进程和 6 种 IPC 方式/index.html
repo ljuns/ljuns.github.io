@@ -94,12 +94,12 @@
 <meta property="og:url" content="http://ljuns.cn/2017/02/27/学习总结-- Android 多进程和 6 种 IPC 方式/index.html">
 <meta property="og:site_name" content="小山的技术小窝">
 <meta property="og:description" content="之前对于 IPC 机制真的是完全懵逼啊，根本就不知道 IPC 是个什么东西，通过这些天的学习算是有了一定的了解，但也仅限于使用方式，对于原理的东西还是很懵逼的，所以先来个 IPC 方式的总结（对原理还没有理解透彻，这里只是用法的小结）。 IPC 是 Inter-Process Communication 的缩写，含义为进程间通信或者跨进程通信，是指两个进程之间进行数据交换的过程。在说到 IPC 之">
-<meta property="og:image" content="http://oaydqd1yy.bkt.clouddn.com/gif/Kapture%202017-03-02%20at%2015.56.29.gif">
-<meta property="og:updated_time" content="2017-06-03T13:24:46.000Z">
+<meta property="og:image" content="https://i.niupic.com/images/2018/01/19/0jhKZM.gif">
+<meta property="og:updated_time" content="2018-01-19T05:46:43.593Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="学习总结-- Android 多进程和 6 种 IPC 方式">
 <meta name="twitter:description" content="之前对于 IPC 机制真的是完全懵逼啊，根本就不知道 IPC 是个什么东西，通过这些天的学习算是有了一定的了解，但也仅限于使用方式，对于原理的东西还是很懵逼的，所以先来个 IPC 方式的总结（对原理还没有理解透彻，这里只是用法的小结）。 IPC 是 Inter-Process Communication 的缩写，含义为进程间通信或者跨进程通信，是指两个进程之间进行数据交换的过程。在说到 IPC 之">
-<meta name="twitter:image" content="http://oaydqd1yy.bkt.clouddn.com/gif/Kapture%202017-03-02%20at%2015.56.29.gif">
+<meta name="twitter:image" content="https://i.niupic.com/images/2018/01/19/0jhKZM.gif">
 
 
 
@@ -455,7 +455,7 @@
 <p>UDP 是无连接的，提供不稳定的单向通信功能，在性能上具有更好的效率，其缺点是不保证数据一定能够正确传输，尤其是在网络拥塞的情况下。</p>
 </blockquote>
 <p>下面演示一个跨进程的聊天程序，仅仅是演示跨进程的通信：</p>
-<p><img src="http://oaydqd1yy.bkt.clouddn.com/gif/Kapture%202017-03-02%20at%2015.56.29.gif" alt=""></p>
+<p><img src="https://i.niupic.com/images/2018/01/19/0jhKZM.gif" alt=""></p>
 <p>接下来看看具体的实现，首先使用 Socket 进行通信，需要声明权限：</p>
  <figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.INTERNET"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.ACCESS_NETWORK_STATE"</span> /&gt;</span></div></pre></td></tr></table></figure>
 <p>服务端：当 Service 启动时新建一个线程并在这个线程中建立 TCP 服务，然后就等待客户端的连接请求。当有客户端连接时就会生成一个新的 Socket，通过 Socket 就可以实现客户端和服务端通信了。当服务端输入流的返回值是 null 时说明客户端断开了连接，此时服务端也会关闭对应的 Socket 并结束通信。</p>
@@ -730,7 +730,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

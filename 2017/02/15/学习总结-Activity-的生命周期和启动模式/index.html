@@ -94,18 +94,18 @@
 <meta property="og:url" content="http://ljuns.cn/2017/02/15/学习总结-Activity-的生命周期和启动模式/index.html">
 <meta property="og:site_name" content="小山的技术小窝">
 <meta property="og:description" content="可能是因为处于比较安逸的环境（目前团队移动端项目不多），心态有点浮躁，想要提高自己却又始终没有行动起来，为了改变现状同时也改变自己，前两天定下个目标：每周产出一篇文章，作为自己成长道路上的垫脚石。 这将是一个系列，“学习总结”的系列，主要是对《Android 开发艺术探索》学习的总结，如无特别说明，该系列中的引用都来自《Android 开发艺术探索》。">
-<meta property="og:image" content="http://oaydqd1yy.bkt.clouddn.com/png/activity_lifecycle.png">
-<meta property="og:image" content="http://oaydqd1yy.bkt.clouddn.com/png/tmp03a4f365.png">
-<meta property="og:image" content="http://oaydqd1yy.bkt.clouddn.com/png/tmp548eee0b.png">
-<meta property="og:image" content="http://oaydqd1yy.bkt.clouddn.com/png/tmp42676dc1.png">
-<meta property="og:image" content="http://oaydqd1yy.bkt.clouddn.com/png/tmp0d354993.png">
-<meta property="og:image" content="http://oaydqd1yy.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-02-18%2012.50.37.png">
-<meta property="og:image" content="http://oaydqd1yy.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-02-18%2015.01.19.png">
-<meta property="og:updated_time" content="2017-09-27T12:36:20.000Z">
+<meta property="og:image" content="https://i.niupic.com/images/2018/01/19/8PaktT.png">
+<meta property="og:image" content="https://i.niupic.com/images/2018/01/19/gk6NSJ.png">
+<meta property="og:image" content="https://i.niupic.com/images/2018/01/19/XYDbI6.png">
+<meta property="og:image" content="https://i.niupic.com/images/2018/01/19/angStJ.png">
+<meta property="og:image" content="https://i.niupic.com/images/2018/01/19/MjN73W.png">
+<meta property="og:image" content="https://i.niupic.com/images/2018/01/19/cEcZOQ.png">
+<meta property="og:image" content="https://i.niupic.com/images/2018/01/19/fWbZ40.png">
+<meta property="og:updated_time" content="2018-01-19T05:51:00.413Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="学习总结--Activity 的生命周期和启动模式">
 <meta name="twitter:description" content="可能是因为处于比较安逸的环境（目前团队移动端项目不多），心态有点浮躁，想要提高自己却又始终没有行动起来，为了改变现状同时也改变自己，前两天定下个目标：每周产出一篇文章，作为自己成长道路上的垫脚石。 这将是一个系列，“学习总结”的系列，主要是对《Android 开发艺术探索》学习的总结，如无特别说明，该系列中的引用都来自《Android 开发艺术探索》。">
-<meta name="twitter:image" content="http://oaydqd1yy.bkt.clouddn.com/png/activity_lifecycle.png">
+<meta name="twitter:image" content="https://i.niupic.com/images/2018/01/19/8PaktT.png">
 
 
 
@@ -387,11 +387,11 @@
 <p>这将是一个系列，“学习总结”的系列，主要是对《Android 开发艺术探索》学习的总结，如无特别说明，该系列中的引用都来自《Android 开发艺术探索》。</p>
 <a id="more"></a>
 <h2 id="Activity-的生命周期"><a href="#Activity-的生命周期" class="headerlink" title="Activity 的生命周期"></a>Activity 的生命周期</h2><h3 id="典型情况下的生命周期"><a href="#典型情况下的生命周期" class="headerlink" title="典型情况下的生命周期"></a>典型情况下的生命周期</h3><p>Activity 的生命周期是老生常谈了，不知道大家在面试的时候是否有遇到过 Activity 生命周期的问题，反正我是有遇见过。这个知识点虽然很基础，但也很重要，无论从事什么行业什么工作，基础都是最重要的，难道不是么？先来看张图：</p>
-<p><img src="http://oaydqd1yy.bkt.clouddn.com/png/activity_lifecycle.png" alt=""></p>
+<p><img src="https://i.niupic.com/images/2018/01/19/8PaktT.png" alt=""></p>
 <p>这是官网上描述 Activity 生命周期的图，也就是这里说的典型的 Activity 生命周期。关于回调方法这里便不再说，相信大家都可以很轻松的从各种途径获取到。</p>
 <h3 id="异常情况下的生命周期"><a href="#异常情况下的生命周期" class="headerlink" title="异常情况下的生命周期"></a>异常情况下的生命周期</h3><p>Activity 除了受用户操作所导致的正常的生命周期方法调度，还有一些异常情况，比如当资源相关的系统配置发生改变以及系统内存不足时，Activity 就可能被杀死。</p>
 <ol>
-<li><h4 id="资源相关的系统配置发生改变时Activity-的生命周期变化。"><a href="#资源相关的系统配置发生改变时Activity-的生命周期变化。" class="headerlink" title="资源相关的系统配置发生改变时Activity 的生命周期变化。"></a>资源相关的系统配置发生改变时Activity 的生命周期变化。</h4><p>比如说当前 Activity 处于竖屏状态，如果旋转屏幕，系统配置就会发生改变，默认情况下 Activity 就会被销毁并且重新创建。那么这种情况下的生命周期又是怎样的呢？来个示例：首先启动一个 Activity，随便输入点东西：<br><br><img src="http://oaydqd1yy.bkt.clouddn.com/png/tmp03a4f365.png" alt=""><br><br>此时的生命周期是这样的：<br><br><img src="http://oaydqd1yy.bkt.clouddn.com/png/tmp548eee0b.png" alt=""><br><br>然后旋转一下屏幕：<br><br><img src="http://oaydqd1yy.bkt.clouddn.com/png/tmp42676dc1.png" alt=""><br><br>这时的生命周期又是这样的：<br><br><img src="http://oaydqd1yy.bkt.clouddn.com/png/tmp0d354993.png" alt=""><br><br>也就是说默认情况下，系统配置发生改变后 Activity 会被销毁并重新创建，同时系统会回调 onSaveInstanceState() 方法来保存当前的状态，用 onRestoreInstanceState() 方法来恢复之前保存的状态。所以会发现尽管 Activity 重新创建了，但是一开始输入的数据并没有消失，需要强调的是：<strong>onSaveInstanceState() 这个方法只会在 Activity 被异常终止的情况下回调</strong>。<br><br>其实细心点还能发现 onCreate() 方法和 onRestoreInstanceState() 方法都有一个相同的 Bundle 参数，所以在 onCreate() 方法中也同样可以恢复一些数据。它们的区别在于：onCreate() 方法不管是正常情况还是异常情况都会被回调，所以需要判断参数是否为 null；但是只要系统回调了 onRestoreInstanceState() 方法就说明参数一定不为 null，所以官方的建议是在 onRestoreInstanceState() 方法中做一些恢复数据的工作。</p>
+<li><h4 id="资源相关的系统配置发生改变时Activity-的生命周期变化。"><a href="#资源相关的系统配置发生改变时Activity-的生命周期变化。" class="headerlink" title="资源相关的系统配置发生改变时Activity 的生命周期变化。"></a>资源相关的系统配置发生改变时Activity 的生命周期变化。</h4><p>比如说当前 Activity 处于竖屏状态，如果旋转屏幕，系统配置就会发生改变，默认情况下 Activity 就会被销毁并且重新创建。那么这种情况下的生命周期又是怎样的呢？来个示例：首先启动一个 Activity，随便输入点东西：<br><br><img src="https://i.niupic.com/images/2018/01/19/gk6NSJ.png" alt=""><br><br>此时的生命周期是这样的：<br><br><img src="https://i.niupic.com/images/2018/01/19/XYDbI6.png" alt=""><br><br>然后旋转一下屏幕：<br><br><img src="https://i.niupic.com/images/2018/01/19/angStJ.png" alt=""><br><br>这时的生命周期又是这样的：<br><br><img src="https://i.niupic.com/images/2018/01/19/MjN73W.png" alt=""><br><br>也就是说默认情况下，系统配置发生改变后 Activity 会被销毁并重新创建，同时系统会回调 onSaveInstanceState() 方法来保存当前的状态，用 onRestoreInstanceState() 方法来恢复之前保存的状态。所以会发现尽管 Activity 重新创建了，但是一开始输入的数据并没有消失，需要强调的是：<strong>onSaveInstanceState() 这个方法只会在 Activity 被异常终止的情况下回调</strong>。<br><br>其实细心点还能发现 onCreate() 方法和 onRestoreInstanceState() 方法都有一个相同的 Bundle 参数，所以在 onCreate() 方法中也同样可以恢复一些数据。它们的区别在于：onCreate() 方法不管是正常情况还是异常情况都会被回调，所以需要判断参数是否为 null；但是只要系统回调了 onRestoreInstanceState() 方法就说明参数一定不为 null，所以官方的建议是在 onRestoreInstanceState() 方法中做一些恢复数据的工作。</p>
 </li>
 <li><h4 id="系统内存不足导致-Activity-被杀死"><a href="#系统内存不足导致-Activity-被杀死" class="headerlink" title="系统内存不足导致 Activity 被杀死"></a>系统内存不足导致 Activity 被杀死</h4><p>这种情况不好模拟，但是它的数据存储和恢复过程和前面一样。下面了解一下 Activity 的优先级情况，可以分为以下三种：</p>
 <ol>
@@ -407,10 +407,10 @@
 <p><font color="red" size="4">注意：</font> 如果是用 ApplicationContext 去启动 standard 模式的 Activity 会报错：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">E/AndroidRuntime: FATAL EXCEPTION: main</div><div class="line">  android.util.AndroidRuntimeException:<span class="function">Calling <span class="title">startActivity</span><span class="params">()</span> from </span></div><div class="line">  outside of an Activity context <span class="keyword">requires</span> the FLAG_ACTIVITY_NEW_TASK </div><div class="line">  flag. Is <span class="keyword">this</span> really what you want?</div></pre></td></tr></table></figure>
 <p>这是因为非 Activity 类型的 Context（ApplicationContext）并没有所谓的任务栈。出现这种情况时给待启动的 Activity 添加 <code>FLAG_ACTIVITY_NEW_TASK</code> 这个标记便可以解决问题。</p>
-<h3 id="singleTop：栈顶复用模式"><a href="#singleTop：栈顶复用模式" class="headerlink" title="singleTop：栈顶复用模式"></a>singleTop：栈顶复用模式</h3><p>在这种模式下，如果 Activity 已经处于栈顶位置，当启动该 Activity 时不会重新创建实例，同时onCreate()、onStart() 方法也不会被系统调用，但是系统会在 Activity 启动时回调它的 onNewInstance() 方法。这种情况下的生命周期如下图：<br><br><img src="http://oaydqd1yy.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-02-18%2012.50.37.png" alt=""><br><br>如果 Activity 没有处于栈顶位置，启动该 Activity 就会重新创建新的实例。</p>
+<h3 id="singleTop：栈顶复用模式"><a href="#singleTop：栈顶复用模式" class="headerlink" title="singleTop：栈顶复用模式"></a>singleTop：栈顶复用模式</h3><p>在这种模式下，如果 Activity 已经处于栈顶位置，当启动该 Activity 时不会重新创建实例，同时onCreate()、onStart() 方法也不会被系统调用，但是系统会在 Activity 启动时回调它的 onNewInstance() 方法。这种情况下的生命周期如下图：<br><br><img src="https://i.niupic.com/images/2018/01/19/cEcZOQ.png" alt=""><br><br>如果 Activity 没有处于栈顶位置，启动该 Activity 就会重新创建新的实例。</p>
 <p>举个例子：假设当前任务栈中有 A、B、C、D 四个 Activity，其中 A 位于栈底，D 位于栈顶。如果 D 的启动模式是 singTop，此时 D 位于栈顶，当再次启动 D 的时候栈内的情况仍为 ABCD；如果 B 的启动模式是 singTop，此时 B 不是位于栈顶，当再次启动 B 的时候栈内的情况就变为 ABCDB。</p>
 <h3 id="singleTask：栈内复用模式"><a href="#singleTask：栈内复用模式" class="headerlink" title="singleTask：栈内复用模式"></a>singleTask：栈内复用模式</h3><p>这里先要了解一下：什么是 Activity 需要的任务栈？默认情况下，一个应用中所有的 Activity 需要的任务栈的名字是该应用的包名。但是也可以为每个 Activity 单独指定 TaskAffinity 这个属性，这个属性值必须不能和包名相同。TaskAffinity 属性主要和 singleTask 启动模式或者和 allowTaskReparenting 属性配对使用，在其他情况下没有意义。</p>
-<p>在 singleTask 这种模式下，只要 Activity 在任何一个栈中存在，那么不管重复启动多少次该 Activity 也不会重新创建实例，同时系统也会回调它的 onNewInstance() 方法。具体如下：<br><br><img src="http://oaydqd1yy.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-02-18%2015.01.19.png" alt=""><br><br>下面举几个例子来说明一下：</p>
+<p>在 singleTask 这种模式下，只要 Activity 在任何一个栈中存在，那么不管重复启动多少次该 Activity 也不会重新创建实例，同时系统也会回调它的 onNewInstance() 方法。具体如下：<br><br><img src="https://i.niupic.com/images/2018/01/19/fWbZ40.png" alt=""><br><br>下面举几个例子来说明一下：</p>
 <blockquote>
 <ul>
 <li>比如目前任务栈 S1 中的情况为 ABC，这个时候 Activity D 以 singleTask 模式请求启动，其所需要的任务栈为 S2，由于 S2 和 D 的实例都不存在，所以系统会先创建任务栈，然后再创建 D 的实例并将其入栈到 S2。</li>
@@ -649,7 +649,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

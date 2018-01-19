@@ -94,14 +94,14 @@
 <meta property="og:url" content="http://ljuns.cn/2017/01/22/学习总结--View 的移动/index.html">
 <meta property="og:site_name" content="小山的技术小窝">
 <meta property="og:description" content="在自定义 View 的时候经常会用到有关 View 的移动，用的比较多的估计是动画，但是除了动画还有没有什么方法可以实现相同的效果呢？有，而且还有好多种方法，这里总结一下目前所了解到的有关 View 的移动方法。在开始之前先来看张图：">
-<meta property="og:image" content="http://oaydqd1yy.bkt.clouddn.com/png/2017-01-23%2021.49.43.png">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2017/1/23/38b76647713de1e1f99cbf186df93b52">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2017/1/23/d9e1662485939d4cd7f9545f9e5690d6">
-<meta property="og:updated_time" content="2017-06-03T13:24:46.000Z">
+<meta property="og:image" content="https://i.niupic.com/images/2018/01/19/KbaHQp.png">
+<meta property="og:image" content="https://i.niupic.com/images/2018/01/19/HFb5K0.38b76647713de1e1f99cbf186df93b52">
+<meta property="og:image" content="https://i.niupic.com/images/2018/01/19/PuVZud.d9e1662485939d4cd7f9545f9e5690d6">
+<meta property="og:updated_time" content="2018-01-19T05:56:39.459Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="学习总结-- View 的移动">
 <meta name="twitter:description" content="在自定义 View 的时候经常会用到有关 View 的移动，用的比较多的估计是动画，但是除了动画还有没有什么方法可以实现相同的效果呢？有，而且还有好多种方法，这里总结一下目前所了解到的有关 View 的移动方法。在开始之前先来看张图：">
-<meta name="twitter:image" content="http://oaydqd1yy.bkt.clouddn.com/png/2017-01-23%2021.49.43.png">
+<meta name="twitter:image" content="https://i.niupic.com/images/2018/01/19/KbaHQp.png">
 
 
 
@@ -380,7 +380,7 @@
 
       
         <p>在自定义 View 的时候经常会用到有关 View 的移动，用的比较多的估计是动画，但是除了动画还有没有什么方法可以实现相同的效果呢？有，而且还有好多种方法，这里总结一下目前所了解到的有关 View 的移动方法。在开始之前先来看张图：<br></p>
-<div align="center"><br><img src="http://oaydqd1yy.bkt.clouddn.com/png/2017-01-23%2021.49.43.png" alt=""><br></div>
+<div align="center"><br><img src="https://i.niupic.com/images/2018/01/19/KbaHQp.png" alt=""><br></div>
 
 <a id="more"></a>
 <p>这张图结合了 Android 坐标系和一些常用的 API（最大的矩形相当于手机屏幕；中间黄色的矩形是 ViewGroup，比如LinearLayout、RelativeLayout…；最中间的是具体的某个 View ，比如 Button、TextView…；小黑点表示触摸点），很直观的阐明了各个 API 的含义，根据这张图分别解释一下各个方法：</p>
@@ -413,7 +413,7 @@
 </li>
 </ol>
 <p>这里有一点需要提示一下：<strong>layout() 方法的参数顺序是 left、top、right、bottom</strong>。经过上面的三个步骤，每次移动后 View 都会调用 layout() 方法对自己重新布局，从而达到移动 View 的效果。<br></p>
-<div align="center"><br><img src="https://user-gold-cdn.xitu.io/2017/1/23/38b76647713de1e1f99cbf186df93b52" alt=""><br></div>
+<div align="center"><br><img src="https://i.niupic.com/images/2018/01/19/HFb5K0.38b76647713de1e1f99cbf186df93b52" alt=""><br></div>
 
 <p>下面是 onTouchEvent() 方法完整的代码：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onTouchEvent</span><span class="params">(MotionEvent event)</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="comment">// 相对位置</span></div><div class="line">    <span class="keyword">int</span> x = (<span class="keyword">int</span>) event.getX();</div><div class="line">    <span class="keyword">int</span> y = (<span class="keyword">int</span>) event.getY();</div><div class="line"></div><div class="line">    <span class="keyword">switch</span> (event.getAction()) &#123;</div><div class="line">        <span class="keyword">case</span> MotionEvent.ACTION_DOWN:</div><div class="line">            lastX = x;</div><div class="line">            lastY = y;</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        <span class="keyword">case</span> MotionEvent.ACTION_MOVE:</div><div class="line">            <span class="comment">// 计算偏移量</span></div><div class="line">            <span class="keyword">int</span> offSetX = x - lastX;</div><div class="line">            <span class="keyword">int</span> offSetY = y - lastY;</div><div class="line"></div><div class="line">            <span class="comment">// 在当前的left、top、right、bottom 基础上加上偏移量</span></div><div class="line">            layout(getLeft() + offSetX,</div><div class="line">                    getTop() + offSetY,</div><div class="line">                    getRight() + offSetX,</div><div class="line">                    getBottom() + offSetY);</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        <span class="keyword">case</span> MotionEvent.ACTION_UP:</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
@@ -426,7 +426,7 @@
 <h2 id="scrollTo-和-scrollBy"><a href="#scrollTo-和-scrollBy" class="headerlink" title="scrollTo() 和 scrollBy()"></a>scrollTo() 和 scrollBy()</h2><p>在一个 View 中，系统提供了 scrollTo() 和 scrollBy() 两种方法来改变一个 View 的位置。这两个方法的区别是：scrollTo(x, y) 表示移动到一个具体的坐标点（x, y）；scrollBy(x, y) 表示移动的偏移量为 x、y。与前面几种方式相同，只需修改第3步的关键方法就可以实现相同的效果：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onTouchEvent</span><span class="params">(MotionEvent event)</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="comment">// 相对位置</span></div><div class="line"><span class="comment">//        int x = (int) event.getX();</span></div><div class="line"><span class="comment">//        int y = (int) event.getY();</span></div><div class="line"></div><div class="line">        <span class="comment">// 绝对位置</span></div><div class="line">        <span class="keyword">int</span> rawX = (<span class="keyword">int</span>) event.getRawX();</div><div class="line">        <span class="keyword">int</span> rawY = (<span class="keyword">int</span>) event.getRawY();</div><div class="line"></div><div class="line">        <span class="keyword">switch</span> (event.getAction()) &#123;</div><div class="line">            <span class="keyword">case</span> MotionEvent.ACTION_DOWN:</div><div class="line"><span class="comment">//                lastX = x;</span></div><div class="line"><span class="comment">//                lastY = y;</span></div><div class="line">                lastX = rawX;</div><div class="line">                lastY = rawY;</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> MotionEvent.ACTION_MOVE:</div><div class="line">                <span class="comment">// 计算偏移量</span></div><div class="line"><span class="comment">//                int offSetX = x - lastX;</span></div><div class="line"><span class="comment">//                int offSetY = y - lastY;</span></div><div class="line">                <span class="keyword">int</span> offSetX = rawX - lastX;</div><div class="line">                <span class="keyword">int</span> offSetY = rawY - lastY;</div><div class="line"></div><div class="line">               ((View)getParent()).scrollBy(-offSetX, -offSetY);</div><div class="line">    <span class="comment">//          ((View)getParent()).scrollTo(-offSetX, -offSetY);</span></div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> MotionEvent.ACTION_UP:</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
 <p>懵逼了吧？为毛是 <code>((View)getParent()).scrollBy(-offSetX, -offSetY)</code> 而不是 <code>scrollBy(offSetX, offSetY)</code> ？？为毛是 <code>(-offSetX, -offSetY)</code> ？？<br>第一个问题：因为 scrollTo() 和 scrollBy() 方法移动的是 View 的 content，即移动的是 View 的内容。例如 TextView 的 content 就是它的文本，所以如果要移动某个 View ，那么就要在 View 所在的 ViewGroup 中使用 scrollTo()、scrollBy() 方法。明白了第一个问题，第二个问题也就迎刃而解了：因为 scrollTo()、scrollBy() 方法作用在 ViewGroup 上，所以要往反方向移动才能实现我们需要的效果。</p>
 <h2 id="Scroller"><a href="#Scroller" class="headerlink" title="Scroller"></a>Scroller</h2><p>首先来看个效果图：<br></p>
-<div align="center"><br><img src="https://user-gold-cdn.xitu.io/2017/1/23/d9e1662485939d4cd7f9545f9e5690d6" alt=""><br></div>
+<div align="center"><br><img src="https://i.niupic.com/images/2018/01/19/PuVZud.d9e1662485939d4cd7f9545f9e5690d6" alt=""><br></div>
 
 <p>当我鼠标松开时，蓝色的矩形会平滑的移动，这是怎么做到的呢？<br>由于在 ACTION_MOVE 事件中不断获取手指移动的微小的偏移量，这样就将一段距离划分成了 N 个非常小的偏移量，在每个小的偏移量里面通过调用 scrollTo() 方法进行了移动。因为人眼的视觉暂留特性，使得在整体上是一个平滑移动的效果。<br>这就是 Scroller ，接下来看看代码是怎么实现的：</p>
 <ul>
@@ -685,7 +685,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
