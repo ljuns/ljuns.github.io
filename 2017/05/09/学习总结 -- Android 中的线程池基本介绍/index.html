@@ -94,12 +94,12 @@
 <meta property="og:url" content="http://ljuns.cn/2017/05/09/学习总结 -- Android 中的线程池基本介绍/index.html">
 <meta property="og:site_name" content="小山的技术小窝">
 <meta property="og:description" content="首先概括一下线程池的好处：   重用线程池中的线程，避免因为线程的创建和销毁带来的性能开销； 能有效控制线程池的最大并发数，避免大量的线程之间因互相抢占系统资源而导致的阻塞现象； 能够对线程进行简单的管理，并提供定时执行以及指定间隔循环执行等功能。   Android 中的线程池来源于 Java 的 Executor，Executor 是个接口，真正的实现是 ThreadPoolExecutor。">
-<meta property="og:image" content="http://oh0xbzubu.bkt.clouddn.com/image/%E7%BA%BF%E7%A8%8B%E6%B1%A0%E5%A4%84%E7%90%86%E6%B5%81%E7%A8%8B.png">
-<meta property="og:updated_time" content="2017-06-03T13:24:46.000Z">
+<meta property="og:image" content="https://i.niupic.com/images/2018/01/19/T6P29J.png">
+<meta property="og:updated_time" content="2018-01-19T06:09:32.393Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="学习总结 -- Android 中的线程池基本介绍">
 <meta name="twitter:description" content="首先概括一下线程池的好处：   重用线程池中的线程，避免因为线程的创建和销毁带来的性能开销； 能有效控制线程池的最大并发数，避免大量的线程之间因互相抢占系统资源而导致的阻塞现象； 能够对线程进行简单的管理，并提供定时执行以及指定间隔循环执行等功能。   Android 中的线程池来源于 Java 的 Executor，Executor 是个接口，真正的实现是 ThreadPoolExecutor。">
-<meta name="twitter:image" content="http://oh0xbzubu.bkt.clouddn.com/image/%E7%BA%BF%E7%A8%8B%E6%B1%A0%E5%A4%84%E7%90%86%E6%B5%81%E7%A8%8B.png">
+<meta name="twitter:image" content="https://i.niupic.com/images/2018/01/19/T6P29J.png">
 
 
 
@@ -411,7 +411,7 @@
 <li>ThreadPoolExecutor.CallerRunsPolicy：由调用线程处理该任务。</li>
 </ul>
 <p>ThreadPoolExecutor 的参数解释就到这了，ThreadPoolExecutor 执行任务时大致遵循如下规则：</p>
-<p><a href="http://oh0xbzubu.bkt.clouddn.com/image/%E7%BA%BF%E7%A8%8B%E6%B1%A0%E5%A4%84%E7%90%86%E6%B5%81%E7%A8%8B.png" target="_blank" rel="external"><img src="http://oh0xbzubu.bkt.clouddn.com/image/%E7%BA%BF%E7%A8%8B%E6%B1%A0%E5%A4%84%E7%90%86%E6%B5%81%E7%A8%8B.png" alt="img"></a></p>
+<p><img src="https://i.niupic.com/images/2018/01/19/T6P29J.png" alt=""></p>
 <p>在 Android 6.0 版本的 ThreadPoolExecutor 文档中有这么一段话：</p>
 <blockquote>
 <p>However, programmers are urged to use the more convenient <code>Executors</code> factory methods <code>newCachedThreadPool()</code> (unbounded thread pool, with automatic thread reclamation), <code>newFixedThreadPool(int)</code> (fixed size thread pool) and <code>newSingleThreadExecutor()</code> (single background thread), that preconfigure settings for the most common usage scenarios.</p>
