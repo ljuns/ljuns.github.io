@@ -95,7 +95,7 @@
 <meta property="og:site_name" content="小山的技术小窝">
 <meta property="og:description" content="首先概括一下线程池的好处：   重用线程池中的线程，避免因为线程的创建和销毁带来的性能开销； 能有效控制线程池的最大并发数，避免大量的线程之间因互相抢占系统资源而导致的阻塞现象； 能够对线程进行简单的管理，并提供定时执行以及指定间隔循环执行等功能。   Android 中的线程池来源于 Java 的 Executor，Executor 是个接口，真正的实现是 ThreadPoolExecutor。">
 <meta property="og:image" content="https://i.niupic.com/images/2018/01/19/T6P29J.png">
-<meta property="og:updated_time" content="2018-01-19T06:09:32.393Z">
+<meta property="og:updated_time" content="2018-01-22T09:41:20.088Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="学习总结 -- Android 中的线程池基本介绍">
 <meta name="twitter:description" content="首先概括一下线程池的好处：   重用线程池中的线程，避免因为线程的创建和销毁带来的性能开销； 能有效控制线程池的最大并发数，避免大量的线程之间因互相抢占系统资源而导致的阻塞现象； 能够对线程进行简单的管理，并提供定时执行以及指定间隔循环执行等功能。   Android 中的线程池来源于 Java 的 Executor，Executor 是个接口，真正的实现是 ThreadPoolExecutor。">
@@ -427,7 +427,7 @@
 <h2 id="newSingleThreadExecutor"><a href="#newSingleThreadExecutor" class="headerlink" title="newSingleThreadExecutor()"></a>newSingleThreadExecutor()</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">public static ExecutorService newSingleThreadExecutor() &#123;</div><div class="line">    return new FinalizableDelegatedExecutorService</div><div class="line">        (new ThreadPoolExecutor(1, 1,</div><div class="line">                                0L, TimeUnit.MILLISECONDS,</div><div class="line">                                new LinkedBlockingQueue&lt;Runnable&gt;()));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>该方法会创建一个单线程的线程池。这个线程池只有一个线程在工作，也就是相当于单线程串行执行所有任务。如果这个唯一的线程因为异常结束，那么会有一个新的线程来替代它。此线程池保证所有任务的执行顺序按照任务的提交顺序执行。</p>
 <p>实际上以上的三个创建线程池的工厂方法都是通过配置 ThreadPoolExecutor 的参数来实现不同功能的，这三种线程池可以满足大多数场合。</p>
-<p>关于线程池基本介绍就到这，如果想了解线程池的原理，可以看看这篇文章：<a href="http://www.cnblogs.com/exe19/p/5359885.html" target="_blank" rel="external">深入理解Java之线程池</a></p>
+<p>关于线程池基本介绍就到这，如果想了解线程池的原理，可以看看这篇文章：<a href="https://www.cnblogs.com/exe19/p/5359885.html" target="_blank" rel="external">深入理解Java之线程池</a></p>
 
       
     </div>
