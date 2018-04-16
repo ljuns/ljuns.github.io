@@ -95,7 +95,7 @@
 <meta property="og:site_name" content="ljuns">
 <meta property="og:description" content="当 JVM 创建对象遇到内存不足的时候，JVM 会自动触发垃圾回收（Garbage Collection，简称 GC）操作，将那些不再使用但仍然存在内存中的对象当成垃圾清理掉，释放出被占用的内存空间，供新创建的对象使用。">
 <meta property="og:image" content="https://s1.ax2x.com/2018/04/14/kX5hB.jpg">
-<meta property="og:updated_time" content="2018-04-14T14:15:13.838Z">
+<meta property="og:updated_time" content="2018-04-16T15:47:46.676Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JVM 垃圾回收策略">
 <meta name="twitter:description" content="当 JVM 创建对象遇到内存不足的时候，JVM 会自动触发垃圾回收（Garbage Collection，简称 GC）操作，将那些不再使用但仍然存在内存中的对象当成垃圾清理掉，释放出被占用的内存空间，供新创建的对象使用。">
@@ -432,6 +432,7 @@
 <li>新生代 GC（Minor GC）：指发生在新生代的垃圾收集动作，因为 Java 对象大多都具备朝生夕灭的特性，所以 Minor GC 非常频繁，一般回收速度也较快。触发时机是 Eden 空间分配满的时候。</li>
 <li>老年代 GC（Major GC / Full GC）：指发生在老年代的 GC，出现了 Major GC，经常会伴随至少一次的 Minor GC（非绝对）。Major GC 的速度一般会比 Minor GC 慢 10 倍以上。</li>
 </ul>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p>《深入理解 Java 虚拟机（JVM高级特性与最佳实践） — 周志明》</p>
 
       
     </div>
@@ -640,7 +641,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-对象是否存活"><span class="nav-number">1.</span> <span class="nav-text">1 对象是否存活</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-引用计数算法"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 引用计数算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-可达性分析算法"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 可达性分析算法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-垃圾回收算法"><span class="nav-number">2.</span> <span class="nav-text">2 垃圾回收算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-标记-清除算法"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 标记-清除算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-复制算法"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 复制算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-标记-整理算法"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 标记-整理算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-分代收集算法"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 分代收集算法</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-对象是否存活"><span class="nav-number">1.</span> <span class="nav-text">1 对象是否存活</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-引用计数算法"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 引用计数算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-可达性分析算法"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 可达性分析算法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-垃圾回收算法"><span class="nav-number">2.</span> <span class="nav-text">2 垃圾回收算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-标记-清除算法"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 标记-清除算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-复制算法"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 复制算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-标记-整理算法"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 标记-整理算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-分代收集算法"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 分代收集算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">2.5.</span> <span class="nav-text">参考</span></a></li></ol></li></ol></div>
             
 
           </div>
