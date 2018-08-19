@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="RxJava, 源码解析," />
+  <meta name="keywords" content="RxJava, 源码分析," />
 
 
 
@@ -87,20 +87,20 @@
 
 
 
-<meta name="description" content="本次分析的 RxJava 版本信息如下： 12compile &amp;apos;io.reactivex.rxjava2:rxandroid:2.0.1&amp;apos;compile &amp;apos;io.reactivex.rxjava2:rxjava:2.1.6&amp;apos;">
-<meta name="keywords" content="RxJava, 源码解析">
+<meta name="description" content="本次分析的 RxJava 版本信息如下： 12implementation &amp;apos;io.reactivex.rxjava2:rxandroid:2.0.1&amp;apos;implementation &amp;apos;io.reactivex.rxjava2:rxjava:2.1.6&amp;apos;">
+<meta name="keywords" content="RxJava, 源码分析">
 <meta property="og:type" content="article">
-<meta property="og:title" content="RxJava 2.x 流程分析">
-<meta property="og:url" content="/images/ljuns.ico/2018/05/31/RxJava-2-x-源码解析/index.html">
+<meta property="og:title" content="RxJava 2.x 源码分析">
+<meta property="og:url" content="/images/ljuns.ico/2018/05/31/RxJava 2.x源码分析/index.html">
 <meta property="og:site_name" content="ljuns">
-<meta property="og:description" content="本次分析的 RxJava 版本信息如下： 12compile &amp;apos;io.reactivex.rxjava2:rxandroid:2.0.1&amp;apos;compile &amp;apos;io.reactivex.rxjava2:rxjava:2.1.6&amp;apos;">
+<meta property="og:description" content="本次分析的 RxJava 版本信息如下： 12implementation &amp;apos;io.reactivex.rxjava2:rxandroid:2.0.1&amp;apos;implementation &amp;apos;io.reactivex.rxjava2:rxjava:2.1.6&amp;apos;">
 <meta property="og:image" content="https://s1.ax2x.com/2018/05/31/7ulrh.jpg">
 <meta property="og:image" content="https://s1.ax2x.com/2018/05/31/7J7ge.jpg">
 <meta property="og:image" content="https://s1.ax2x.com/2018/05/31/7J2eq.jpg">
-<meta property="og:updated_time" content="2018-06-27T01:41:24.875Z">
+<meta property="og:updated_time" content="2018-08-15T06:21:19.614Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="RxJava 2.x 流程分析">
-<meta name="twitter:description" content="本次分析的 RxJava 版本信息如下： 12compile &amp;apos;io.reactivex.rxjava2:rxandroid:2.0.1&amp;apos;compile &amp;apos;io.reactivex.rxjava2:rxjava:2.1.6&amp;apos;">
+<meta name="twitter:title" content="RxJava 2.x 源码分析">
+<meta name="twitter:description" content="本次分析的 RxJava 版本信息如下： 12implementation &amp;apos;io.reactivex.rxjava2:rxandroid:2.0.1&amp;apos;implementation &amp;apos;io.reactivex.rxjava2:rxjava:2.1.6&amp;apos;">
 <meta name="twitter:image" content="https://s1.ax2x.com/2018/05/31/7ulrh.jpg">
 
 
@@ -129,13 +129,13 @@
 
 
 
-  <link rel="canonical" href="/images/ljuns.ico/2018/05/31/RxJava-2-x-源码解析/"/>
+  <link rel="canonical" href="/images/ljuns.ico/2018/05/31/RxJava 2.x源码分析/"/>
 
 
 
 
 
-  <title> RxJava 2.x 流程分析 | ljuns </title>
+  <title> RxJava 2.x 源码分析 | ljuns </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -274,7 +274,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="/images/ljuns.ico/2018/05/31/RxJava-2-x-源码解析/">
+    <link itemprop="mainEntityOfPage" href="/images/ljuns.ico/2018/05/31/RxJava 2.x源码分析/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ljuns">
@@ -295,7 +295,7 @@
             
             
               
-                RxJava 2.x 流程分析
+                RxJava 2.x 源码分析
               
             
           </h1>
@@ -333,8 +333,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/RxJava-2-x/" itemprop="url" rel="index">
-                    <span itemprop="name">RxJava 2.x</span>
+                  <a href="/categories/源码分析/" itemprop="url" rel="index">
+                    <span itemprop="name">源码分析</span>
                   </a>
                 </span>
 
@@ -350,7 +350,7 @@
 
           
           
-             <span id="/2018/05/31/RxJava-2-x-源码解析/" class="leancloud_visitors" data-flag-title="RxJava 2.x 流程分析">
+             <span id="/2018/05/31/RxJava 2.x源码分析/" class="leancloud_visitors" data-flag-title="RxJava 2.x 源码分析">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -385,7 +385,7 @@
 
       
         <p>本次分析的 RxJava 版本信息如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">compile &apos;io.reactivex.rxjava2:rxandroid:2.0.1&apos;</div><div class="line">compile &apos;io.reactivex.rxjava2:rxjava:2.1.6&apos;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">implementation &apos;io.reactivex.rxjava2:rxandroid:2.0.1&apos;</div><div class="line">implementation &apos;io.reactivex.rxjava2:rxjava:2.1.6&apos;</div></pre></td></tr></table></figure>
 <a id="more"></a>
 <p>先来个简单例子：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 创建被观察者</span></div><div class="line">Observable&lt;Integer&gt; observable = Observable.create(<span class="keyword">new</span> ObservableOnSubscribe&lt;Integer&gt;() &#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">subscribe</span><span class="params">(ObservableEmitter&lt;Integer&gt; e)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        e.onNext(<span class="number">1</span>);</div><div class="line">        e.onError(<span class="keyword">new</span> Throwable(<span class="string">"error"</span>));</div><div class="line">        e.onComplete();</div><div class="line">    &#125;</div><div class="line">&#125;);</div><div class="line"><span class="comment">// 创建观察者</span></div><div class="line">Observer&lt;Integer&gt; observer = <span class="keyword">new</span> Observer&lt;Integer&gt;() &#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSubscribe</span><span class="params">(Disposable d)</span> </span>&#123;</div><div class="line">        Log.d(TAG, <span class="string">"onSubscribe: "</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onNext</span><span class="params">(Integer integer)</span> </span>&#123;</div><div class="line">        Log.d(TAG, <span class="string">"onNext: "</span> + integer);</div><div class="line">    &#125;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onError</span><span class="params">(Throwable e)</span> </span>&#123;</div><div class="line">        Log.d(TAG, <span class="string">"onError: "</span> + e.getMessage());</div><div class="line">    &#125;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onComplete</span><span class="params">()</span> </span>&#123;</div><div class="line">        Log.d(TAG, <span class="string">"onComplete: "</span>);</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"><span class="comment">// 订阅</span></div><div class="line">observable.subscribeOn(Schedulers.io())</div><div class="line">    .observeOn(AndroidSchedulers.mainThread())</div><div class="line">    .subscribe(observer);</div></pre></td></tr></table></figure>
@@ -544,7 +544,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/RxJava-源码解析/" rel="tag"># RxJava, 源码解析</a>
+            <a href="/tags/RxJava-源码分析/" rel="tag"># RxJava, 源码分析</a>
           
         </div>
       
@@ -567,7 +567,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/06/27/RxJava-简介/" rel="prev" title="RxJava 2.x 学习笔记">
+              <a href="/2018/06/27/RxJava 简介/" rel="prev" title="RxJava 2.x 学习笔记">
                 RxJava 2.x 学习笔记 <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -649,7 +649,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-count">19</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -660,7 +660,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -671,7 +671,7 @@
             
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-count">19</span>
                 <span class="site-state-item-name">标签</span>
               
             </div>
