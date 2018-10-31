@@ -1,0 +1,901 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Kotlin，笔记," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Kotlin 实战笔记">
+<meta name="keywords" content="Kotlin，笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《Kotlin 实战》第3章笔记">
+<meta property="og:url" content="/images/ljuns.ico/2018/10/27/《Kotlin 实战》第3章笔记/index.html">
+<meta property="og:site_name" content="ljuns">
+<meta property="og:description" content="Kotlin 实战笔记">
+<meta property="og:updated_time" content="2018-10-31T04:43:34.607Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="《Kotlin 实战》第3章笔记">
+<meta name="twitter:description" content="Kotlin 实战笔记">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="/images/ljuns.ico/2018/10/27/《Kotlin 实战》第3章笔记/"/>
+
+
+
+
+
+  <title> 《Kotlin 实战》第3章笔记 | ljuns </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">ljuns</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">做自己喜欢的事，喜欢自己做的事</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="/images/ljuns.ico/2018/10/27/《Kotlin 实战》第3章笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ljuns">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ljuns">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                《Kotlin 实战》第3章笔记
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-27T21:49:58+08:00">
+                2018-10-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">学习笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/10/27/《Kotlin 实战》第3章笔记/" class="leancloud_visitors" data-flag-title="《Kotlin 实战》第3章笔记">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Kotlin 实战笔记</p>
+<a id="more"></a>
+<h3 id="集合"><a href="#集合" class="headerlink" title="集合"></a>集合</h3><p>Kotlin 的集合分为可变集合和不可变集合，不可变集合类似 Java 中的 List、Set、Map，而可变集合如 MutableList<t>、MutableSet<t>、MutableMap<k, v="">。</k,></t></t></p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">val</span> set1 = setOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)</div><div class="line"><span class="keyword">val</span> set2 = hashSetOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)</div><div class="line"><span class="keyword">val</span> set3 = mutableSetOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)</div><div class="line"></div><div class="line"><span class="keyword">val</span> list1 = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)</div><div class="line"><span class="keyword">val</span> list2 = arrayListOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)</div><div class="line"><span class="keyword">val</span> list3 = mutableListOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)</div><div class="line"></div><div class="line"><span class="keyword">val</span> map1 = mapOf(<span class="number">1</span> to <span class="string">"one"</span>, <span class="number">2</span> to <span class="string">"two"</span>, <span class="number">3</span> to <span class="string">"three"</span>)</div><div class="line"><span class="keyword">val</span> map2 = hashMapOf(<span class="number">1</span> to <span class="string">"one"</span>, <span class="number">2</span> to <span class="string">"two"</span>, <span class="number">3</span> to <span class="string">"fifty-three"</span>)</div><div class="line"><span class="keyword">val</span> map3 = mutableMapOf(<span class="number">1</span> to <span class="string">"one"</span>, <span class="number">2</span> to <span class="string">"two"</span>, <span class="number">3</span> to <span class="string">"three"</span>)</div></pre></td></tr></table></figure>
+<h3 id="默认参数值"><a href="#默认参数值" class="headerlink" title="默认参数值"></a>默认参数值</h3><p>Kotlin 中声明的函数可以指定默认的参数值：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">fun</span> <span class="type">&lt;T&gt;</span> <span class="title">joinToString</span><span class="params">(</span></span></div><div class="line">    collection: <span class="type">Collection</span>&lt;<span class="type">T</span>&gt;,</div><div class="line">    <span class="comment">//下面三个参数都有默认值</span></div><div class="line">    separator: <span class="type">String</span> = <span class="string">""</span>,</div><div class="line">    prefix: <span class="type">String</span> = <span class="string">""</span>,</div><div class="line">    postfix: <span class="type">String</span> = <span class="string">""</span></div><div class="line">) &#123;&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">(args: <span class="type">Array</span>&lt;<span class="type">String</span>&gt;)</span></span> &#123;</div><div class="line">    <span class="keyword">val</span> list = listOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)</div><div class="line"></div><div class="line">    <span class="comment">//有默认值的参数可以不传值</span></div><div class="line">    joinToString(list)</div><div class="line">    joinToString(list, <span class="string">""</span>)</div><div class="line">    joinToString(list, <span class="string">""</span>, <span class="string">""</span>)</div><div class="line">    joinToString(list, <span class="string">""</span>, <span class="string">""</span>, <span class="string">""</span>)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上面这个例子中 <code>joinToString(list, &quot;&quot;, &quot;&quot;, &quot;&quot;)</code> 的调用可以做得更优雅：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//调用时标明参数的名称</span></div><div class="line">joinToString(list, separator = <span class="string">""</span>, prefix = <span class="string">""</span>, postfix = <span class="string">""</span>)</div></pre></td></tr></table></figure>
+<p><strong>注意：在调用一个函数时，如果指定了一个参数名称，那么之后的所有参数都需要标明名称:</strong></p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//正确示例</span></div><div class="line">joinToString(list, <span class="string">""</span>, prefix = <span class="string">""</span>, postfix = <span class="string">""</span>)</div><div class="line"></div><div class="line"><span class="comment">//错误示例</span></div><div class="line">joinToString(list, separator = <span class="string">""</span>, <span class="string">""</span>, postfix = <span class="string">""</span>)</div></pre></td></tr></table></figure>
+<h3 id="顶层函数和属性"><a href="#顶层函数和属性" class="headerlink" title="顶层函数和属性"></a>顶层函数和属性</h3><p>在 Kotlin 中可以直接在一个 Kotlin 文件声明函数和属性，不必像 Java 那样必须在类中才能声明属性和方法。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//文件名：KotlinTest.kt</span></div><div class="line"><span class="keyword">package</span> com.itscoder.ljuns.practise.kotlin.chapter3</div><div class="line"><span class="comment">//类似于 Java 中 private static final test1 = 0;</span></div><div class="line"><span class="keyword">val</span> test1: <span class="built_in">Int</span> = <span class="number">0</span></div><div class="line"><span class="comment">//类似于 Java 中 public static final test2 = 0;</span></div><div class="line">const <span class="keyword">val</span> test2: <span class="built_in">Int</span> = <span class="number">0</span></div><div class="line"><span class="comment">//类似于 Java 中 private static int test3;</span></div><div class="line"><span class="keyword">var</span> test3: <span class="built_in">Int</span> = <span class="number">0</span></div><div class="line"><span class="comment">//类似于 Java 中 public static final void test() &#123;&#125;</span></div><div class="line"><span class="function"><span class="keyword">fun</span> <span class="title">test</span><span class="params">()</span></span> &#123;&#125;</div></pre></td></tr></table></figure>
+<p>看看编译后生成的文件：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//类名就是文件名</span></div><div class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">KotlinTestKt</span> </span>&#123;</div><div class="line">   <span class="keyword">private</span> static <span class="keyword">final</span> int test1 = <span class="number">0</span>;</div><div class="line">   <span class="keyword">public</span> static <span class="keyword">final</span> int test2 = <span class="number">0</span>;</div><div class="line">   <span class="keyword">private</span> static int test3;</div><div class="line"></div><div class="line">   <span class="keyword">public</span> static <span class="keyword">final</span> int getTest1() &#123;</div><div class="line">      <span class="keyword">return</span> test1;</div><div class="line">   &#125;</div><div class="line"></div><div class="line">   <span class="keyword">public</span> static <span class="keyword">final</span> int getTest3() &#123;</div><div class="line">      <span class="keyword">return</span> test3;</div><div class="line">   &#125;</div><div class="line"></div><div class="line">   <span class="keyword">public</span> static <span class="keyword">final</span> void setTest3(int var0) &#123;</div><div class="line">      test3 = var0;</div><div class="line">   &#125;</div><div class="line"></div><div class="line">   <span class="keyword">public</span> static <span class="keyword">final</span> void test() &#123;</div><div class="line">   &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="拓展函数和属性"><a href="#拓展函数和属性" class="headerlink" title="拓展函数和属性"></a>拓展函数和属性</h3><h4 id="拓展函数"><a href="#拓展函数" class="headerlink" title="拓展函数"></a>拓展函数</h4><p>Kotlin 可以在不修改源代码的情况下给原有的类添加函数，即拓展函数。</p>
+<p>新建一个 kotlin 文件 StringUtil.kt：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * 给 String 类拓展了一个 lastChar() 的函数，拓展函数名可以和成员函数名相同</div><div class="line"> * String：接收者类型，即要拓展的类或接口</div><div class="line"> * this：接收者对象，可省略</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">fun</span> String.<span class="title">lastChar</span><span class="params">()</span></span>: <span class="built_in">Char</span> = <span class="keyword">this</span>.<span class="keyword">get</span>(<span class="keyword">this</span>.length - <span class="number">1</span>)</div><div class="line"><span class="comment">// 省略 this</span></div><div class="line"><span class="function"><span class="keyword">fun</span> String.<span class="title">lastChar</span><span class="params">()</span></span>: <span class="built_in">Char</span> = <span class="keyword">get</span>(length - <span class="number">1</span>)</div></pre></td></tr></table></figure>
+<p>上面代码给 String 这个类拓展了一个返回最后一个字符的函数，用法和其他普通函数一样：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">print(<span class="string">"Kotlin"</span>.lastChar())</div></pre></td></tr></table></figure>
+<p>编译后生成的 Java 文件：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">StringUtilKt</span> </span>&#123;</div><div class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">char</span> <span class="title">lastChar</span><span class="params">(@NotNull String $receiver)</span> </span>&#123;</div><div class="line">      Intrinsics.checkParameterIsNotNull($receiver, <span class="string">"$receiver"</span>);</div><div class="line">      <span class="keyword">return</span> $receiver.charAt($receiver.length() - <span class="number">1</span>);</div><div class="line">   &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>所以，如果是在 Java 中调用的话就是这样：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">System.out.println(StringUtilKt.lastChar(<span class="string">"Java"</span>));</div></pre></td></tr></table></figure>
+<p>此外，拓展函数不能被重写，举个例子：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">open</span> <span class="class"><span class="keyword">class</span> <span class="title">View</span> </span>&#123;</div><div class="line">    <span class="keyword">open</span> <span class="function"><span class="keyword">fun</span> <span class="title">click</span><span class="params">()</span></span> = println(<span class="string">"view click"</span>)</div><div class="line">&#125;</div><div class="line"><span class="comment">// 继承 View</span></div><div class="line"><span class="keyword">open</span> <span class="class"><span class="keyword">class</span> <span class="title">Button</span>: <span class="type">View</span></span>() &#123;</div><div class="line">    <span class="comment">// 重写 click()</span></div><div class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">click</span><span class="params">()</span></span> = println(<span class="string">"button click"</span>)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 分别有拓展函数</span></div><div class="line"><span class="function"><span class="keyword">fun</span> View.<span class="title">showOff</span><span class="params">()</span></span> = println(<span class="string">"I`m a View"</span>)</div><div class="line"><span class="function"><span class="keyword">fun</span> Button.<span class="title">showOff</span><span class="params">()</span></span> = println(<span class="string">"I`m a Button"</span>)</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">(args: <span class="type">Array</span>&lt;<span class="type">String</span>&gt;)</span></span> &#123;</div><div class="line">    <span class="keyword">val</span> view: View = Button()</div><div class="line"></div><div class="line">    view.click() <span class="comment">// 打印结果：button click</span></div><div class="line">    <span class="comment">// 调用拓展函数时变量类型由静态类型决定，即 View</span></div><div class="line">    view.showOff() <span class="comment">// 打印结果：I`m a View</span></div><div class="line">    View().showOff() <span class="comment">// 打印结果：I`m a View</span></div><div class="line">    Button().showOff() <span class="comment">// 打印结果：I`m a Button</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>注意：如果一个类的成员函数和拓展函数有相同的函数名，成员函数会被优先使用</strong></p>
+<h4 id="拓展属性"><a href="#拓展属性" class="headerlink" title="拓展属性"></a>拓展属性</h4><p>和拓展属性类似，可以给已存在的类添加拓展属性。</p>
+<p>在拓展函数的例子中添加拓展属性：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * 给 String 类拓展了一个 lastChar 的属性，拓展属性名可以和成员属性名相同</div><div class="line"> * 必须提供对应的 gettr()、setter() 方法</div><div class="line"> */</div><div class="line"><span class="keyword">val</span> String.lastChar: <span class="built_in">Char</span></div><div class="line">    <span class="keyword">get</span>() = <span class="keyword">get</span>(length - <span class="number">1</span>)</div></pre></td></tr></table></figure>
+<h3 id="可变参数"><a href="#可变参数" class="headerlink" title="可变参数"></a>可变参数</h3><p>Kotlin 中可变参数的定义和使用与 Java 有点不同：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 用 vararg 来声明可变参数</span></div><div class="line"><span class="function"><span class="keyword">fun</span> <span class="title">test</span><span class="params">(<span class="keyword">vararg</span> value: <span class="type">String</span>)</span></span> = println(value.size)</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">(args: <span class="type">Array</span>&lt;<span class="type">String</span>&gt;)</span></span> &#123;</div><div class="line">    <span class="comment">// 这种调用和 Java 中一样</span></div><div class="line">	test(<span class="string">"one"</span>, <span class="string">"two"</span>, <span class="string">"three"</span>)</div><div class="line">    <span class="comment">// Kotlin 不允许传入一个数组，要加一个特殊符号 * </span></div><div class="line">    test(*args)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>看看编译后的文件：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">(@NotNull String... value)</span> </span>&#123;</div><div class="line">      Intrinsics.checkParameterIsNotNull(value, <span class="string">"value"</span>);</div><div class="line">      <span class="keyword">int</span> var1 = value.length;</div><div class="line">      System.out.println(var1);</div><div class="line">   &#125;</div><div class="line"></div><div class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(@NotNull String[] args)</span> </span>&#123;</div><div class="line">      Intrinsics.checkParameterIsNotNull(args, <span class="string">"args"</span>);</div><div class="line">      test(<span class="string">"one"</span>, <span class="string">"two"</span>, <span class="string">"three"</span>);</div><div class="line">      test((String[])Arrays.copyOf(args, args.length));</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<p>所以如果在 Java 中去调用 Kotlin 定义的可变参数，使用方式还是和以前一样的。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/WechatIMG23.png" alt="ljuns WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/WechatIMG22.jpeg" alt="ljuns Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Kotlin，笔记/" rel="tag"># Kotlin，笔记</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/10/20/《Kotlin 实战》第2章笔记/" rel="next" title="《Kotlin 实战》第2章笔记">
+                <i class="fa fa-chevron-left"></i> 《Kotlin 实战》第2章笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMTA3My83NjIx"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="ljuns" />
+          <p class="site-author-name" itemprop="name">ljuns</p>
+           
+              <p class="site-description motion-element" itemprop="description">做自己喜欢的事，喜欢自己做的事</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#集合"><span class="nav-number">1.</span> <span class="nav-text">集合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#默认参数值"><span class="nav-number">2.</span> <span class="nav-text">默认参数值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#顶层函数和属性"><span class="nav-number">3.</span> <span class="nav-text">顶层函数和属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#拓展函数和属性"><span class="nav-number">4.</span> <span class="nav-text">拓展函数和属性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#拓展函数"><span class="nav-number">4.1.</span> <span class="nav-text">拓展函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#拓展属性"><span class="nav-number">4.2.</span> <span class="nav-text">拓展属性</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#可变参数"><span class="nav-number">5.</span> <span class="nav-text">可变参数</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ljuns</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("uUWe0rkGeHSCYXNicFT31jqm-gzGzoHsz", "HoNf0QAubQdnEAzudg1hrEz3");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
