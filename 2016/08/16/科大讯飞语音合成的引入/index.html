@@ -6,15 +6,15 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-Hans">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -32,7 +32,7 @@
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -66,21 +66,21 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="总结，科大讯飞，语音合成," />
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
 
 
+  <meta name="keywords" content="总结，科大讯飞，语音合成,">
 
 
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.0" />
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.0">
 
 
 
@@ -94,6 +94,7 @@
 <meta property="og:url" content="/images/ljuns.ico/2016/08/16/科大讯飞语音合成的引入/index.html">
 <meta property="og:site_name" content="ljuns">
 <meta property="og:description" content="关于第三方 SDK 的引入，很多情况下直接查看官方文档就够了，之前的我也一直这样认为，直到遇到了科大讯飞的语音合成。其实他和其他第三方 SDK 的引入没有太大的区别，唯一的一点不同或许就是需要引入 .so 文件，这个 .so 文件正是坑所在。既然都说了，那就顺便把语音合成这部分也说一下吧。在语音合成这方面，据我所知科大讯飞算是做得很不错的了，要用到人家的 SDK 那注册个账号是少不了的了。这部分就">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://i.niupic.com/images/2018/01/19/LuTql5.png">
 <meta property="og:image" content="https://i.niupic.com/images/2018/01/19/9fSSXj.png">
 <meta property="og:image" content="https://i.niupic.com/images/2018/01/19/E7cZPg.png">
@@ -134,7 +135,7 @@
 
 
 
-  <link rel="canonical" href="/images/ljuns.ico/2016/08/16/科大讯飞语音合成的引入/"/>
+  <link rel="canonical" href="/images/ljuns.ico/2016/08/16/科大讯飞语音合成的引入/">
 
 
 
@@ -143,7 +144,7 @@
   <title> 科大讯飞语音合成的引入 | ljuns </title>
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
 
@@ -168,13 +169,13 @@
   <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
 
     <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
+      <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">ljuns</span>
         <span class="logo-line-after"><i></i></span>
@@ -204,7 +205,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
           </a>
@@ -214,7 +215,7 @@
         <li class="menu-item menu-item-categories">
           <a href="/categories" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
             
             分类
           </a>
@@ -224,7 +225,7 @@
         <li class="menu-item menu-item-about">
           <a href="/about" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
             
             关于
           </a>
@@ -234,7 +235,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             归档
           </a>
@@ -268,16 +269,16 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="/images/ljuns.ico/2016/08/16/科大讯飞语音合成的引入/">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ljuns">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="ljuns">
     </span>
 
@@ -316,7 +317,7 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
             
               <span class="post-meta-divider">|</span>
             
@@ -327,7 +328,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
                   <a href="/categories/杂七杂八/" itemprop="url" rel="index">
                     <span itemprop="name">杂七杂八</span>
                   </a>
@@ -376,9 +377,9 @@
       
         <p>关于第三方 SDK 的引入，很多情况下直接查看官方文档就够了，之前的我也一直这样认为，直到遇到了科大讯飞的语音合成。其实他和其他第三方 SDK 的引入没有太大的区别，唯一的一点不同或许就是需要引入 .so 文件，这个 .so 文件正是坑所在。既然都说了，那就顺便把语音合成这部分也说一下吧。<br>在语音合成这方面，据我所知科大讯飞算是做得很不错的了，要用到人家的 SDK 那注册个账号是少不了的了。这部分就省略了，直接注册登录，然后创建应用，这时会给你个 appID ，嗯，还要绑定手机号和微信号（这点略坑）。都弄好后就下载 SDK ,解压出来是这样的：<br><br><img src="https://i.niupic.com/images/2018/01/19/LuTql5.png" alt=""><br><a id="more"></a></p>
 <h3 id="1、包的导入-包括-so-文件"><a href="#1、包的导入-包括-so-文件" class="headerlink" title="1、包的导入(包括 .so 文件)"></a>1、包的导入(包括 .so 文件)</h3><p>直接把 SDK 中 lib 文件夹下的 <strong>所有文件</strong> 复制到 Android 工程下的 lib 目录下（如果 Android 工程下面没有 lib文件夹 ，就自己新建一个 lib 文件夹），为什么要复制所有呢？这里有个坑，一开始按照官方 SDK 只复制了 armeabi、armeabi-v7a、mips 这三个文件夹，但是在一切都弄好准备测试是一直报“引擎不支持（21002）”，我以为是 .so 文件引入失败，花了好一会功夫才搞清楚原来要导入所有文件，这是 lib 下的所有文件：<br><br><img src="https://i.niupic.com/images/2018/01/19/9fSSXj.png" alt=""><br>我的 Android 工程目录<br><br><img src="https://i.niupic.com/images/2018/01/19/E7cZPg.png" alt=""><br>这里有一点要注意，导入的 jar 包还需对它右键 －&gt; Add As Library<br><br><img src="https://i.niupic.com/images/2018/01/19/nfuETC.png" alt=""><br>jar 包是引入了，那 .so 文件呢？接下来才是精华所在</p>
-<h3 id="2、-so-文件的引入"><a href="#2、-so-文件的引入" class="headerlink" title="2、.so 文件的引入"></a>2、.so 文件的引入</h3><h4 id="2-1、添加引入语句"><a href="#2-1、添加引入语句" class="headerlink" title="2.1、添加引入语句"></a>2.1、添加引入语句</h4><p>刚刚已经把 .so 文件都复制到 Android 工程的 lib 目录下了，但是还不够。打开 module 的 build.gradle 文件，在里面的 android 标签下添加一句 sourceSets.main.jniLibs.srcDirs = [‘libs’]<br><br><img src="https://i.niupic.com/images/2018/01/19/5mr29h.png" alt=""><br>我的整个 build.gradle 文件是这样的：<br><br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">apply plugin: 'com.android.application'</div><div class="line"></div><div class="line">android &#123;</div><div class="line">    compileSdkVersion 23</div><div class="line">    buildToolsVersion '22.0.0'</div><div class="line"></div><div class="line">    defaultConfig &#123;</div><div class="line">        applicationId "com.catt.temp"</div><div class="line">        minSdkVersion 19</div><div class="line">        targetSdkVersion 23</div><div class="line">        versionCode 1</div><div class="line">        versionName "1.0"</div><div class="line">    &#125;</div><div class="line">    buildTypes &#123;</div><div class="line">        release &#123;</div><div class="line">            minifyEnabled false</div><div class="line">            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    sourceSets.main.jniLibs.srcDirs = ['libs']</div><div class="line">&#125;</div><div class="line"></div><div class="line">dependencies &#123;</div><div class="line">    compile fileTree(dir: 'libs', include: ['*.jar'])</div><div class="line">    testCompile 'junit:junit:4.12'</div><div class="line">    compile 'com.android.support:appcompat-v7:23.3.0'</div><div class="line">    compile 'com.android.support:support-v4:23.3.0'</div><div class="line">    compile 'com.android.support:design:23.3.0'</div><div class="line">    compile 'com.github.liuguangqiang.swipeback:library:1.0.2@aar'</div><div class="line">    compile files('libs/ksoap2-android-assembly-3.3.0-jar-with-dependencies.jar')</div><div class="line">    compile files('libs/Msc.jar')</div><div class="line">    compile files('libs/Sunflower.jar')</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="2、-so-文件的引入"><a href="#2、-so-文件的引入" class="headerlink" title="2、.so 文件的引入"></a>2、.so 文件的引入</h3><h4 id="2-1、添加引入语句"><a href="#2-1、添加引入语句" class="headerlink" title="2.1、添加引入语句"></a>2.1、添加引入语句</h4><p>刚刚已经把 .so 文件都复制到 Android 工程的 lib 目录下了，但是还不够。打开 module 的 build.gradle 文件，在里面的 android 标签下添加一句 sourceSets.main.jniLibs.srcDirs = [‘libs’]<br><br><img src="https://i.niupic.com/images/2018/01/19/5mr29h.png" alt=""><br>我的整个 build.gradle 文件是这样的：<br><br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">apply plugin: 'com.android.application'</span><br><span class="line"></span><br><span class="line">android &#123;</span><br><span class="line">    compileSdkVersion 23</span><br><span class="line">    buildToolsVersion '22.0.0'</span><br><span class="line"></span><br><span class="line">    defaultConfig &#123;</span><br><span class="line">        applicationId "com.catt.temp"</span><br><span class="line">        minSdkVersion 19</span><br><span class="line">        targetSdkVersion 23</span><br><span class="line">        versionCode 1</span><br><span class="line">        versionName "1.0"</span><br><span class="line">    &#125;</span><br><span class="line">    buildTypes &#123;</span><br><span class="line">        release &#123;</span><br><span class="line">            minifyEnabled false</span><br><span class="line">            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    sourceSets.main.jniLibs.srcDirs = ['libs']</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">dependencies &#123;</span><br><span class="line">    compile fileTree(dir: 'libs', include: ['*.jar'])</span><br><span class="line">    testCompile 'junit:junit:4.12'</span><br><span class="line">    compile 'com.android.support:appcompat-v7:23.3.0'</span><br><span class="line">    compile 'com.android.support:support-v4:23.3.0'</span><br><span class="line">    compile 'com.android.support:design:23.3.0'</span><br><span class="line">    compile 'com.github.liuguangqiang.swipeback:library:1.0.2@aar'</span><br><span class="line">    compile files('libs/ksoap2-android-assembly-3.3.0-jar-with-dependencies.jar')</span><br><span class="line">    compile files('libs/Msc.jar')</span><br><span class="line">    compile files('libs/Sunflower.jar')</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <h4 id="2-2、Make-Project"><a href="#2-2、Make-Project" class="headerlink" title="2.2、Make Project"></a>2.2、Make Project</h4><p>此时还差一步，就是 Build -&gt; Make Project <br><br><img src="https://i.niupic.com/images/2018/01/19/IFdZpE.png" alt=""><br>这样就会在工程生成一个 jniLibs 的东东，就像是这样的：<br><br><img src="https://i.niupic.com/images/2018/01/19/AJrPlq.png" alt=""></p>
-<h3 id="3、代码实现"><a href="#3、代码实现" class="headerlink" title="3、代码实现"></a>3、代码实现</h3><p>到这里所有的准备工作都做好了，接下来是代码实现，这部分在 SDK 上有，可以直接复制过来，贴上我的代码(AndroidMainfest.xml 中的权限看 SDK 就好了，这里就不贴出来了)：<br><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.catt.temp.util;</div><div class="line"><span class="keyword">import</span> android.content.Context;</div><div class="line"><span class="keyword">import</span> android.os.Bundle;</div><div class="line"><span class="keyword">import</span> com.iflytek.cloud.SpeechConstant;</div><div class="line"><span class="keyword">import</span> com.iflytek.cloud.SpeechError;</div><div class="line"><span class="keyword">import</span> com.iflytek.cloud.SpeechSynthesizer;</div><div class="line"><span class="keyword">import</span> com.iflytek.cloud.SpeechUtility;</div><div class="line"><span class="keyword">import</span> com.iflytek.cloud.SynthesizerListener;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 语音合成</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MSCUtil</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> Context mContext;</div><div class="line">    <span class="keyword">private</span> SpeechSynthesizer mSynthesizer;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String TEXT = <span class="string">"警告，当前机房温度已达到"</span>;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MSCUtil</span><span class="params">(Context context)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.mContext = context;</div><div class="line">        SpeechUtility.createUtility(mContext, SpeechConstant.APPID +<span class="string">"=57b27fce"</span>);</div><div class="line">        mSynthesizer = SpeechSynthesizer.createSynthesizer(mContext, <span class="keyword">null</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 开始</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">startSpeek</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="comment">// 设置发音人</span></div><div class="line">        mSynthesizer.setParameter(SpeechConstant.VOICE_NAME, <span class="string">"xiaoyan"</span>);</div><div class="line">        <span class="comment">// 设置语速</span></div><div class="line">        mSynthesizer.setParameter(SpeechConstant.SPEED, <span class="string">"50"</span>);</div><div class="line">        <span class="comment">// 设置音量，范围0～100</span></div><div class="line">        mSynthesizer.setParameter(SpeechConstant.VOLUME, <span class="string">"80"</span>);</div><div class="line">        <span class="comment">// 设置云端</span></div><div class="line">        mSynthesizer.setParameter(SpeechConstant.ENGINE_TYPE, SpeechConstant.TYPE_CLOUD);</div><div class="line">        mSynthesizer.setParameter(SpeechConstant.TTS_AUDIO_PATH, <span class="string">"./sdcard/iflytek.pcm"</span>);</div><div class="line">        mSynthesizer.startSpeaking(TEXT, synListener);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 停止</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">stopSpeek</span><span class="params">()</span> </span>&#123;</div><div class="line">        mSynthesizer.stopSpeaking();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 合成监听器</div><div class="line">     */</div><div class="line">    <span class="keyword">private</span> SynthesizerListener synListener = <span class="keyword">new</span> SynthesizerListener() &#123;</div><div class="line">        <span class="comment">//会话结束回调接口,没有错误时,error为null</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCompleted</span><span class="params">(SpeechError error)</span> </span>&#123;</div><div class="line">            <span class="comment">// 循环</span></div><div class="line">            mSynthesizer.startSpeaking(TEXT, synListener);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onEvent</span><span class="params">(<span class="keyword">int</span> i, <span class="keyword">int</span> i1, <span class="keyword">int</span> i2, Bundle bundle)</span> </span>&#123;&#125;</div><div class="line">        <span class="comment">//缓冲进度回调 //percent为缓冲进度0~100,beginPos为缓冲音频在文本中开始位置,endPos表示缓冲音频在文本中结束位置,info为附加信息。</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onBufferProgress</span><span class="params">(<span class="keyword">int</span> percent, <span class="keyword">int</span> beginPos, <span class="keyword">int</span> endPos, String info)</span> </span>&#123;&#125;</div><div class="line">        <span class="comment">//开始播放</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSpeakBegin</span><span class="params">()</span> </span>&#123;&#125;</div><div class="line">        <span class="comment">//暂停播放</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSpeakPaused</span><span class="params">()</span> </span>&#123;&#125;</div><div class="line">        <span class="comment">//播放进度回调 //percent为播放进度0~100,beginPos为播放音频在文本中开始位置,endPos表示播放音频在文本中结束位置.</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSpeakProgress</span><span class="params">(<span class="keyword">int</span> percent, <span class="keyword">int</span> beginPos, <span class="keyword">int</span> endPos)</span> </span>&#123;&#125;</div><div class="line">        <span class="comment">//恢复播放回调接口</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSpeakResumed</span><span class="params">()</span> </span>&#123;&#125;</div><div class="line">    &#125;;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="3、代码实现"><a href="#3、代码实现" class="headerlink" title="3、代码实现"></a>3、代码实现</h3><p>到这里所有的准备工作都做好了，接下来是代码实现，这部分在 SDK 上有，可以直接复制过来，贴上我的代码(AndroidMainfest.xml 中的权限看 SDK 就好了，这里就不贴出来了)：<br><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.catt.temp.util;</span><br><span class="line"><span class="keyword">import</span> android.content.Context;</span><br><span class="line"><span class="keyword">import</span> android.os.Bundle;</span><br><span class="line"><span class="keyword">import</span> com.iflytek.cloud.SpeechConstant;</span><br><span class="line"><span class="keyword">import</span> com.iflytek.cloud.SpeechError;</span><br><span class="line"><span class="keyword">import</span> com.iflytek.cloud.SpeechSynthesizer;</span><br><span class="line"><span class="keyword">import</span> com.iflytek.cloud.SpeechUtility;</span><br><span class="line"><span class="keyword">import</span> com.iflytek.cloud.SynthesizerListener;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 语音合成</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MSCUtil</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Context mContext;</span><br><span class="line">    <span class="keyword">private</span> SpeechSynthesizer mSynthesizer;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String TEXT = <span class="string">"警告，当前机房温度已达到"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MSCUtil</span><span class="params">(Context context)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.mContext = context;</span><br><span class="line">        SpeechUtility.createUtility(mContext, SpeechConstant.APPID +<span class="string">"=57b27fce"</span>);</span><br><span class="line">        mSynthesizer = SpeechSynthesizer.createSynthesizer(mContext, <span class="keyword">null</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 开始</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">startSpeek</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 设置发音人</span></span><br><span class="line">        mSynthesizer.setParameter(SpeechConstant.VOICE_NAME, <span class="string">"xiaoyan"</span>);</span><br><span class="line">        <span class="comment">// 设置语速</span></span><br><span class="line">        mSynthesizer.setParameter(SpeechConstant.SPEED, <span class="string">"50"</span>);</span><br><span class="line">        <span class="comment">// 设置音量，范围0～100</span></span><br><span class="line">        mSynthesizer.setParameter(SpeechConstant.VOLUME, <span class="string">"80"</span>);</span><br><span class="line">        <span class="comment">// 设置云端</span></span><br><span class="line">        mSynthesizer.setParameter(SpeechConstant.ENGINE_TYPE, SpeechConstant.TYPE_CLOUD);</span><br><span class="line">        mSynthesizer.setParameter(SpeechConstant.TTS_AUDIO_PATH, <span class="string">"./sdcard/iflytek.pcm"</span>);</span><br><span class="line">        mSynthesizer.startSpeaking(TEXT, synListener);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 停止</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">stopSpeek</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        mSynthesizer.stopSpeaking();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 合成监听器</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> SynthesizerListener synListener = <span class="keyword">new</span> SynthesizerListener() &#123;</span><br><span class="line">        <span class="comment">//会话结束回调接口,没有错误时,error为null</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCompleted</span><span class="params">(SpeechError error)</span> </span>&#123;</span><br><span class="line">            <span class="comment">// 循环</span></span><br><span class="line">            mSynthesizer.startSpeaking(TEXT, synListener);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onEvent</span><span class="params">(<span class="keyword">int</span> i, <span class="keyword">int</span> i1, <span class="keyword">int</span> i2, Bundle bundle)</span> </span>&#123;&#125;</span><br><span class="line">        <span class="comment">//缓冲进度回调 //percent为缓冲进度0~100,beginPos为缓冲音频在文本中开始位置,endPos表示缓冲音频在文本中结束位置,info为附加信息。</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onBufferProgress</span><span class="params">(<span class="keyword">int</span> percent, <span class="keyword">int</span> beginPos, <span class="keyword">int</span> endPos, String info)</span> </span>&#123;&#125;</span><br><span class="line">        <span class="comment">//开始播放</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSpeakBegin</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">        <span class="comment">//暂停播放</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSpeakPaused</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">        <span class="comment">//播放进度回调 //percent为播放进度0~100,beginPos为播放音频在文本中开始位置,endPos表示播放音频在文本中结束位置.</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSpeakProgress</span><span class="params">(<span class="keyword">int</span> percent, <span class="keyword">int</span> beginPos, <span class="keyword">int</span> endPos)</span> </span>&#123;&#125;</span><br><span class="line">        <span class="comment">//恢复播放回调接口</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSpeakResumed</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>注释都很详细了，在 onCompleted() 方法中调用 mSynthesizer.startSpeaking(TEXT, synListener); 这一句是我自己的需求，因为我想要它循环播放语音，直到我手动的停止。TEXT 就是需要转换为语音的文字，自己定制。</p>
 <p>很郁闷的事，今天我发现官方 SDK 改了，变成了这样：<br><br><img src="https://i.niupic.com/images/2018/01/19/LRhDIr.png" alt=""><br>一开始不是这样的，不然我也不会浪费这么多时间在这，只能说很坑…</p>
 
@@ -403,13 +404,13 @@
     <div id="QR" style="display: none;">
       
         <div id="wechat" style="display: inline-block">
-          <img id="wechat_qr" src="/images/WechatIMG23.png" alt="ljuns WeChat Pay"/>
+          <img id="wechat_qr" src="/images/WechatIMG23.png" alt="ljuns WeChat Pay">
           <p>微信打赏</p>
         </div>
       
       
         <div id="alipay" style="display: inline-block">
-          <img id="alipay_qr" src="/images/WechatIMG22.jpeg" alt="ljuns Alipay"/>
+          <img id="alipay_qr" src="/images/WechatIMG22.jpeg" alt="ljuns Alipay">
           <p>支付宝打赏</p>
         </div>
       
@@ -512,7 +513,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             文章目录
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -522,10 +523,8 @@
       
 
       <section class="site-overview sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/images/avatar.jpg"
-               alt="ljuns" />
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="ljuns">
           <p class="site-author-name" itemprop="name">ljuns</p>
            
               <p class="site-description motion-element" itemprop="description">做自己喜欢的事，喜欢自己做的事</p>
@@ -536,7 +535,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-count">25</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -558,7 +557,7 @@
             
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-count">23</span>
                 <span class="site-state-item-name">标签</span>
               
             </div>
@@ -613,7 +612,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy;  2016 - 
   <span itemprop="copyrightYear">2018</span>

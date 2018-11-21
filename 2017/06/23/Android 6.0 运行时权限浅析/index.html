@@ -6,15 +6,15 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-Hans">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -32,7 +32,7 @@
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -66,21 +66,21 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="权限," />
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
 
 
+  <meta name="keywords" content="权限,">
 
 
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.0" />
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.0">
 
 
 
@@ -94,6 +94,7 @@
 <meta property="og:url" content="/images/ljuns.ico/2017/06/23/Android 6.0 运行时权限浅析/index.html">
 <meta property="og:site_name" content="ljuns">
 <meta property="og:description" content="关于 Android 的权限是一直都存在的，6.0 之后做的改变其实是为了更好的保护用户的个人信息安全。 最直观的就是以前安装应用的时候会显示这个应用需要用到所有的权限，如果不想应用拥有某个权限，唯一的做法就是放弃该应用。现在不一样了，现在是先不管应用需要哪些权限，安装了再说，等要用到某些功能时应用才提示要申请权限，当然也是可以拒绝的，大不了不用这个功能而已，但是其他的功能还是照样可以用的啊。 接">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://i.niupic.com/images/2018/01/19/GMSsWk.jpg">
 <meta property="og:image" content="https://i.niupic.com/images/2018/01/19/gVXGQu.gif">
 <meta property="og:image" content="https://s1.ax2x.com/2018/01/19/OkQ8z.gif">
@@ -129,7 +130,7 @@
 
 
 
-  <link rel="canonical" href="/images/ljuns.ico/2017/06/23/Android 6.0 运行时权限浅析/"/>
+  <link rel="canonical" href="/images/ljuns.ico/2017/06/23/Android 6.0 运行时权限浅析/">
 
 
 
@@ -138,7 +139,7 @@
   <title> Android 6.0 运行时权限浅析 | ljuns </title>
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
 
@@ -163,13 +164,13 @@
   <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
 
     <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
+      <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">ljuns</span>
         <span class="logo-line-after"><i></i></span>
@@ -199,7 +200,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
           </a>
@@ -209,7 +210,7 @@
         <li class="menu-item menu-item-categories">
           <a href="/categories" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
             
             分类
           </a>
@@ -219,7 +220,7 @@
         <li class="menu-item menu-item-about">
           <a href="/about" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
             
             关于
           </a>
@@ -229,7 +230,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             归档
           </a>
@@ -263,16 +264,16 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="/images/ljuns.ico/2017/06/23/Android 6.0 运行时权限浅析/">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ljuns">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="ljuns">
     </span>
 
@@ -311,7 +312,7 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
             
               <span class="post-meta-divider">|</span>
             
@@ -322,7 +323,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
                   <a href="/categories/学习笔记/" itemprop="url" rel="index">
                     <span itemprop="name">学习笔记</span>
                   </a>
@@ -378,11 +379,11 @@
 <p><img src="https://i.niupic.com/images/2018/01/19/GMSsWk.jpg" alt=""></p>
 <h2 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h2><p>这里通过一个拨打电话的小例子来展示运行时权限的用法：</p>
 <p>首先在布局文件添加一个按钮，这个按钮用来申请权限：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- activity_main.xml --&gt;</span></div><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">LinearLayout</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></div><div class="line">    <span class="attr">xmlns:tools</span>=<span class="string">"http://schemas.android.com/tools"</span></div><div class="line">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line">    <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></div><div class="line">    <span class="attr">android:orientation</span>=<span class="string">"vertical"</span></div><div class="line">    <span class="attr">tools:context</span>=<span class="string">"cn.ljuns.androidgrowing.MainActivity"</span>&gt;</div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">Button</span></span></div><div class="line">        <span class="attr">android:id</span>=<span class="string">"@+id/btn_call"</span></div><div class="line">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">        <span class="attr">android:text</span>=<span class="string">"Call Phone"</span> /&gt;</div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">LinearLayout</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- activity_main.xml --&gt;</span></span><br><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">LinearLayout</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">xmlns:tools</span>=<span class="string">"http://schemas.android.com/tools"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:orientation</span>=<span class="string">"vertical"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">tools:context</span>=<span class="string">"cn.ljuns.androidgrowing.MainActivity"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">Button</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:id</span>=<span class="string">"@+id/btn_call"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:text</span>=<span class="string">"Call Phone"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">LinearLayout</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>很简单的布局，只是添加了一个 Button。既然是拨打电话，那么就需要在 AndroidManifest.xml 文件中进行权限的声明：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.CALL_PHONE"</span> /&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.CALL_PHONE"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
 <p>在 AndroidManifest.xml 文件进行权限的声明这一点没有什么变化，以前是这样，现在也是这样。接下来才是重头戏，看看对应的 MainActivity：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">        setContentView(R.layout.activity_main);</div><div class="line"></div><div class="line">       	<span class="comment">// 绑带 Button 事件</span></div><div class="line">	findViewById(R.id.btn_call).setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</div><div class="line">              	<span class="comment">// 检查权限</span></div><div class="line">                <span class="keyword">if</span> (ContextCompat.checkSelfPermission(MainActivity.<span class="keyword">this</span>,</div><div class="line">                    Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) &#123;</div><div class="line">                  	<span class="comment">// 申请拨打电话的权限</span></div><div class="line">                    ActivityCompat.requestPermissions(MainActivity.<span class="keyword">this</span>,</div><div class="line">                            <span class="keyword">new</span> String[]&#123;Manifest.permission.CALL_PHONE&#125;, <span class="number">1</span>);</div><div class="line">                &#125; <span class="keyword">else</span> &#123;</div><div class="line">                    call();</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line">      </div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 拥有权限时拨打电话</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">call</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            Intent intent = <span class="keyword">new</span> Intent(Intent.ACTION_CALL);</div><div class="line">            intent.setData(Uri.parse(<span class="string">"tel:10086"</span>));</div><div class="line">            startActivity(intent);</div><div class="line">        &#125; <span class="keyword">catch</span> (SecurityException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     *申请权限的回调</div><div class="line">     */</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onRequestPermissionsResult</span><span class="params">(</span></span></div><div class="line">            <span class="keyword">int</span> requestCode, String[] permissions, <span class="keyword">int</span>[] grantResults) &#123;</div><div class="line">        <span class="keyword">switch</span> (requestCode) &#123;</div><div class="line">            <span class="keyword">case</span> <span class="number">1</span>:</div><div class="line">                <span class="keyword">if</span> (grantResults.length &gt; <span class="number">0</span> &amp;&amp;</div><div class="line">                        grantResults[<span class="number">0</span>] == PackageManager.PERMISSION_GRANTED) &#123;</div><div class="line">                    call();</div><div class="line">                &#125; <span class="keyword">else</span> &#123;</div><div class="line">                    Toast.makeText(<span class="keyword">this</span>, <span class="string">"你拒绝了这个权限"</span>, Toast.LENGTH_SHORT).show();</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line"></span><br><span class="line">       	<span class="comment">// 绑带 Button 事件</span></span><br><span class="line">	findViewById(R.id.btn_call).setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</span><br><span class="line">              	<span class="comment">// 检查权限</span></span><br><span class="line">                <span class="keyword">if</span> (ContextCompat.checkSelfPermission(MainActivity.<span class="keyword">this</span>,</span><br><span class="line">                    Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) &#123;</span><br><span class="line">                  	<span class="comment">// 申请拨打电话的权限</span></span><br><span class="line">                    ActivityCompat.requestPermissions(MainActivity.<span class="keyword">this</span>,</span><br><span class="line">                            <span class="keyword">new</span> String[]&#123;Manifest.permission.CALL_PHONE&#125;, <span class="number">1</span>);</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    call();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">      </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 拥有权限时拨打电话</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">call</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Intent intent = <span class="keyword">new</span> Intent(Intent.ACTION_CALL);</span><br><span class="line">            intent.setData(Uri.parse(<span class="string">"tel:10086"</span>));</span><br><span class="line">            startActivity(intent);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (SecurityException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     *申请权限的回调</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onRequestPermissionsResult</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">            <span class="keyword">int</span> requestCode, String[] permissions, <span class="keyword">int</span>[] grantResults)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">switch</span> (requestCode) &#123;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">                <span class="keyword">if</span> (grantResults.length &gt; <span class="number">0</span> &amp;&amp;</span><br><span class="line">                        grantResults[<span class="number">0</span>] == PackageManager.PERMISSION_GRANTED) &#123;</span><br><span class="line">                    call();</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    Toast.makeText(<span class="keyword">this</span>, <span class="string">"你拒绝了这个权限"</span>, Toast.LENGTH_SHORT).show();</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>首先需要通过 <code>ContextCompat.checkSelfPermission()</code> 方法来检查某个权限，如果返回值等于 <code>PackageManager.PERMISSION_GRANTED</code> 就代表已经拥有该权限，而如果返回值等于 <code>PackageManager.PERMISSION_DENIED</code> 则代表还未拥有该权限。</p>
 <p>其次，如果还未拥有该权限就通过 <code>ActivityCompat.requestPermissions(final Activity activity, final String[] permissions, final int requestCode)</code> 方法来申请。三个参数分别是：Activity 对象、需要申请的权限数组、请求码。当然，Fragment 中同样可以申请权限： <code>requestPermissions(String[] permissions, int requestCode)</code> 。</p>
 <p>最后需要对申请的权限进行处理，也就是同意或者拒绝了该权限后需要执行哪些操作。所以还需要重写 <code>onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults)</code> 方法，在该方法中进行处理。onRequestPermissionsResult() 方法的三个参数分布是：申请权限时传递过来的请求码、申请的权限数组、申请权限的返回值(同意或者拒绝)。</p>
@@ -392,19 +393,19 @@
 <p><strong>其实还有一点需要注意：如果手机的 Android 版本低于 6.0，运行时权限不会起任何的作用。</strong></p>
 <h2 id="简单封装"><a href="#简单封装" class="headerlink" title="简单封装"></a>简单封装</h2><p>接下来尝试简单的封装一下：</p>
 <p>首先需要一个接口，里面的两个方法分别代表权限申请成功和失败，也就是允许和拒绝。同时，对于拒绝的权限还要显示哪些权限被拒绝了：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">PermissionListener</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">granted</span><span class="params">()</span></span>;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">denied</span><span class="params">(List&lt;String&gt; deniedList)</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">PermissionListener</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">granted</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">denied</span><span class="params">(List&lt;String&gt; deniedList)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>接着新建一个 BaseActivity 继承 AppCompatActivity，在 BaseActivity 中做权限的申请和申请后的处理：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="keyword">static</span> PermissionListener mListener;</div><div class="line"><span class="comment">/**</span></div><div class="line"> * 申请权限</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">requestRuntimePermissions</span><span class="params">(</span></span></div><div class="line">  				String[] permissions, PermissionListener listener) &#123;</div><div class="line">    mListener = listener;</div><div class="line">    List&lt;String&gt; permissionList = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">    <span class="comment">// 遍历每一个申请的权限，把没有通过的权限放在集合中</span></div><div class="line">    <span class="keyword">for</span> (String permission : permissions) &#123;</div><div class="line">        <span class="keyword">if</span> (ContextCompat.checkSelfPermission(<span class="keyword">this</span>, permission) !=</div><div class="line">                PackageManager.PERMISSION_GRANTED) &#123;</div><div class="line">            permissionList.add(permission);</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            mListener.granted();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">// 申请权限</span></div><div class="line">    <span class="keyword">if</span> (!permissionList.isEmpty()) &#123;</div><div class="line">        ActivityCompat.requestPermissions(<span class="keyword">this</span>,</div><div class="line">                permissionList.toArray(<span class="keyword">new</span> String[permissionList.size()]), <span class="number">1</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 申请后的处理</div><div class="line"> */</div><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onRequestPermissionsResult</span><span class="params">(</span></span></div><div class="line">  			<span class="keyword">int</span> requestCode, String[] permissions, <span class="keyword">int</span>[] grantResults) &#123;</div><div class="line">    <span class="keyword">super</span>.onRequestPermissionsResult(requestCode, permissions, grantResults);</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (grantResults.length &gt; <span class="number">0</span>) &#123;</div><div class="line">        List&lt;String&gt; deniedList = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">      	<span class="comment">// 遍历所有申请的权限，把被拒绝的权限放入集合</span></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; grantResults.length; i++) &#123;</div><div class="line">            <span class="keyword">int</span> grantResult = grantResults[i];</div><div class="line">            <span class="keyword">if</span> (grantResult == PackageManager.PERMISSION_GRANTED) &#123;</div><div class="line">                mListener.granted();</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                deniedList.add(permissions[i]);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (!deniedList.isEmpty()) &#123;</div><div class="line">            mListener.denied(deniedList);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> PermissionListener mListener;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 申请权限</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">requestRuntimePermissions</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  				String[] permissions, PermissionListener listener)</span> </span>&#123;</span><br><span class="line">    mListener = listener;</span><br><span class="line">    List&lt;String&gt; permissionList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    <span class="comment">// 遍历每一个申请的权限，把没有通过的权限放在集合中</span></span><br><span class="line">    <span class="keyword">for</span> (String permission : permissions) &#123;</span><br><span class="line">        <span class="keyword">if</span> (ContextCompat.checkSelfPermission(<span class="keyword">this</span>, permission) !=</span><br><span class="line">                PackageManager.PERMISSION_GRANTED) &#123;</span><br><span class="line">            permissionList.add(permission);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            mListener.granted();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 申请权限</span></span><br><span class="line">    <span class="keyword">if</span> (!permissionList.isEmpty()) &#123;</span><br><span class="line">        ActivityCompat.requestPermissions(<span class="keyword">this</span>,</span><br><span class="line">                permissionList.toArray(<span class="keyword">new</span> String[permissionList.size()]), <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 申请后的处理</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onRequestPermissionsResult</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  			<span class="keyword">int</span> requestCode, String[] permissions, <span class="keyword">int</span>[] grantResults)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.onRequestPermissionsResult(requestCode, permissions, grantResults);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (grantResults.length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        List&lt;String&gt; deniedList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">      	<span class="comment">// 遍历所有申请的权限，把被拒绝的权限放入集合</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; grantResults.length; i++) &#123;</span><br><span class="line">            <span class="keyword">int</span> grantResult = grantResults[i];</span><br><span class="line">            <span class="keyword">if</span> (grantResult == PackageManager.PERMISSION_GRANTED) &#123;</span><br><span class="line">                mListener.granted();</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                deniedList.add(permissions[i]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (!deniedList.isEmpty()) &#123;</span><br><span class="line">            mListener.denied(deniedList);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>上面代码比较简单，这里再介绍一下。</p>
 <ol>
 <li>在 requestRuntimePermissions() 方法中首先遍历应用需要的权限，如果权限还没有申请或者之前申请失败的就先放入一个集合；如果已经申请成功的就回调 granted() 方法，让用户去处理后续。接着对那些还没申请过或者之前申请失败的权限进行申请。</li>
 <li>重写 onRequestPermissionsResult() 方法，遍历申请的所有权限，如果申请通过了就回调 granted() 方法，让用户去做后续处理；如果申请失败就放入集合，并且回调 denied() 方法，让用户去做后续处理。</li>
 </ol>
 <p>MainActivity 中的代码需要修改为如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">    <span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">    setContentView(R.layout.activity_main);</div><div class="line">  </div><div class="line">    <span class="comment">// 绑带 Button 事件</span></div><div class="line">    findViewById(R.id.btn_demo).setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</div><div class="line">            <span class="comment">// 申请权限</span></div><div class="line">            requestRuntimePermissions(<span class="keyword">new</span> String[]&#123;Manifest.permission.CALL_PHONE,</div><div class="line">                            Manifest.permission.READ_EXTERNAL_STORAGE,</div><div class="line">                            Manifest.permission.ACCESS_FINE_LOCATION&#125;,</div><div class="line">                    <span class="keyword">new</span> PermissionListener() &#123;</div><div class="line">                        <span class="meta">@Override</span></div><div class="line">                        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">granted</span><span class="params">()</span> </span>&#123;</div><div class="line">                            <span class="comment">// 权限申请通过</span></div><div class="line">                        &#125;</div><div class="line"></div><div class="line">                        <span class="meta">@Override</span></div><div class="line">                        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">denied</span><span class="params">(List&lt;String&gt; deniedList)</span> </span>&#123;</div><div class="line">                            <span class="comment">// 权限申请不通过</span></div><div class="line">                            <span class="keyword">for</span> (String denied : deniedList) &#123;</div><div class="line">                            	Toast.makeText(MainActivity.<span class="keyword">this</span>,</div><div class="line">                                               denied + <span class="string">"权限被拒绝了"</span>,</div><div class="line">                                               Toast.LENGTH_SHORT).show();</div><div class="line">                            &#125;</div><div class="line">                        &#125;</div><div class="line">                    &#125;);</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">    setContentView(R.layout.activity_main);</span><br><span class="line">  </span><br><span class="line">    <span class="comment">// 绑带 Button 事件</span></span><br><span class="line">    findViewById(R.id.btn_demo).setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</span><br><span class="line">            <span class="comment">// 申请权限</span></span><br><span class="line">            requestRuntimePermissions(<span class="keyword">new</span> String[]&#123;Manifest.permission.CALL_PHONE,</span><br><span class="line">                            Manifest.permission.READ_EXTERNAL_STORAGE,</span><br><span class="line">                            Manifest.permission.ACCESS_FINE_LOCATION&#125;,</span><br><span class="line">                    <span class="keyword">new</span> PermissionListener() &#123;</span><br><span class="line">                        <span class="meta">@Override</span></span><br><span class="line">                        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">granted</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                            <span class="comment">// 权限申请通过</span></span><br><span class="line">                        &#125;</span><br><span class="line"></span><br><span class="line">                        <span class="meta">@Override</span></span><br><span class="line">                        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">denied</span><span class="params">(List&lt;String&gt; deniedList)</span> </span>&#123;</span><br><span class="line">                            <span class="comment">// 权限申请不通过</span></span><br><span class="line">                            <span class="keyword">for</span> (String denied : deniedList) &#123;</span><br><span class="line">                            	Toast.makeText(MainActivity.<span class="keyword">this</span>,</span><br><span class="line">                                               denied + <span class="string">"权限被拒绝了"</span>,</span><br><span class="line">                                               Toast.LENGTH_SHORT).show();</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>最后运行结果：</p>
 <p><img src="https://s1.ax2x.com/2018/01/19/OkQ8z.gif" alt=""></p>
-<p>参考链接：<a href="https://edu.csdn.net/course/detail/3539" target="_blank" rel="external">Android 6.0 运行时权限讲解</a></p>
+<p>参考链接：<a href="https://edu.csdn.net/course/detail/3539" target="_blank" rel="noopener">Android 6.0 运行时权限讲解</a></p>
 
       
     </div>
@@ -427,13 +428,13 @@
     <div id="QR" style="display: none;">
       
         <div id="wechat" style="display: inline-block">
-          <img id="wechat_qr" src="/images/WechatIMG23.png" alt="ljuns WeChat Pay"/>
+          <img id="wechat_qr" src="/images/WechatIMG23.png" alt="ljuns WeChat Pay">
           <p>微信打赏</p>
         </div>
       
       
         <div id="alipay" style="display: inline-block">
-          <img id="alipay_qr" src="/images/WechatIMG22.jpeg" alt="ljuns Alipay"/>
+          <img id="alipay_qr" src="/images/WechatIMG22.jpeg" alt="ljuns Alipay">
           <p>支付宝打赏</p>
         </div>
       
@@ -536,7 +537,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             文章目录
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -546,10 +547,8 @@
       
 
       <section class="site-overview sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/images/avatar.jpg"
-               alt="ljuns" />
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="ljuns">
           <p class="site-author-name" itemprop="name">ljuns</p>
            
               <p class="site-description motion-element" itemprop="description">做自己喜欢的事，喜欢自己做的事</p>
@@ -560,7 +559,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-count">25</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -582,7 +581,7 @@
             
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-count">23</span>
                 <span class="site-state-item-name">标签</span>
               
             </div>
@@ -637,7 +636,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy;  2016 - 
   <span itemprop="copyrightYear">2018</span>

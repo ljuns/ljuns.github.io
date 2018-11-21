@@ -6,15 +6,15 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-Hans">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -32,7 +32,7 @@
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -66,21 +66,21 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="生命周期 启动模式," />
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
 
 
+  <meta name="keywords" content="生命周期 启动模式,">
 
 
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.0" />
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.0">
 
 
 
@@ -94,6 +94,7 @@
 <meta property="og:url" content="/images/ljuns.ico/2017/02/15/学习总结-Activity-的生命周期和启动模式/index.html">
 <meta property="og:site_name" content="ljuns">
 <meta property="og:description" content="可能是因为处于比较安逸的环境（目前团队移动端项目不多），心态有点浮躁，想要提高自己却又始终没有行动起来，为了改变现状同时也改变自己，前两天定下个目标：每周产出一篇文章，作为自己成长道路上的垫脚石。 这将是一个系列，“学习总结”的系列，主要是对《Android 开发艺术探索》学习的总结，如无特别说明，该系列中的引用都来自《Android 开发艺术探索》。">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://i.niupic.com/images/2018/01/19/8PaktT.png">
 <meta property="og:image" content="https://i.niupic.com/images/2018/01/19/gk6NSJ.png">
 <meta property="og:image" content="https://i.niupic.com/images/2018/01/19/XYDbI6.png">
@@ -101,7 +102,7 @@
 <meta property="og:image" content="https://i.niupic.com/images/2018/01/19/MjN73W.png">
 <meta property="og:image" content="https://i.niupic.com/images/2018/01/19/cEcZOQ.png">
 <meta property="og:image" content="https://i.niupic.com/images/2018/01/19/fWbZ40.png">
-<meta property="og:updated_time" content="2018-03-13T05:49:57.755Z">
+<meta property="og:updated_time" content="2018-03-13T05:49:57.756Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="学习总结--Activity 的生命周期和启动模式">
 <meta name="twitter:description" content="可能是因为处于比较安逸的环境（目前团队移动端项目不多），心态有点浮躁，想要提高自己却又始终没有行动起来，为了改变现状同时也改变自己，前两天定下个目标：每周产出一篇文章，作为自己成长道路上的垫脚石。 这将是一个系列，“学习总结”的系列，主要是对《Android 开发艺术探索》学习的总结，如无特别说明，该系列中的引用都来自《Android 开发艺术探索》。">
@@ -133,7 +134,7 @@
 
 
 
-  <link rel="canonical" href="/images/ljuns.ico/2017/02/15/学习总结-Activity-的生命周期和启动模式/"/>
+  <link rel="canonical" href="/images/ljuns.ico/2017/02/15/学习总结-Activity-的生命周期和启动模式/">
 
 
 
@@ -142,7 +143,7 @@
   <title> 学习总结--Activity 的生命周期和启动模式 | ljuns </title>
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
 
@@ -167,13 +168,13 @@
   <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
 
     <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
+      <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">ljuns</span>
         <span class="logo-line-after"><i></i></span>
@@ -203,7 +204,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
           </a>
@@ -213,7 +214,7 @@
         <li class="menu-item menu-item-categories">
           <a href="/categories" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
             
             分类
           </a>
@@ -223,7 +224,7 @@
         <li class="menu-item menu-item-about">
           <a href="/about" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
             
             关于
           </a>
@@ -233,7 +234,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             归档
           </a>
@@ -267,16 +268,16 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="/images/ljuns.ico/2017/02/15/学习总结-Activity-的生命周期和启动模式/">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ljuns">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="ljuns">
     </span>
 
@@ -315,7 +316,7 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
             
               <span class="post-meta-divider">|</span>
             
@@ -326,7 +327,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
                   <a href="/categories/学习笔记/" itemprop="url" rel="index">
                     <span itemprop="name">学习笔记</span>
                   </a>
@@ -395,19 +396,19 @@
 <h2 id="Activity-的启动模式"><a href="#Activity-的启动模式" class="headerlink" title="Activity 的启动模式"></a>Activity 的启动模式</h2><p>一个 Android 应用程序功能通常会被拆分为多个 Activity，各个 Activity 之间通过 Intent 进行连接，而 Android 系统则通过栈结构来保存整个应用程序的 Activity，这个栈就被叫做任务栈，栈底元素是整个任务栈的发起者。</p>
 <h3 id="standard：标准模式"><a href="#standard：标准模式" class="headerlink" title="standard：标准模式"></a>standard：标准模式</h3><p>这是系统默认的启动模式，每次启动一个 Activity 都会创建一个新的实例，不管这个实例是否已经存在。在这种模式下，谁启动了这个 Activity，那么这个 Activity 就运行在启动它的那个 Activity 所在的栈中。</p>
 <p><font color="red" size="4">注意：</font> 如果是用 ApplicationContext 去启动 standard 模式的 Activity 会报错：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">E/AndroidRuntime: FATAL EXCEPTION: main</div><div class="line">  android.util.AndroidRuntimeException:<span class="function">Calling <span class="title">startActivity</span><span class="params">()</span> from </span></div><div class="line">  outside of an Activity context <span class="keyword">requires</span> the FLAG_ACTIVITY_NEW_TASK </div><div class="line">  flag. Is <span class="keyword">this</span> really what you want?</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">E/AndroidRuntime: FATAL EXCEPTION: main</span><br><span class="line">  android.util.AndroidRuntimeException:<span class="function">Calling <span class="title">startActivity</span><span class="params">()</span> from </span></span><br><span class="line"><span class="function">  outside of an Activity context <span class="keyword">requires</span> the FLAG_ACTIVITY_NEW_TASK </span></span><br><span class="line"><span class="function">  flag. Is <span class="keyword">this</span> really what you want?</span></span><br></pre></td></tr></table></figure>
 <p>这是因为非 Activity 类型的 Context（ApplicationContext）并没有所谓的任务栈。出现这种情况时给待启动的 Activity 添加 <code>FLAG_ACTIVITY_NEW_TASK</code> 这个标记便可以解决问题。</p>
 <h3 id="singleTop：栈顶复用模式"><a href="#singleTop：栈顶复用模式" class="headerlink" title="singleTop：栈顶复用模式"></a>singleTop：栈顶复用模式</h3><p>在这种模式下，如果 Activity 已经处于栈顶位置，当启动该 Activity 时不会重新创建实例，同时onCreate()、onStart() 方法也不会被系统调用，但是系统会在 Activity 启动时回调它的 onNewInstance() 方法。这种情况下的生命周期如下图：<br><br><img src="https://i.niupic.com/images/2018/01/19/cEcZOQ.png" alt=""><br><br>如果 Activity 没有处于栈顶位置，启动该 Activity 就会重新创建新的实例。</p>
 <p>举个例子：假设当前任务栈中有 A、B、C、D 四个 Activity，其中 A 位于栈底，D 位于栈顶。如果 D 的启动模式是 singTop，此时 D 位于栈顶，当再次启动 D 的时候栈内的情况仍为 ABCD；如果 B 的启动模式是 singTop，此时 B 不是位于栈顶，当再次启动 B 的时候栈内的情况就变为 ABCDB。</p>
 <h3 id="singleTask：栈内复用模式"><a href="#singleTask：栈内复用模式" class="headerlink" title="singleTask：栈内复用模式"></a>singleTask：栈内复用模式</h3><p>这里先要了解一下：什么是 Activity 需要的任务栈？默认情况下，一个应用中所有的 Activity 需要的任务栈的名字是该应用的包名。但是也可以为每个 Activity 单独指定 TaskAffinity 这个属性，这个属性值必须不能和包名相同。TaskAffinity 属性主要和 singleTask 启动模式或者和 allowTaskReparenting 属性配对使用，在其他情况下没有意义。</p>
 <p>在 singleTask 这种模式下，只要 Activity 在任何一个栈中存在，那么不管重复启动多少次该 Activity 也不会重新创建实例，同时系统也会回调它的 onNewInstance() 方法。具体如下：<br><br><img src="https://i.niupic.com/images/2018/01/19/fWbZ40.png" alt=""><br><br>下面举几个例子来说明一下：</p>
 <blockquote>
+</blockquote>
 <ul>
 <li>比如目前任务栈 S1 中的情况为 ABC，这个时候 Activity D 以 singleTask 模式请求启动，其所需要的任务栈为 S2，由于 S2 和 D 的实例都不存在，所以系统会先创建任务栈，然后再创建 D 的实例并将其入栈到 S2。</li>
 <li>另外一种情况，假设 D 所需的任务栈为 S1，其他情况如前面所示，那么由于 S1 已经存在，所以系统会直接创建 D 的实例并将其入栈道 S1。</li>
 <li>如果 D 所需的任务栈为 S1，并且当前任务栈 S1 的情况为 ADBC，根据栈内复用的原则，此时 D 不会重新创建，系统会把 D 切换到栈顶并调用其 onNewInstance() 方法，同时由于 singleTask 默认具有 clearTop 的效果，会导致栈内所有在 D 上面的 Activity 全部出栈，于是最终 S1 中的情况为 AD 。</li>
 </ul>
-</blockquote>
 <h3 id="singleInstance：单实例模式"><a href="#singleInstance：单实例模式" class="headerlink" title="singleInstance：单实例模式"></a>singleInstance：单实例模式</h3><p>这是一种加强的 singleTask 模式，具有此种模式的 Activity 拥有 singleTask 模式所有的特性，同时具有该模式的 Activity 只能单独地位于一个任务栈中。</p>
 <p>举个例子：有 A、B、C 三个 Activity，其中 A 和 C 的启动模式为 standard，B 的启动模式为 singleInstance，启动顺序为 A -&gt; B -&gt; C，此时会发现 AC 会位于同一个任务栈中，而 B 位于另外一个任务栈。当按下 Back 键进行返回时，C 直接返回到了 A，再按下 Back 键就返回到 B。这是因为 A 和 C 所在的任务栈已经空了，再按下 Back 键时就会显示另一个任务栈的 Activity（B）。</p>
 <h2 id="IntentFilter-的匹配规则"><a href="#IntentFilter-的匹配规则" class="headerlink" title="IntentFilter 的匹配规则"></a>IntentFilter 的匹配规则</h2><p>启动 Activity 分为显示启动和隐式启动两种，显示启动需要明确指定被启动对象的组件信息，包括包名和类名，而隐式启动则不需要明确指定组件信息。原则上一个 Intent 不应该既是显示启动又是隐式启动，<strong>如果一个 Intent 同时存在显示启动和隐式启动则以显示启动为主</strong>。</p>
@@ -422,7 +423,7 @@
 <li>Path、pathPattern、pathPrefix：表示路径信息。</li>
 </ul>
 <p>实际的例子：<br></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">content:<span class="comment">//com.example.project:200/folder/subfolder/etc</span></div><div class="line">http:<span class="comment">//www.baidu.com:80/search/info</span></div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">content:<span class="comment">//com.example.project:200/folder/subfolder/etc</span></span><br><span class="line">http:<span class="comment">//www.baidu.com:80/search/info</span></span><br></pre></td></tr></table></figure>
 <p>匹配规则：如果过滤规则中定义了 data，那么 Intent 中必须也要定义可<strong>完全匹配</strong>过滤规则中的任何一个 data。匹配规则中 URI 的默认值为 content 或者 file，所以即使匹配规则中没有写明 URI，Intent 中 URI 的 scheme 必须为 content 或者 file。<font color="red" size="4">注意：</font> Intent 的 setData() 方法和 setType() 方法会彼此清除对方的值，所以如果要指定完整的 data 必须使用 setDataAndType() 方法。</p>
 <p>“Activity 的生命周期和启动模式” 的学习总结就到这了，如果有发现错误或有更好的见解再来补充说明。</p>
 
@@ -447,13 +448,13 @@
     <div id="QR" style="display: none;">
       
         <div id="wechat" style="display: inline-block">
-          <img id="wechat_qr" src="/images/WechatIMG23.png" alt="ljuns WeChat Pay"/>
+          <img id="wechat_qr" src="/images/WechatIMG23.png" alt="ljuns WeChat Pay">
           <p>微信打赏</p>
         </div>
       
       
         <div id="alipay" style="display: inline-block">
-          <img id="alipay_qr" src="/images/WechatIMG22.jpeg" alt="ljuns Alipay"/>
+          <img id="alipay_qr" src="/images/WechatIMG22.jpeg" alt="ljuns Alipay">
           <p>支付宝打赏</p>
         </div>
       
@@ -556,7 +557,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             文章目录
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -566,10 +567,8 @@
       
 
       <section class="site-overview sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/images/avatar.jpg"
-               alt="ljuns" />
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="ljuns">
           <p class="site-author-name" itemprop="name">ljuns</p>
            
               <p class="site-description motion-element" itemprop="description">做自己喜欢的事，喜欢自己做的事</p>
@@ -580,7 +579,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-count">25</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -602,7 +601,7 @@
             
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-count">23</span>
                 <span class="site-state-item-name">标签</span>
               
             </div>
@@ -657,7 +656,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy;  2016 - 
   <span itemprop="copyrightYear">2018</span>

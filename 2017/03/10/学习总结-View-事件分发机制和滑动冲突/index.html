@@ -6,15 +6,15 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-Hans">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -32,7 +32,7 @@
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -66,21 +66,21 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="事件分发, 滑动冲突," />
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
 
 
+  <meta name="keywords" content="事件分发, 滑动冲突,">
 
 
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.0" />
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.0">
 
 
 
@@ -94,6 +94,7 @@
 <meta property="og:url" content="/images/ljuns.ico/2017/03/10/学习总结-View-事件分发机制和滑动冲突/index.html">
 <meta property="og:site_name" content="ljuns">
 <meta property="og:description" content="终于到了 View 这一关卡了，之前也有实践过自定义 View：圆弧刻度温度进度条，但是对于 View 底层的东西没什么了解，只是会用而已，抱着“知其然知其所以然”的心态，很多时候都会先去尝试使用，然后才来究其原因。这次会分两个部分来叙述本篇：事件分发机制、滑动冲突；自己本身对源码也不熟悉，所以本篇主要是理论概述，尽量不出现源码的东西。">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2017-06-22T06:24:03.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="学习总结 -- View 事件分发机制和滑动冲突">
@@ -125,7 +126,7 @@
 
 
 
-  <link rel="canonical" href="/images/ljuns.ico/2017/03/10/学习总结-View-事件分发机制和滑动冲突/"/>
+  <link rel="canonical" href="/images/ljuns.ico/2017/03/10/学习总结-View-事件分发机制和滑动冲突/">
 
 
 
@@ -134,7 +135,7 @@
   <title> 学习总结 -- View 事件分发机制和滑动冲突 | ljuns </title>
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
 
@@ -159,13 +160,13 @@
   <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
 
     <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
+      <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">ljuns</span>
         <span class="logo-line-after"><i></i></span>
@@ -195,7 +196,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
           </a>
@@ -205,7 +206,7 @@
         <li class="menu-item menu-item-categories">
           <a href="/categories" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
             
             分类
           </a>
@@ -215,7 +216,7 @@
         <li class="menu-item menu-item-about">
           <a href="/about" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
             
             关于
           </a>
@@ -225,7 +226,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             归档
           </a>
@@ -259,16 +260,16 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="/images/ljuns.ico/2017/03/10/学习总结-View-事件分发机制和滑动冲突/">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ljuns">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="ljuns">
     </span>
 
@@ -307,7 +308,7 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
             
               <span class="post-meta-divider">|</span>
             
@@ -318,7 +319,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
                   <a href="/categories/学习笔记/" itemprop="url" rel="index">
                     <span itemprop="name">学习笔记</span>
                   </a>
@@ -365,7 +366,7 @@
       
 
       
-        <p>终于到了 View 这一关卡了，之前也有实践过自定义 View：<a href="https://ljuns.github.io/2016/07/27/TemperatureView%EF%BC%9A%E5%9C%86%E5%BC%A7%E5%88%BB%E5%BA%A6%E6%B8%A9%E5%BA%A6%E8%BF%9B%E5%BA%A6%E6%9D%A1/" target="_blank" rel="external">圆弧刻度温度进度条</a>，但是对于 View 底层的东西没什么了解，只是会用而已，抱着“知其然知其所以然”的心态，很多时候都会先去尝试使用，然后才来究其原因。这次会分两个部分来叙述本篇：事件分发机制、滑动冲突；自己本身对源码也不熟悉，所以本篇主要是理论概述，尽量不出现源码的东西。</p>
+        <p>终于到了 View 这一关卡了，之前也有实践过自定义 View：<a href="https://ljuns.github.io/2016/07/27/TemperatureView%EF%BC%9A%E5%9C%86%E5%BC%A7%E5%88%BB%E5%BA%A6%E6%B8%A9%E5%BA%A6%E8%BF%9B%E5%BA%A6%E6%9D%A1/" target="_blank" rel="noopener">圆弧刻度温度进度条</a>，但是对于 View 底层的东西没什么了解，只是会用而已，抱着“知其然知其所以然”的心态，很多时候都会先去尝试使用，然后才来究其原因。这次会分两个部分来叙述本篇：事件分发机制、滑动冲突；自己本身对源码也不熟悉，所以本篇主要是理论概述，尽量不出现源码的东西。</p>
 <a id="more"></a>
 <h2 id="事件分发机制"><a href="#事件分发机制" class="headerlink" title="事件分发机制"></a>事件分发机制</h2><p>首先要声明这里用来分析的对象是 MotionEvent，即点击事件。</p>
 <blockquote>
@@ -377,7 +378,7 @@
 <p><strong>public boolean onInterceptTouchEvent(MotionEvent event)</strong></p>
 <p><strong>public boolean onTouchEvent(MotionEvent event)</strong></p>
 <p>这三个方法的关系就如下面的伪代码：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">dispatchTouchEvent</span><span class="params">(MotionEvent event)</span> </span>&#123;</div><div class="line">  <span class="keyword">boolean</span> consume = <span class="keyword">false</span>;</div><div class="line">  <span class="keyword">if</span> (onInterceptTouchEvent(event)) &#123;</div><div class="line">    consume = onTouchEvent(event);</div><div class="line">  &#125; <span class="keyword">else</span> &#123;</div><div class="line">    consume = child.dispatchTouchEvent(ev);</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> consume;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">dispatchTouchEvent</span><span class="params">(MotionEvent event)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">boolean</span> consume = <span class="keyword">false</span>;</span><br><span class="line">  <span class="keyword">if</span> (onInterceptTouchEvent(event)) &#123;</span><br><span class="line">    consume = onTouchEvent(event);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    consume = child.dispatchTouchEvent(ev);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> consume;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>通过这个伪代码可以很清晰的知道这三个方法之间的关系。它们的传递规则：对于一个根 ViewGroup 来说，点击事件产生后，首先会传递给 ViewGroup 本身，此时 ViewGroup 的 dispatchTouchEvent() 方法就会被调用，接着会调用 onInterceptTouchEvent() 方法，如果 onInterceptTouchEvent() 方法返回 true 就表示 ViewGroup 要拦截当前事件；接着再调用 onTouchEvent() 方法来处理该事件；但是如果 onInterceptTouchEvent() 方法返回 false 就表示 ViewGroup 不拦截当前事件，此时 ViewGroup 的 onTouchEvent() 方法就不会被调用，而是调用子 View 的 dispatchTouchEvent() 方法，如此反复直到事件最终被处理。</p>
 <p>通常来说那三个方法的执行流程就如上所说的，但是还会有一些比较特殊的情况，比如设置 OnTouchListener、OnClickListener。</p>
 <p>当一个 View 需要处理事件时，如果 View 设置了 OnTouchListener，那么 OnTouchListener 中的 onTouch() 方法就会被调用。如果 onTouch() 方法返回 false，则当前 View 的 onTouchEvent() 方法就会被调用；如果返回 true，当前 View 的 onTouchEvent() 方法将不会被调用。</p>
@@ -404,12 +405,12 @@
 <p>比较常见的滑动冲突就是上面那三种，那么该怎么来解决呢？其实可以根据滑动类型是水平滑动还是竖直滑动来判断由谁来拦截事件。至于如何判断滑动类型就有比较多的方式了：可以依据滑动路径和水平方向所形成的夹角；也可以依据水平方向和竖直方向上的距离差来判断 … 。</p>
 <p>滑动类型已经确定了，接下来就是确定滑动的接收者，究竟是谁来响应这个滑动类型？下面介绍两种具体的解决方法：</p>
 <h3 id="外部拦截"><a href="#外部拦截" class="headerlink" title="外部拦截"></a>外部拦截</h3><p>所谓外部拦截就是指点击事件都先经过父容器的拦截处理，如果父容器需要该事件就拦截，否则就不拦截而是交给子容器。外部拦截需要重写父容器的 onInterceptTouchEvent() 方法，在内部做响应的拦截即可。这种方法的伪代码如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">oonInterceptTouchEvent</span><span class="params">(MotionEvent event)</span> </span>&#123;</div><div class="line">  <span class="keyword">boolean</span> intercepted = <span class="keyword">false</span>;</div><div class="line">  <span class="keyword">int</span> x = (<span class="keyword">int</span>) event.getX();</div><div class="line">  <span class="keyword">int</span> y = (<span class="keyword">int</span>) event.getY();</div><div class="line">  <span class="keyword">switch</span> (event.getAction()) &#123;</div><div class="line">    <span class="keyword">case</span> MotionEvent.ACTION_DOWN:</div><div class="line">      intercepted = <span class="keyword">false</span>;</div><div class="line">      <span class="keyword">break</span>;</div><div class="line">    <span class="keyword">case</span> MotionEvent.ACTION_MOVE:</div><div class="line">      <span class="keyword">if</span> (父容器需要当前点击事件) &#123;</div><div class="line">        intercepted = <span class="keyword">true</span>;</div><div class="line">      &#125; <span class="keyword">else</span> &#123;</div><div class="line">        intercepted = <span class="keyword">false</span>;</div><div class="line">      &#125;</div><div class="line">      <span class="keyword">break</span>;</div><div class="line">    <span class="keyword">case</span> MotionEvent.ACTION_UP:</div><div class="line">      intercepted = <span class="keyword">false</span>;</div><div class="line">      <span class="keyword">break</span>;</div><div class="line">    <span class="keyword">default</span> :</div><div class="line">      <span class="keyword">break</span>;</div><div class="line">  &#125;</div><div class="line">  mLastXIntercept = x;</div><div class="line">  mLastYIntercept = y;</div><div class="line">  <span class="keyword">return</span> intercepted;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">oonInterceptTouchEvent</span><span class="params">(MotionEvent event)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">boolean</span> intercepted = <span class="keyword">false</span>;</span><br><span class="line">  <span class="keyword">int</span> x = (<span class="keyword">int</span>) event.getX();</span><br><span class="line">  <span class="keyword">int</span> y = (<span class="keyword">int</span>) event.getY();</span><br><span class="line">  <span class="keyword">switch</span> (event.getAction()) &#123;</span><br><span class="line">    <span class="keyword">case</span> MotionEvent.ACTION_DOWN:</span><br><span class="line">      intercepted = <span class="keyword">false</span>;</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> MotionEvent.ACTION_MOVE:</span><br><span class="line">      <span class="keyword">if</span> (父容器需要当前点击事件) &#123;</span><br><span class="line">        intercepted = <span class="keyword">true</span>;</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        intercepted = <span class="keyword">false</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> MotionEvent.ACTION_UP:</span><br><span class="line">      intercepted = <span class="keyword">false</span>;</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">default</span> :</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  mLastXIntercept = x;</span><br><span class="line">  mLastYIntercept = y;</span><br><span class="line">  <span class="keyword">return</span> intercepted;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>在 onInterceptTouchEvent() 方法中，首先是 ACTION_DOWN 事件，父容器必须返回 false，即不拦截 ACTION_DOWN 事件，这是因为一旦父容器拦截了 ACTION_DOWN 事件，那么后续的 ACTION_MOVE 和 ACTION_UP 事件都会直接交由父容器处理，此时事件就不能传递给子元素了；其次是 ACTION_MOVE 事件，这个事件可以根据需要来决定是否拦截，如果父容器需要拦截就返回 true，否则就返回 false；最后是 ACTION_UP 事件，这里必须返回 false，因为 ACTION_UP 事件本身没有太多意义。</p>
 <h3 id="内部拦截"><a href="#内部拦截" class="headerlink" title="内部拦截"></a>内部拦截</h3><p>内部拦截是指父容器默认不拦截任何事件，所有的事件都传递给子元素，如果子元素需要此事件就直接消耗处理掉，否则就返回给父容器进行处理。这种方法和外部拦截刚好相反，需要配合 requestDisallowInterceptTouchEvent() 方法才能正常工作，此时需要重写子元素的 dispatchTouchEvent() 方法。伪代码如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">dispatchTouchEvent</span><span class="params">(MotionEvent event)</span> </span>&#123;</div><div class="line">  <span class="keyword">int</span> x = (<span class="keyword">int</span>) event.getX();</div><div class="line">  <span class="keyword">int</span> y = (<span class="keyword">int</span>) event.getY();</div><div class="line">  <span class="keyword">switch</span> (event.getAction) &#123;</div><div class="line">    <span class="keyword">case</span> MotionEvent.ACTION_DOWN:</div><div class="line">      parent.requestDisallowInterceptTouchEvent(<span class="keyword">true</span>);</div><div class="line">      <span class="keyword">break</span>;</div><div class="line">    <span class="keyword">case</span> MotinEvent.ACTION_MOVE:</div><div class="line">      <span class="keyword">int</span> deltaX = x - mLastX;</div><div class="line">      <span class="keyword">int</span> deltaY = y - mLastY;</div><div class="line">      <span class="keyword">if</span> (父容器需要此类点击事件) &#123;</div><div class="line">        parent.requestDisallowInterceptTouchEvent(<span class="keyword">false</span>);</div><div class="line">      &#125;</div><div class="line">      <span class="keyword">break</span>;</div><div class="line">    <span class="keyword">case</span> MotionEvent.ACTION_UP:</div><div class="line">      <span class="keyword">break</span>;</div><div class="line">    <span class="keyword">default</span> :</div><div class="line">      <span class="keyword">break</span>;</div><div class="line">  &#125;</div><div class="line">  mLastX = x;</div><div class="line">  mLastY = y;</div><div class="line">  <span class="keyword">return</span> <span class="keyword">super</span>.dispatchTouchEvent(event);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">dispatchTouchEvent</span><span class="params">(MotionEvent event)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> x = (<span class="keyword">int</span>) event.getX();</span><br><span class="line">  <span class="keyword">int</span> y = (<span class="keyword">int</span>) event.getY();</span><br><span class="line">  <span class="keyword">switch</span> (event.getAction) &#123;</span><br><span class="line">    <span class="keyword">case</span> MotionEvent.ACTION_DOWN:</span><br><span class="line">      parent.requestDisallowInterceptTouchEvent(<span class="keyword">true</span>);</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> MotinEvent.ACTION_MOVE:</span><br><span class="line">      <span class="keyword">int</span> deltaX = x - mLastX;</span><br><span class="line">      <span class="keyword">int</span> deltaY = y - mLastY;</span><br><span class="line">      <span class="keyword">if</span> (父容器需要此类点击事件) &#123;</span><br><span class="line">        parent.requestDisallowInterceptTouchEvent(<span class="keyword">false</span>);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> MotionEvent.ACTION_UP:</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">default</span> :</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  mLastX = x;</span><br><span class="line">  mLastY = y;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">super</span>.dispatchTouchEvent(event);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>使用内部拦截除了需要对子元素进行修改以外，父元素也要修改为拦截除了 ACTION_DOWN 以外的其他事件。事件父元素所做的修改如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onInterceptTouchEvent</span><span class="params">(MotionEvent event)</span> </span>&#123;</div><div class="line">  <span class="keyword">int</span> action = event.getAction();</div><div class="line">  <span class="keyword">if</span> (action == MotionEvent.ACTION_DOWN) &#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">  &#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onInterceptTouchEvent</span><span class="params">(MotionEvent event)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> action = event.getAction();</span><br><span class="line">  <span class="keyword">if</span> (action == MotionEvent.ACTION_DOWN) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>为什么父元素不能拦截 ACTION_DOWN 事件呢？那是因为通过 requestDisallowInterceptTouchEvent() 方法会自动设置一个 FLAG_DISALLOW_INTERCEPT 标记，该标记会导致父元素无法拦截除了 ACTION_DOWN  以外的其他点击事件，而 ACTION_DOWN 事件会重置 FLAG_DISALLOW_INTERCEPT 标记，使之无效。</p>
 <p>目前所理解的 View 事件分发机制和滑动冲突就这么多了，只是一些理论概述，接下来还需要好好的实践一番才能进一步掌握，同时也才能发现一些细节上的问题。</p>
 
@@ -434,13 +435,13 @@
     <div id="QR" style="display: none;">
       
         <div id="wechat" style="display: inline-block">
-          <img id="wechat_qr" src="/images/WechatIMG23.png" alt="ljuns WeChat Pay"/>
+          <img id="wechat_qr" src="/images/WechatIMG23.png" alt="ljuns WeChat Pay">
           <p>微信打赏</p>
         </div>
       
       
         <div id="alipay" style="display: inline-block">
-          <img id="alipay_qr" src="/images/WechatIMG22.jpeg" alt="ljuns Alipay"/>
+          <img id="alipay_qr" src="/images/WechatIMG22.jpeg" alt="ljuns Alipay">
           <p>支付宝打赏</p>
         </div>
       
@@ -543,7 +544,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             文章目录
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -553,10 +554,8 @@
       
 
       <section class="site-overview sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/images/avatar.jpg"
-               alt="ljuns" />
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="ljuns">
           <p class="site-author-name" itemprop="name">ljuns</p>
            
               <p class="site-description motion-element" itemprop="description">做自己喜欢的事，喜欢自己做的事</p>
@@ -567,7 +566,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-count">25</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -589,7 +588,7 @@
             
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-count">23</span>
                 <span class="site-state-item-name">标签</span>
               
             </div>
@@ -644,7 +643,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy;  2016 - 
   <span itemprop="copyrightYear">2018</span>

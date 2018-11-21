@@ -6,15 +6,15 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-Hans">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -32,7 +32,7 @@
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -66,21 +66,21 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="线程池," />
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
 
 
+  <meta name="keywords" content="线程池,">
 
 
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.0" />
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.0">
 
 
 
@@ -94,8 +94,9 @@
 <meta property="og:url" content="/images/ljuns.ico/2017/05/09/学习总结 -- Android 中的线程池基本介绍/index.html">
 <meta property="og:site_name" content="ljuns">
 <meta property="og:description" content="首先概括一下线程池的好处：   重用线程池中的线程，避免因为线程的创建和销毁带来的性能开销； 能有效控制线程池的最大并发数，避免大量的线程之间因互相抢占系统资源而导致的阻塞现象； 能够对线程进行简单的管理，并提供定时执行以及指定间隔循环执行等功能。   Android 中的线程池来源于 Java 的 Executor，Executor 是个接口，真正的实现是 ThreadPoolExecutor。">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://i.niupic.com/images/2018/01/19/T6P29J.png">
-<meta property="og:updated_time" content="2018-01-22T09:41:20.088Z">
+<meta property="og:updated_time" content="2018-01-22T09:41:20.089Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="学习总结 -- Android 中的线程池基本介绍">
 <meta name="twitter:description" content="首先概括一下线程池的好处：   重用线程池中的线程，避免因为线程的创建和销毁带来的性能开销； 能有效控制线程池的最大并发数，避免大量的线程之间因互相抢占系统资源而导致的阻塞现象； 能够对线程进行简单的管理，并提供定时执行以及指定间隔循环执行等功能。   Android 中的线程池来源于 Java 的 Executor，Executor 是个接口，真正的实现是 ThreadPoolExecutor。">
@@ -127,7 +128,7 @@
 
 
 
-  <link rel="canonical" href="/images/ljuns.ico/2017/05/09/学习总结 -- Android 中的线程池基本介绍/"/>
+  <link rel="canonical" href="/images/ljuns.ico/2017/05/09/学习总结 -- Android 中的线程池基本介绍/">
 
 
 
@@ -136,7 +137,7 @@
   <title> 学习总结 -- Android 中的线程池基本介绍 | ljuns </title>
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
 
@@ -161,13 +162,13 @@
   <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
 
     <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
+      <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">ljuns</span>
         <span class="logo-line-after"><i></i></span>
@@ -197,7 +198,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
           </a>
@@ -207,7 +208,7 @@
         <li class="menu-item menu-item-categories">
           <a href="/categories" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
             
             分类
           </a>
@@ -217,7 +218,7 @@
         <li class="menu-item menu-item-about">
           <a href="/about" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
             
             关于
           </a>
@@ -227,7 +228,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             归档
           </a>
@@ -261,16 +262,16 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="/images/ljuns.ico/2017/05/09/学习总结 -- Android 中的线程池基本介绍/">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ljuns">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="ljuns">
     </span>
 
@@ -309,7 +310,7 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
             
               <span class="post-meta-divider">|</span>
             
@@ -320,7 +321,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
                   <a href="/categories/学习笔记/" itemprop="url" rel="index">
                     <span itemprop="name">学习笔记</span>
                   </a>
@@ -378,14 +379,14 @@
 <p>Android 中的线程池来源于 Java 的 Executor，Executor 是个接口，真正的实现是 ThreadPoolExecutor。ThreadPoolExecutor 提供了一系列的参数来配置线程池，从而创建不同的线程池。</p>
 <a id="more"></a>
 <h2 id="ThreadPoolExecutor"><a href="#ThreadPoolExecutor" class="headerlink" title="ThreadPoolExecutor"></a>ThreadPoolExecutor</h2><p>ThreadPoolExecutor 是线程池的真正实现，也是线程池中最核心的一个类。它有四个构造方法，按照惯例直接看参数最多的那个构造方法：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">public ThreadPoolExecutor (int corePoolSize,</div><div class="line">                           int maximumPoolSize,</div><div class="line">                           long keepAliveTime,</div><div class="line">                           TimeUnit unit,</div><div class="line">                           BlockingQueue&lt;Runnable&gt; workQueue,</div><div class="line">                           ThreadFactory threadFactory,</div><div class="line">                           RejectedExecutionHandler handler)</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public ThreadPoolExecutor (int corePoolSize,</span><br><span class="line">                           int maximumPoolSize,</span><br><span class="line">                           long keepAliveTime,</span><br><span class="line">                           TimeUnit unit,</span><br><span class="line">                           BlockingQueue&lt;Runnable&gt; workQueue,</span><br><span class="line">                           ThreadFactory threadFactory,</span><br><span class="line">                           RejectedExecutionHandler handler)</span><br></pre></td></tr></table></figure>
 <p>接下来解释一下各个参数的含义：</p>
 <h3 id="corePoolSize"><a href="#corePoolSize" class="headerlink" title="corePoolSize"></a>corePoolSize</h3><p>线程池中的核心线程数，默认情况下，核心线程会在线程池中一直存活，即使它们处于空闲状态；但是如果调用 ThreadPoolExecutor 的 allowCoreThreadTimeOut(boolean value) 方法并设置参数为 true，那么此时空闲的核心线程就有可能被终止。</p>
 <p>创建线程池后，默认情况下，线程池中并没有任何线程，当有任务到来时才会创建线程去执行任务，除非调用了 prestartCoreThread() 或 prestartAllCoreThreads() 方法来预先创建线程。</p>
 <h3 id="maximumPoolSize"><a href="#maximumPoolSize" class="headerlink" title="maximumPoolSize"></a>maximumPoolSize</h3><p>线程池所能容纳的最大线程数，当活动线程数达到这个数值后，后续的新任务将会被阻塞。</p>
 <h3 id="keepAliveTime"><a href="#keepAliveTime" class="headerlink" title="keepAliveTime"></a>keepAliveTime</h3><p>表示空闲的线程最多能存活的时间。默认情况下，当线程池中的线程数大于 corePoolSize 时，除核心线程外如果某个线程空闲的时间达到 keepAliveTime，该线程就会终止；但是如果调用了 allowCoreThreadTimeOut(boolean value) 方法，即使线程池中的线程数不大于 corePoolSize，keepAliveTime 参数也会起作用，此时任何空闲线程的空闲时间达到 keepAliveTime 都会被终止。</p>
 <h3 id="unit"><a href="#unit" class="headerlink" title="unit"></a>unit</h3><p>用于指定 keepAliveTime 的时间单位，是个枚举。有以下几种：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">TimeUnit.NANOSECONDS;    // 纳秒</div><div class="line">TimeUnit.MICROSECONDS;   // 微妙</div><div class="line">TimeUnit.MILLISECONDS;   // 毫秒</div><div class="line">TimeUnit.SECONDS;        // 秒</div><div class="line">TimeUnit.MINUTES;        // 分钟</div><div class="line">TimeUnit.HOURS;          // 小时</div><div class="line">TimeUnit.DAYS;           // 天</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">TimeUnit.NANOSECONDS;    // 纳秒</span><br><span class="line">TimeUnit.MICROSECONDS;   // 微妙</span><br><span class="line">TimeUnit.MILLISECONDS;   // 毫秒</span><br><span class="line">TimeUnit.SECONDS;        // 秒</span><br><span class="line">TimeUnit.MINUTES;        // 分钟</span><br><span class="line">TimeUnit.HOURS;          // 小时</span><br><span class="line">TimeUnit.DAYS;           // 天</span><br></pre></td></tr></table></figure>
 <h3 id="workQueue"><a href="#workQueue" class="headerlink" title="workQueue"></a>workQueue</h3><p>线程池中的任务队列，只有通过线程池的 execute 方法提交的 Runnable 对象才会存储在这个参数中。常用的有以下几种：</p>
 <ul>
 <li>ArrayBlockingQueue：基于数组的先进先出队列，此队列创建时必须指定大小；</li>
@@ -407,17 +408,17 @@
 <p>However, programmers are urged to use the more convenient <code>Executors</code> factory methods <code>newCachedThreadPool()</code> (unbounded thread pool, with automatic thread reclamation), <code>newFixedThreadPool(int)</code> (fixed size thread pool) and <code>newSingleThreadExecutor()</code> (single background thread), that preconfigure settings for the most common usage scenarios.</p>
 </blockquote>
 <p>意思就是建议大家通过 Executors 的三个工厂方法来创建线程池，接下来分别看看这三个方法。</p>
-<h2 id="newCachedThreadPool"><a href="#newCachedThreadPool" class="headerlink" title="newCachedThreadPool()"></a>newCachedThreadPool()</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">public static ExecutorService newCachedThreadPool() &#123;</div><div class="line">    return new ThreadPoolExecutor(0, Integer.MAX_VALUE,</div><div class="line">                                  60L, TimeUnit.SECONDS,</div><div class="line">                                  new SynchronousQueue&lt;Runnable&gt;());</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="newCachedThreadPool"><a href="#newCachedThreadPool" class="headerlink" title="newCachedThreadPool()"></a>newCachedThreadPool()</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public static ExecutorService newCachedThreadPool() &#123;</span><br><span class="line">    return new ThreadPoolExecutor(0, Integer.MAX_VALUE,</span><br><span class="line">                                  60L, TimeUnit.SECONDS,</span><br><span class="line">                                  new SynchronousQueue&lt;Runnable&gt;());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>该方法会创建一个线程数量为 <code>Integer.MAX_VALUE</code> 的线程池，线程池中的每个线程空闲超过 60 秒都会被回收，并且当有新任务到来时立刻创建一个新线程来执行新任务。</p>
 <blockquote>
 <p>对于执行很多短期异步任务的程序而言，该线程池通常可提高程序性能。调用 <code>execute()</code> 方法将重用以前构造的线程（如果线程可用）。如果现有线程没有可用的，则创建一个新线程并添加到池中。因此，长时间保持空闲的线程池不会使用任何资源。</p>
 </blockquote>
-<h2 id="newFixedThreadPool-int"><a href="#newFixedThreadPool-int" class="headerlink" title="newFixedThreadPool(int)"></a>newFixedThreadPool(int)</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">public static ExecutorService newFixedThreadPool(int nThreads) &#123;</div><div class="line">    return new ThreadPoolExecutor(nThreads, nThreads,</div><div class="line">                                  0L, TimeUnit.MILLISECONDS,</div><div class="line">                                  new LinkedBlockingQueue&lt;Runnable&gt;());</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="newFixedThreadPool-int"><a href="#newFixedThreadPool-int" class="headerlink" title="newFixedThreadPool(int)"></a>newFixedThreadPool(int)</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public static ExecutorService newFixedThreadPool(int nThreads) &#123;</span><br><span class="line">    return new ThreadPoolExecutor(nThreads, nThreads,</span><br><span class="line">                                  0L, TimeUnit.MILLISECONDS,</span><br><span class="line">                                  new LinkedBlockingQueue&lt;Runnable&gt;());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>该方法会创建一个可重用固定线程数的线程池，当线程处于空闲状态时并不会被回收，除非线程池被关闭。当所有线程都处于活动状态时，新任务会存储在任务队列中等待，直到有线程空闲出来。</p>
-<h2 id="newSingleThreadExecutor"><a href="#newSingleThreadExecutor" class="headerlink" title="newSingleThreadExecutor()"></a>newSingleThreadExecutor()</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">public static ExecutorService newSingleThreadExecutor() &#123;</div><div class="line">    return new FinalizableDelegatedExecutorService</div><div class="line">        (new ThreadPoolExecutor(1, 1,</div><div class="line">                                0L, TimeUnit.MILLISECONDS,</div><div class="line">                                new LinkedBlockingQueue&lt;Runnable&gt;()));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="newSingleThreadExecutor"><a href="#newSingleThreadExecutor" class="headerlink" title="newSingleThreadExecutor()"></a>newSingleThreadExecutor()</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public static ExecutorService newSingleThreadExecutor() &#123;</span><br><span class="line">    return new FinalizableDelegatedExecutorService</span><br><span class="line">        (new ThreadPoolExecutor(1, 1,</span><br><span class="line">                                0L, TimeUnit.MILLISECONDS,</span><br><span class="line">                                new LinkedBlockingQueue&lt;Runnable&gt;()));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>该方法会创建一个单线程的线程池。这个线程池只有一个线程在工作，也就是相当于单线程串行执行所有任务。如果这个唯一的线程因为异常结束，那么会有一个新的线程来替代它。此线程池保证所有任务的执行顺序按照任务的提交顺序执行。</p>
 <p>实际上以上的三个创建线程池的工厂方法都是通过配置 ThreadPoolExecutor 的参数来实现不同功能的，这三种线程池可以满足大多数场合。</p>
-<p>关于线程池基本介绍就到这，如果想了解线程池的原理，可以看看这篇文章：<a href="https://www.cnblogs.com/exe19/p/5359885.html" target="_blank" rel="external">深入理解Java之线程池</a></p>
+<p>关于线程池基本介绍就到这，如果想了解线程池的原理，可以看看这篇文章：<a href="https://www.cnblogs.com/exe19/p/5359885.html" target="_blank" rel="noopener">深入理解Java之线程池</a></p>
 
       
     </div>
@@ -440,13 +441,13 @@
     <div id="QR" style="display: none;">
       
         <div id="wechat" style="display: inline-block">
-          <img id="wechat_qr" src="/images/WechatIMG23.png" alt="ljuns WeChat Pay"/>
+          <img id="wechat_qr" src="/images/WechatIMG23.png" alt="ljuns WeChat Pay">
           <p>微信打赏</p>
         </div>
       
       
         <div id="alipay" style="display: inline-block">
-          <img id="alipay_qr" src="/images/WechatIMG22.jpeg" alt="ljuns Alipay"/>
+          <img id="alipay_qr" src="/images/WechatIMG22.jpeg" alt="ljuns Alipay">
           <p>支付宝打赏</p>
         </div>
       
@@ -549,7 +550,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             文章目录
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -559,10 +560,8 @@
       
 
       <section class="site-overview sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/images/avatar.jpg"
-               alt="ljuns" />
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="ljuns">
           <p class="site-author-name" itemprop="name">ljuns</p>
            
               <p class="site-description motion-element" itemprop="description">做自己喜欢的事，喜欢自己做的事</p>
@@ -573,7 +572,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-count">25</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -595,7 +594,7 @@
             
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-count">23</span>
                 <span class="site-state-item-name">标签</span>
               
             </div>
@@ -650,7 +649,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy;  2016 - 
   <span itemprop="copyrightYear">2018</span>

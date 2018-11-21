@@ -6,15 +6,15 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-Hans">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -32,7 +32,7 @@
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -66,21 +66,21 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="Bitmap," />
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
 
 
+  <meta name="keywords" content="Bitmap,">
 
 
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.0" />
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.0">
 
 
 
@@ -94,7 +94,8 @@
 <meta property="og:url" content="/images/ljuns.ico/2017/06/03/如何实现 Bitmap 的高效加载？/index.html">
 <meta property="og:site_name" content="ljuns">
 <meta property="og:description" content="Bitmap 在 Android 中指的是一张图片，可以是 png 格式，也可以是 jpg 等其他常见的图片格式。如何加载一个 Bitmap 呢？ BitmapFactory 类提供了四种解析方法：decodeFile()、decodeResource()、decodeStream() 和 decodeByteArray()，分别用于从文件系统、资源、输入流和字节数组中加载出一个 Bitmap 对">
-<meta property="og:updated_time" content="2018-08-15T06:24:35.987Z">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-08-15T06:24:35.988Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何实现 Bitmap 的高效加载？">
 <meta name="twitter:description" content="Bitmap 在 Android 中指的是一张图片，可以是 png 格式，也可以是 jpg 等其他常见的图片格式。如何加载一个 Bitmap 呢？ BitmapFactory 类提供了四种解析方法：decodeFile()、decodeResource()、decodeStream() 和 decodeByteArray()，分别用于从文件系统、资源、输入流和字节数组中加载出一个 Bitmap 对">
@@ -125,7 +126,7 @@
 
 
 
-  <link rel="canonical" href="/images/ljuns.ico/2017/06/03/如何实现 Bitmap 的高效加载？/"/>
+  <link rel="canonical" href="/images/ljuns.ico/2017/06/03/如何实现 Bitmap 的高效加载？/">
 
 
 
@@ -134,7 +135,7 @@
   <title> 如何实现 Bitmap 的高效加载？ | ljuns </title>
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
 
@@ -159,13 +160,13 @@
   <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
 
     <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
+      <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">ljuns</span>
         <span class="logo-line-after"><i></i></span>
@@ -195,7 +196,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
           </a>
@@ -205,7 +206,7 @@
         <li class="menu-item menu-item-categories">
           <a href="/categories" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
             
             分类
           </a>
@@ -215,7 +216,7 @@
         <li class="menu-item menu-item-about">
           <a href="/about" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
             
             关于
           </a>
@@ -225,7 +226,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             归档
           </a>
@@ -259,16 +260,16 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="/images/ljuns.ico/2017/06/03/如何实现 Bitmap 的高效加载？/">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ljuns">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="ljuns">
     </span>
 
@@ -307,7 +308,7 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
             
               <span class="post-meta-divider">|</span>
             
@@ -318,7 +319,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
                   <a href="/categories/学习笔记/" itemprop="url" rel="index">
                     <span itemprop="name">学习笔记</span>
                   </a>
@@ -382,9 +383,9 @@
 </ol>
 </blockquote>
 <p>通过上面四个步骤就产生如下代码：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">  <span class="function"><span class="keyword">public</span> Bitmap <span class="title">decodeBitmapFromResource</span><span class="params">(Resources res, <span class="keyword">int</span> resId,</span></span></div><div class="line">                                         <span class="keyword">int</span> reqWidth, <span class="keyword">int</span> reqHeight) &#123;</div><div class="line">      BitmapFactory.Options options = <span class="keyword">new</span> BitmapFactory.Options();</div><div class="line">      options.inJustDecodeBounds = <span class="keyword">true</span>;</div><div class="line">      <span class="comment">// 第一次解析，获取原资源大小</span></div><div class="line">      BitmapFactory.decodeResource(res, resId, options);</div><div class="line">    	<span class="comment">// 获取采样率</span></div><div class="line">      options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);</div><div class="line">      options.inJustDecodeBounds = <span class="keyword">false</span>;</div><div class="line">      <span class="comment">// 第二次解析</span></div><div class="line">      <span class="keyword">return</span> BitmapFactory.decodeResource(res, resId, options);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">calculateInSampleSize</span><span class="params">(BitmapFactory.Options options,</span></span></div><div class="line">                                    <span class="keyword">int</span> reqWidth, <span class="keyword">int</span> reqHeight) &#123;</div><div class="line">      <span class="keyword">int</span> width = options.outWidth;</div><div class="line">      <span class="keyword">int</span> height = options.outHeight;</div><div class="line">      <span class="keyword">int</span> inSampleSize = <span class="number">1</span>;</div><div class="line"><span class="comment">// 计算采样率</span></div><div class="line">      <span class="keyword">if</span> (width &gt; reqHeight || height &gt; reqHeight) &#123;</div><div class="line">          <span class="keyword">int</span> halfWidth = width / <span class="number">2</span>;</div><div class="line">          <span class="keyword">int</span> halfHeight = height / <span class="number">2</span>;</div><div class="line">          <span class="keyword">while</span> ((halfWidth / inSampleSize) &gt;= reqWidth </div><div class="line">                  || (halfHeight / inSampleSize) &gt;= reqHeight) &#123;</div><div class="line">              inSampleSize *= <span class="number">2</span>;</div><div class="line">          &#125;</div><div class="line">      &#125;</div><div class="line">      <span class="keyword">return</span> inSampleSize;</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">  <span class="function"><span class="keyword">public</span> Bitmap <span class="title">decodeBitmapFromResource</span><span class="params">(Resources res, <span class="keyword">int</span> resId,</span></span></span><br><span class="line"><span class="function"><span class="params">                                         <span class="keyword">int</span> reqWidth, <span class="keyword">int</span> reqHeight)</span> </span>&#123;</span><br><span class="line">      BitmapFactory.Options options = <span class="keyword">new</span> BitmapFactory.Options();</span><br><span class="line">      options.inJustDecodeBounds = <span class="keyword">true</span>;</span><br><span class="line">      <span class="comment">// 第一次解析，获取原资源大小</span></span><br><span class="line">      BitmapFactory.decodeResource(res, resId, options);</span><br><span class="line">    	<span class="comment">// 获取采样率</span></span><br><span class="line">      options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);</span><br><span class="line">      options.inJustDecodeBounds = <span class="keyword">false</span>;</span><br><span class="line">      <span class="comment">// 第二次解析</span></span><br><span class="line">      <span class="keyword">return</span> BitmapFactory.decodeResource(res, resId, options);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">calculateInSampleSize</span><span class="params">(BitmapFactory.Options options,</span></span></span><br><span class="line"><span class="function"><span class="params">                                    <span class="keyword">int</span> reqWidth, <span class="keyword">int</span> reqHeight)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">int</span> width = options.outWidth;</span><br><span class="line">      <span class="keyword">int</span> height = options.outHeight;</span><br><span class="line">      <span class="keyword">int</span> inSampleSize = <span class="number">1</span>;</span><br><span class="line"><span class="comment">// 计算采样率</span></span><br><span class="line">      <span class="keyword">if</span> (width &gt; reqHeight || height &gt; reqHeight) &#123;</span><br><span class="line">          <span class="keyword">int</span> halfWidth = width / <span class="number">2</span>;</span><br><span class="line">          <span class="keyword">int</span> halfHeight = height / <span class="number">2</span>;</span><br><span class="line">          <span class="keyword">while</span> ((halfWidth / inSampleSize) &gt;= reqWidth </span><br><span class="line">                  || (halfHeight / inSampleSize) &gt;= reqHeight) &#123;</span><br><span class="line">              inSampleSize *= <span class="number">2</span>;</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> inSampleSize;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
 <p>然后就可以用一句代码来将任意一张图片压缩成 100 * 100 的缩略图：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mImageView.setImageBitmap(decodeBitmapFromResource(getResources(), R.id.myimage, <span class="number">100</span>, <span class="number">100</span>));</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mImageView.setImageBitmap(decodeBitmapFromResource(getResources(), R.id.myimage, <span class="number">100</span>, <span class="number">100</span>));</span><br></pre></td></tr></table></figure>
 <p>另外需要注意的是：BitmapFactoty.Options 获取到的图片宽高信息跟图片的位置和程序运行的设备有关，比如同一张图片放在不同的 mipmap 目录下或者程序运行在不同的屏幕密度的设备上，这都有可能导致 BitmapFactoty.Options 获取到不同的结果。</p>
 
       
@@ -408,13 +409,13 @@
     <div id="QR" style="display: none;">
       
         <div id="wechat" style="display: inline-block">
-          <img id="wechat_qr" src="/images/WechatIMG23.png" alt="ljuns WeChat Pay"/>
+          <img id="wechat_qr" src="/images/WechatIMG23.png" alt="ljuns WeChat Pay">
           <p>微信打赏</p>
         </div>
       
       
         <div id="alipay" style="display: inline-block">
-          <img id="alipay_qr" src="/images/WechatIMG22.jpeg" alt="ljuns Alipay"/>
+          <img id="alipay_qr" src="/images/WechatIMG22.jpeg" alt="ljuns Alipay">
           <p>支付宝打赏</p>
         </div>
       
@@ -517,7 +518,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             文章目录
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -527,10 +528,8 @@
       
 
       <section class="site-overview sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/images/avatar.jpg"
-               alt="ljuns" />
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="ljuns">
           <p class="site-author-name" itemprop="name">ljuns</p>
            
               <p class="site-description motion-element" itemprop="description">做自己喜欢的事，喜欢自己做的事</p>
@@ -541,7 +540,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-count">25</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -563,7 +562,7 @@
             
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-count">23</span>
                 <span class="site-state-item-name">标签</span>
               
             </div>
@@ -618,7 +617,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy;  2016 - 
   <span itemprop="copyrightYear">2018</span>
