@@ -87,21 +87,21 @@
 
 
 
-<meta name="description" content="requestLayout当 View 调用 requestLayout() 时会设置一个标识：mPrivateFlags |= PFLAG_FORCE_LAYOUT，然后调用父 View 的 requestLayout() 并设置标识，直到 ViewRootImpl 的 requestLayout()。 在 ViewRootImpl 的 requestLayout() 中异步调用了 perfor">
+<meta name="description" content="requestLayout、invalidate、postInvalidate 的分析">
 <meta name="keywords" content="requestLayout，invalidate，postInvalidate">
 <meta property="og:type" content="article">
 <meta property="og:title" content="requestLayout、invalidate、postInvalidate">
 <meta property="og:url" content="/images/ljuns.ico/2018/11/21/requestLayout、invalidate、postInvalidate/index.html">
 <meta property="og:site_name" content="ljuns">
-<meta property="og:description" content="requestLayout当 View 调用 requestLayout() 时会设置一个标识：mPrivateFlags |= PFLAG_FORCE_LAYOUT，然后调用父 View 的 requestLayout() 并设置标识，直到 ViewRootImpl 的 requestLayout()。 在 ViewRootImpl 的 requestLayout() 中异步调用了 perfor">
+<meta property="og:description" content="requestLayout、invalidate、postInvalidate 的分析">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/929c4bfbgy1fxfsizwi0cj20qo0i240c.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/929c4bfbgy1fxfslnga2zj20p50ntmzg.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/929c4bfbgy1fxfsmqk7qpj20id08o3yx.jpg">
-<meta property="og:updated_time" content="2018-11-21T09:28:19.007Z">
+<meta property="og:updated_time" content="2018-11-21T09:49:03.128Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="requestLayout、invalidate、postInvalidate">
-<meta name="twitter:description" content="requestLayout当 View 调用 requestLayout() 时会设置一个标识：mPrivateFlags |= PFLAG_FORCE_LAYOUT，然后调用父 View 的 requestLayout() 并设置标识，直到 ViewRootImpl 的 requestLayout()。 在 ViewRootImpl 的 requestLayout() 中异步调用了 perfor">
+<meta name="twitter:description" content="requestLayout、invalidate、postInvalidate 的分析">
 <meta name="twitter:image" content="https://ws1.sinaimg.cn/large/929c4bfbgy1fxfsizwi0cj20qo0i240c.jpg">
 
 
@@ -370,7 +370,9 @@
       
 
       
-        <h3 id="requestLayout"><a href="#requestLayout" class="headerlink" title="requestLayout"></a>requestLayout</h3><p>当 View 调用 requestLayout() 时会设置一个标识：<code>mPrivateFlags |= PFLAG_FORCE_LAYOUT</code>，然后调用父 View 的 requestLayout() 并设置标识，直到 ViewRootImpl 的 requestLayout()。</p>
+        <p>requestLayout、invalidate、postInvalidate 的分析</p>
+<a id="more"></a>
+<h3 id="requestLayout"><a href="#requestLayout" class="headerlink" title="requestLayout"></a>requestLayout</h3><p>当 View 调用 requestLayout() 时会设置一个标识：<code>mPrivateFlags |= PFLAG_FORCE_LAYOUT</code>，然后调用父 View 的 requestLayout() 并设置标识，直到 ViewRootImpl 的 requestLayout()。</p>
 <p>在 ViewRootImpl 的 requestLayout() 中异步调用了 performTraversals()，然后分别调用了 performMeasure()、performLayout()、performDraw()。</p>
 <p>在 performMeasure() 中会调用 View 的 measure()，检查 <code>PFLAG_FORCE_LAYOUT</code> 标识，然后执行 onMeasure()，最后设置 <code>PFLAG_LAYOUT_REQUIRED</code> 标识。</p>
 <p>在 performLayout() 中会调用 View 的 layout()，检查 <code>PFLAG_LAYOUT_REQUIRED</code> 标识，然后执行 onLayout()，最后清除标识。</p>
